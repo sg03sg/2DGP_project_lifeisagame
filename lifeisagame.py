@@ -21,18 +21,21 @@ class Background:
 
 class hero:
     def __init__(self):
-        self.x, self.y = 400, 90
-        self.frame = 0
+        self.x, self.y = 640, 150
+        self.frame = -1
+        self.y_frame =-1
         self.face_dir = 1
-        self.image = load_image('animation_sheet.png')
+        self.image = load_image('nobaby.png')
 
     def update(self):
-        # self.frame = (self.frame + 1) % 8
+        self.frame = (self.frame + 1) % 10
+        if self.frame % 10 == 0:
+            self.y_frame = (self.y_frame +1) % 3
         pass
 
     def draw(self):
-        # if self.face_dir == 1:
-        #     self.image.clip_draw(self.frame * 100, 300, 100, 100, self.x, self.y)
+        if self.face_dir == 1:
+          self.image.clip_composite_draw(self.frame * 153, 323-self.y_frame*113, 120, 90,0,'h', self.x, self.y,100,100)
         # else:
         #     self.image.clip_draw(self.frame * 100, 200, 100, 100, self.x, self.y)
         pass
@@ -57,9 +60,9 @@ def reset_world():
 
     background = Background()
     world.append(background)
-    #
-    # boy = Boy()
-    # world.append(boy)
+
+    boy = hero()
+    world.append(boy)
 
 
 
@@ -85,6 +88,6 @@ while running:
     handle_events()
     update_world()
     render_world()
-    delay(0.01)
+    delay(0.02)
 # finalization code
 close_canvas()
