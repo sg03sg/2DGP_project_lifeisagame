@@ -1,45 +1,7 @@
 from pico2d import *
-import random
 
-
-# Game object class here
-
-class Background:
-    def __init__(self):
-        # 이미지가 resource 폴더에 있으므로 경로를 수정
-        self.image = load_image('resource/spr_Babyroom_1.png')
-
-    def draw(self):
-        # 캔버스 크기에 맞게 중앙에 스케일하여 그리기
-        w = get_canvas_width()
-        h = get_canvas_height()
-        self.image.draw(w // 2, h // 2, w, h)
-
-    def update(self):
-        pass
-
-
-class hero:
-    def __init__(self):
-        self.x, self.y = 640, 150
-        self.frame = -1
-        self.y_frame =-1
-        self.face_dir = 1
-        self.image = load_image('nobaby.png')
-
-    def update(self):
-        self.frame = (self.frame + 1) % 10
-        if self.frame % 10 == 0:
-            self.y_frame = (self.y_frame +1) % 3
-        pass
-
-    def draw(self):
-        if self.face_dir == 1:
-          self.image.clip_composite_draw(self.frame * 153, 323-self.y_frame*113, 120, 90,0,'h', self.x, self.y,100,100)
-        # else:
-        #     self.image.clip_draw(self.frame * 100, 200, 100, 100, self.x, self.y)
-        pass
-
+from background import Background
+from hero import Hero
 
 def handle_events():
     global running
@@ -50,19 +12,21 @@ def handle_events():
             running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
+        else:
+            hero.handle_event(event)
 
 
 def reset_world():
     global world
-    global boy
+    global hero
 
     world = []
 
     background = Background()
     world.append(background)
 
-    boy = hero()
-    world.append(boy)
+    hero = Hero()
+    world.append(hero)
 
 
 
