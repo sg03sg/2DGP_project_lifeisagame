@@ -1,34 +1,53 @@
 from pico2d import *
 
+# 화면 크기
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+
 
 class Background:
     def __init__(self):
         self.image = load_image('spr_Babyroom_1.png')
-        self.BG_WIDTH = self.image.w // 3
-        self.BG_HEIGHT = self.image.h
         self.frame_count = 3
+        self.frame_w = self.image.w // self.frame_count
+        self.frame_h = self.image.h
         self.offset = 0.0
-        self.scroll_speed = 200  # 픽셀/초
+        self.scroll_speed = 40.0
+        self.total_w = self.frame_w * self.frame_count
 
     def update(self):
-        # frame_time은 lifeisagame.py에서 delay(0.02)와 맞춤
         frame_time = 0.02
         self.offset += self.scroll_speed * frame_time
-        self.offset %= (self.BG_WIDTH * self.frame_count)
 
     def draw(self):
-        w = get_canvas_width()
-        h = get_canvas_height()
-        left = int(self.offset)
-        x = - (left % self.BG_WIDTH)
-        drawn_width = 0
-        while drawn_width < w:
-            frame_idx = (left // self.BG_WIDTH + drawn_width // self.BG_WIDTH) % self.frame_count
-            sx = frame_idx * self.BG_WIDTH + (left % self.BG_WIDTH if drawn_width == 0 else 0)
-            sw = min(self.BG_WIDTH - (left % self.BG_WIDTH) if drawn_width == 0 else self.BG_WIDTH, w - drawn_width)
-            if sw <= 0:
-                break
-            dx = int(x + drawn_width + sw // 2)
-            self.image.clip_draw(int(sx), 0, int(sw), self.BG_HEIGHT, dx, h // 2, int(sw), h)
-            drawn_width += sw
-            left += sw
+        ofs = int(self.offset) % self.total_w
+        primary = (ofs // self.frame_w) % self.frame_count
+        i = ofs % self.frame_w  # primary 프레임에서 잘려나간 픽셀 수(다음 프레임이 차지할 너비)
+
+        # 스케일 : 원본 프레임 폭 -> 화면 폭
+        scale_x = SCREEN_WIDTH / float(self.frame_w)
+
+        # primary 부분
+        primary_x = primary * self.frame_w + i
+        primary_w = self.frame_w - i
+
+        if primary_w > 0:
+            primary_dest_w = int(primary_w * scale_x)
+            # 중심 좌표 계산
+            primary_center_x = primary_dest_w // 2
+            self.image.clip_draw(primary_x, 0, primary_w, self.frame_h,
+                                 primary_center_x, SCREEN_HEIGHT // 2,
+                                 primary_dest_w, SCREEN_HEIGHT)
+
+        # next 부분
+        if i > 0:
+            next_frame = (primary + 1) % self.frame_count
+            next_src_x = next_frame * self.frame_w
+            next_src_w = i
+            next_dest_w = SCREEN_WIDTH - int((self.frame_w - i) * scale_x)
+            # next의 중심 좌표
+            next_center_x = (SCREEN_WIDTH - next_dest_w // 2)
+
+            self.image.clip_draw(next_src_x, 0, next_src_w, self.frame_h,
+                                 SCREEN_WIDTH - next_dest_w // 2, SCREEN_HEIGHT // 2,
+                                 next_dest_w, SCREEN_HEIGHT)
