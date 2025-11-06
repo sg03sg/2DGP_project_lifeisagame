@@ -1,6 +1,10 @@
 from pico2d import load_image
 from sdl2 import SDL_KEYDOWN, SDLK_SPACE
 from state_machine import StateMachine
+import json
+
+with open('baby_sprite_sheet_data.json', 'r', encoding='utf-8') as f:
+    baby_rounding_box_data = json.load(f)
 
 def space_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
@@ -32,13 +36,14 @@ class Run:
         pass
 
     def do(self):
-        self.hero.frame = (self.hero.frame+1)%10
+        self.hero.frame = (self.hero.frame+1)%5
         if self.hero.frame %10 ==0:
             self.hero.y_frame = (self.hero.y_frame +1)%3
     def draw(self):
-        self.hero.image.clip_composite_draw(self.hero.frame * 153, 323 - self.hero.y_frame * 113, 120, 90, 0, 'h', self.hero.x, self.hero.y, 100,
+        i = self.hero.frame
+        self.hero.image.clip_draw(int(baby_rounding_box_data['sprites'][i]["x"]),int(baby_rounding_box_data['sprites'][i]['y']) ,
+                                  int(baby_rounding_box_data['sprites'][i]['width']), int(baby_rounding_box_data['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
                                        100)
-
 
 class Idle:
     def __init__(self, hero):
@@ -70,16 +75,19 @@ class Jump:
         hero_jump(self.hero, dt)
 
     def draw(self):
-        self.hero.image.clip_composite_draw(self.hero.frame * 153, 323 - self.hero.y_frame * 113, 120, 90, 0, 'h',
-                                            self.hero.x, self.hero.y, 100,
-                                            100)
+        i = self.hero.frame
+        self.hero.image.clip_draw(int(baby_rounding_box_data['sprites'][i]["x"]),
+                                  int(baby_rounding_box_data['sprites'][i]['y']),
+                                  int(baby_rounding_box_data['sprites'][i]['width']),
+                                  int(baby_rounding_box_data['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
+                                  100)
 
 class Hero:
     def __init__(self):
         self.x, self.y = 640, 150
         self.frame = -1
         self.y_frame =-1
-        self.image = load_image('nobaby.png')
+        self.image = load_image('baby_sprite_sheet.png')
 
         # 점프 관련 기본값 : v0^2 / (2 * |g|) <-이거 계산하면 최고 높이
         self.jump_initial_v = 1300.0    # 초기 상승 속도(px/s)

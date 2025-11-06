@@ -16,7 +16,7 @@ class Background:
         self.total_w = self.frame_w * self.frame_count
 
     def update(self):
-        frame_time = 0.02
+        frame_time = 0.08
         self.offset += self.scroll_speed * frame_time
 
     def draw(self):
