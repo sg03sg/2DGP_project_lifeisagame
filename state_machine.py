@@ -12,8 +12,6 @@ class StateMachine:
 
     def handle_state_event(self, state_event):
          # 현재 상태에 대한 전이 규칙이 없으면 아무 것도 하지 않음
-        # if self.cur_state not in self.rules:
-        #     return
 
         for check_event in self.rules[self.cur_state].keys():
             if check_event(state_event):

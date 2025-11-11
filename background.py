@@ -4,7 +4,7 @@ import game_framework
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
-PIXEL_PER_METER = (10.0 / 1.3)  # 방 사진 크기/3 = 170 pixel = 약220 cm
+PIXEL_PER_METER = (10.0 / 1.7)  # 방 사진 크기/3 = 170 pixel = 약300 cm
 RUN_SPEED_KMPH = 20.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
