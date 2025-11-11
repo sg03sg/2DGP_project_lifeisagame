@@ -23,13 +23,8 @@ class Item:
 
     def handle_collision(self,group, other):
         pass
-        # if group == 'boy:Item':
-        #     game_world.remove_object(self)
-        # elif group == 'grass:Item':
-        #     self.stopped = True
-        #     game_world.remove_collision_object(self)
-        # elif group == 'zombie:Item':
-        #     game_world.remove_object(self)
+        if group == 'hero:item':
+            game_world.remove_object(self)
 
     def update(self):
         # 위치 업데이트

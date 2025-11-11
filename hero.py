@@ -123,3 +123,6 @@ class Hero:
 
     def handle_event(self, event):
         self.state_machine.handle_state_event(("INPUT", event))
+
+    def handle_collision(self,group, other):
+        pass

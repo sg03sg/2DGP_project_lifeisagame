@@ -34,6 +34,9 @@ def init():
     hero = Hero()
     game_world.add_object(hero,1)
 
+    game_world.add_collision_pair('hero:item', hero, None)
+
+
 def update():
     global item
     item_timer = game_framework.game_time
@@ -42,7 +45,9 @@ def update():
             item_y = 150 + 200 * (random.randint(0, 1))
             item = Item(item_y)
             game_world.add_object(item, 1)
+            game_world.add_collision_pair('hero:item', None, item)
     game_world.update()
+    game_world.handle_collisions()
 
 
 
