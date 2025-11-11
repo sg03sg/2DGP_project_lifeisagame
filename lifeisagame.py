@@ -8,6 +8,6 @@ while play_mode.running:
     play_mode.handle_events()
     play_mode.update_world()
     play_mode.draw()
-    delay(0.08)
+    delay(0.02)
 play_mode.finish()
 close_canvas()
