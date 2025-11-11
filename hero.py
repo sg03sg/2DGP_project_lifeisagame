@@ -46,8 +46,8 @@ class Run:
             self.hero.y_frame = (self.hero.y_frame +1)%3
     def draw(self):
         i = int(self.hero.frame)
-        self.hero.image.clip_draw(int(baby_rounding_box_data['sprites'][i]["x"]),int(baby_rounding_box_data['sprites'][i]['y']) ,
-                                  int(baby_rounding_box_data['sprites'][i]['width']), int(baby_rounding_box_data['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
+        self.hero.image.clip_draw(int(baby_rounding_box_data['sprites'][i]["x"])+7,int(baby_rounding_box_data['sprites'][i]['y']) ,
+                                  int(baby_rounding_box_data['sprites'][i]['width'])-7, int(baby_rounding_box_data['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
                                        100)
 
 class Idle:
