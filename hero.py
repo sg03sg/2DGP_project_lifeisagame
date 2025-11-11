@@ -75,7 +75,7 @@ class Jump:
         pass
 
     def do(self):
-        dt = 0.0
+        dt = game_framework.frame_time
         hero_jump(self.hero, dt)
 
     def draw(self):
@@ -94,8 +94,8 @@ class Hero:
         self.image = load_image('baby_sprite_sheet.png')
 
         # 점프 관련 기본값 : v0^2 / (2 * |g|) <-이거 계산하면 최고 높이
-        self.jump_initial_v = 1300.0    # 초기 상승 속도(px/s)
-        self.gravity = -2100.0         # 중력(px/s^2)
+        self.jump_initial_v = 1400.0    # 초기 상승 속도(px/s)
+        self.gravity = -2500.0         # 중력(px/s^2)
         self.jump_vy = 0.0
 
         self.run = Run(self)
