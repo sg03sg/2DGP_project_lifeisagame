@@ -1,9 +1,11 @@
 from pico2d import *
+
 from background import Background
 from hero import Hero
-import game_world
 
-running = True
+import game_world
+import game_framework
+
 
 def handle_events():
     global running
@@ -11,18 +13,17 @@ def handle_events():
     event_list = get_events()
     for event in event_list:
         if event.type == SDL_QUIT:
-            running = False
+            game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            running = False
+            game_framework.quit()
         else:
             hero.handle_event(event)
 
 
 def init():
-    global world
     global hero
+    global running
 
-    running = True
     background = Background()
     game_world.add_object(background,0)
 
@@ -31,7 +32,7 @@ def init():
 
 
 
-def update_world():
+def update():
     game_world.update()
 
 
@@ -41,4 +42,9 @@ def draw():
     update_canvas()
 
 def finish():
+    game_world.clear()
+
+def pauese():
+    pass
+def resume():
     pass
