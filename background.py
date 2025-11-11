@@ -1,9 +1,14 @@
 from pico2d import *
-
+import game_framework
 # 화면 크기
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
+PIXEL_PER_METER = (10.0 / 1.3)  # 방 사진 크기/3 = 170 pixel = 약220 cm
+RUN_SPEED_KMPH = 20.0  # Km / Hour
+RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
 class Background:
     def __init__(self):
@@ -12,12 +17,12 @@ class Background:
         self.frame_w = self.image.w // self.frame_count
         self.frame_h = self.image.h
         self.offset = 0.0
-        self.scroll_speed = 40.0
+        self.scroll_speed = RUN_SPEED_PPS
         self.total_w = self.frame_w * self.frame_count
 
     def update(self):
-        frame_time = 0.08
-        self.offset += self.scroll_speed * frame_time
+        # game_framework.frame_time = 0.08
+        self.offset += self.scroll_speed * game_framework.frame_time
 
     def draw(self):
         ofs = int(self.offset) % self.total_w
