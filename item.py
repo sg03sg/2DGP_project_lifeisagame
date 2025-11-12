@@ -22,7 +22,6 @@ class Item:
         draw_rectangle(*self.get_bb())
 
     def handle_collision(self,group, other):
-        pass
         if group == 'hero:item':
             game_world.remove_object(self)
 

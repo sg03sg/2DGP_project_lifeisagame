@@ -4,6 +4,7 @@ import random
 from background import Background
 from hero import Hero
 from item import Item
+from ui import Ui
 
 import game_world
 import game_framework
@@ -26,6 +27,9 @@ def init():
     global hero
     global background
 
+    global hp
+    global happy
+
     global running
 
     background = Background()
@@ -33,6 +37,11 @@ def init():
 
     hero = Hero()
     game_world.add_object(hero,1)
+
+    hp= Ui("hp",50)
+    game_world.add_object(hp,1)
+    happy= Ui("happy",250)
+    game_world.add_object(happy,1)
 
     game_world.add_collision_pair('hero:item', hero, None)
 
