@@ -1,8 +1,11 @@
 from pico2d import load_image, draw_rectangle
 from sdl2 import SDL_KEYDOWN, SDLK_SPACE
 from state_machine import StateMachine
-import json
+
+import game_world
 import game_framework
+
+import json
 
 with open('baby_sprite_sheet_data.json', 'r', encoding='utf-8') as f:
     baby_rounding_box_data = json.load(f)
@@ -93,6 +96,10 @@ class Hero:
         self.y_frame =-1
         self.image = load_image('baby_sprite_sheet.png')
 
+        #ui 관련 값
+        self.hp = 100
+        self.happy = 50
+
         # 점프 관련 기본값 : v0^2 / (2 * |g|) <-이거 계산하면 최고 높이
         self.jump_initial_v = 1000.0    # 초기 상승 속도(px/s)
         self.gravity = -2500.0         # 중력(px/s^2)
@@ -125,4 +132,8 @@ class Hero:
         self.state_machine.handle_state_event(("INPUT", event))
 
     def handle_collision(self,group, other):
-        pass
+        if group == 'hero:item':
+            # if self.hp < 100:
+            #     self.hp += 5
+            if self.happy < 100:
+                self.happy += 5
