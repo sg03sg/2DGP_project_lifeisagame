@@ -10,12 +10,19 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-# class bridge:
-#     def __init__(self):
-#         self.image = load_image('bridge.png')
-#
-#     def draw(self):
-#         self.image.draw(self.x,self.y).
+class door:
+    def __init__(self,x):
+        self.image = load_image('Images/door.png')
+        self.frame = 0
+        self.x = x
+        self.y = 130
+
+    def update(self):
+        pass
+
+    def draw(self):
+        self.image.clip_draw(self.x,self.y)
+
 
 class Background:
     def __init__(self, filenames=None, loop=True):
