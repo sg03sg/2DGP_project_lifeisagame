@@ -11,48 +11,79 @@ RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
 class Background:
-    def __init__(self):
-        self.image = load_image('spr_Babyroom_1.png')
+    def __init__(self, filenames=None, loop=True):
+        if filenames is None:
+            filenames = ['spr_Babyroom_1.png']
+        self.images = [load_image(f) for f in filenames]
         self.frame_count = 3
-        self.frame_w = self.image.w // self.frame_count
-        self.frame_h = self.image.h
+        # 각 이미지의 프레임 폭/높이
+        self.frame_w = [f.w // self.frame_count for f in self.images]
+        self.frame_h = [f.h for f in self.images]
+        # 각 이미지의 총 폭(프레임수 * 한 프레임 폭)
+        self.total_w = [fw * self.frame_count for fw in self.frame_w]
+
         self.offset = 0.0
         self.scroll_speed = RUN_SPEED_PPS
-        self.total_w = self.frame_w * self.frame_count
+        self.stage = 0
+        self.loop = loop
 
     def update(self):
-        # game_framework.frame_time = 0.08
         self.offset += self.scroll_speed * game_framework.frame_time
 
+        # 반복 모드: offset이 여러 스테이지를 그림
+        if self.loop:
+            while self.offset >= self.total_w[self.stage]:
+                self.offset -= self.total_w[self.stage]
+                self.stage = (self.stage + 1) % len(self.images)
+        else:
+            # 비반복 모드: 마지막 이미지에서 멈춤
+            while self.stage < len(self.images) - 1 and self.offset >= self.total_w[self.stage]:
+                self.offset -= self.total_w[self.stage]
+                self.stage += 1
+            if self.stage == len(self.images) - 1:
+                self.offset = min(self.offset, self.total_w[self.stage] - 1)
+
     def draw(self):
-        ofs = int(self.offset) % self.total_w
-        primary = (ofs // self.frame_w) % self.frame_count
-        i = ofs % self.frame_w  # primary 프레임에서 잘려나간 픽셀 수(다음 프레임이 차지할 너비)
+        ofs = int(self.offset)
+        fw = self.frame_w[self.stage]
+        fh = self.frame_h[self.stage]
 
-        # 스케일 : 원본 프레임 폭 -> 화면 폭
-        scale_x = SCREEN_WIDTH / float(self.frame_w)
+        # 현재 프레임에서 잘린 픽셀 수 = i
+        primary = ofs // fw
+        i = ofs % fw
+        primary_frame = int(primary % self.frame_count)
 
-        # primary 부분
-        primary_x = primary * self.frame_w + i
-        primary_w = self.frame_w - i
+        # 한 프레임을 화면 폭으로 스케일
+        scale_x = SCREEN_WIDTH / float(fw)
 
-        if primary_w > 0:
-            primary_dest_w = int(primary_w * scale_x)
-            # 중심 좌표 계산
-            primary_center_x = primary_dest_w // 2
-            self.image.clip_draw(primary_x, 0, primary_w, self.frame_h,
-                                 primary_center_x, SCREEN_HEIGHT // 2,
-                                 primary_dest_w, SCREEN_HEIGHT)
+        # 현재 프레임 그리기
+        primary_src_x = primary_frame * fw + i
+        primary_src_w = fw - i
 
-        # next 부분
+        if primary_src_w > 0:
+            primary_dest_w = int(primary_src_w * scale_x)
+            self.images[self.stage].clip_draw(primary_src_x, 0, primary_src_w, fh,
+                                              primary_dest_w // 2, SCREEN_HEIGHT // 2,
+                                              primary_dest_w, SCREEN_HEIGHT)
+        else:
+            primary_dest_w = 0
+
+        # 다음 부분이 필요하면 그리기
         if i > 0:
-            next_frame = (primary + 1) % self.frame_count
-            next_src_x = next_frame * self.frame_w
-            next_src_w = i
-            next_dest_w = SCREEN_WIDTH - int((self.frame_w - i) * scale_x)
-            # next의 중심 좌표
-            next_center_x = (SCREEN_WIDTH - next_dest_w // 2)
+            # 다음 프레임이 같은 스테이지에 있는지, 다음 이미지의 첫 프레임인지 검사
+            if primary_frame < self.frame_count - 1:
+                next_stage = self.stage
+                next_frame_idx = primary_frame + 1
+            else:
+                next_stage = (self.stage + 1) % len(self.images)
+                next_frame_idx = 0
 
-            self.image.clip_draw(next_src_x, 0, next_src_w, self.frame_h,
-                                 SCREEN_WIDTH - next_dest_w // 2, SCREEN_HEIGHT // 2,
-                                 next_dest_w, SCREEN_HEIGHT)
+            next_src_x = next_frame_idx * fw
+            next_src_w = i
+
+            # 남은 화면 폭을 next로 채움
+            next_dest_w = SCREEN_WIDTH - primary_dest_w
+            if next_dest_w > 0 and next_src_w > 0:
+                self.images[next_stage].clip_draw(next_src_x, 0, next_src_w, fh,
+                                                  primary_dest_w + next_dest_w // 2, SCREEN_HEIGHT // 2,
+                                                  next_dest_w, SCREEN_HEIGHT)
