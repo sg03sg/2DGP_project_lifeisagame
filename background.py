@@ -15,7 +15,7 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 #         self.image = load_image('bridge.png')
 #
 #     def draw(self):
-#         self.image.draw(self.x,self.y)
+#         self.image.draw(self.x,self.y).
 
 class Background:
     def __init__(self, filenames=None, loop=True):
