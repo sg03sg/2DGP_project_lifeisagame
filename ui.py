@@ -10,11 +10,11 @@ SCREEN_HEIGHT = 720
 class Ui:
     def __init__(self,name,x):
         if name == 'hp':
-            self.image = load_image("hp_bar.png")
+            self.image = load_image("Images/hp_bar.png")
             self. percent = play_mode.hero.hp / 100
             self.kind = 0
         elif name == 'happy':
-            self.image = load_image("happy_bar.png")
+            self.image = load_image("Images/happy_bar.png")
             self.percent = play_mode.hero.happy / 100
             self.kind =1
         self.image_H = self.image.h

@@ -10,10 +10,17 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
+# class bridge:
+#     def __init__(self):
+#         self.image = load_image('bridge.png')
+#
+#     def draw(self):
+#         self.image.draw(self.x,self.y)
+
 class Background:
     def __init__(self, filenames=None, loop=True):
         if filenames is None:
-            filenames = ['spr_Babyroom_1.png']
+            filenames = ['Images/Babyroom.png','Images/childroom.png']
         self.images = [load_image(f) for f in filenames]
         self.frame_count = 3
         # 각 이미지의 프레임 폭/높이

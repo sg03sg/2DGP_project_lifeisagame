@@ -7,7 +7,7 @@ import game_framework
 
 import json
 
-with open('baby_sprite_sheet_data.json', 'r', encoding='utf-8') as f:
+with open('Json/baby_sprite_sheet_data.json', 'r', encoding='utf-8') as f:
     baby_rounding_box_data = json.load(f)
 
 def space_down(e):
@@ -94,7 +94,7 @@ class Hero:
         self.x, self.y = 640, 150
         self.frame = -1
         self.y_frame =-1
-        self.image = load_image('baby_sprite_sheet.png')
+        self.image = load_image('Images/baby_sprite_sheet.png')
 
         #ui 관련 값
         self.hp = 100

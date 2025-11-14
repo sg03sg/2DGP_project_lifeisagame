@@ -8,7 +8,7 @@ class Item:
 
     def __init__(self, y):
         if Item.image == None:
-            Item.image = load_image('ITEMIMAGE_babymilk.png')
+            Item.image = load_image('Images/ITEMIMAGE_babymilk.png')
         self.x = 1300
         self.y = y
         self.speed = background.RUN_SPEED_PPS + 500  # 아이템의 속도 (배경보다 빠르게)
