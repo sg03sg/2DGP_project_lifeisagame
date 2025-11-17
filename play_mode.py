@@ -32,6 +32,8 @@ def init():
 
     global running
 
+    global black_img
+
     background = Background()
     game_world.add_object(background,0)
 
@@ -44,6 +46,8 @@ def init():
     game_world.add_object(happy,1)
 
     game_world.add_collision_pair('hero:item', hero, None)
+    black_img = load_image('Images/black.png')
+
 
 
 def update():
@@ -62,6 +66,9 @@ def update():
 
 def draw():
     clear_canvas()
+    if black_img:
+        black_img.draw(get_canvas_width()//2, get_canvas_height()//2,
+                       get_canvas_width(), get_canvas_height())
     game_world.draw()
     update_canvas()
 
