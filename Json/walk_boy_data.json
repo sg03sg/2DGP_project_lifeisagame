@@ -1,0 +1,58 @@
+{
+    "sprites": [
+        {
+            "name": "walk_boy_0",
+            "x": 1.0,
+            "y": 2.0,
+            "width": 31.0,
+            "height": 40.0,
+            "pivotX": 15.5,
+            "pivotY": 20.0
+        },
+        {
+            "name": "walk_boy_1",
+            "x": 34.0,
+            "y": 2.0,
+            "width": 31.0,
+            "height": 40.0,
+            "pivotX": 15.5,
+            "pivotY": 20.0
+        },
+        {
+            "name": "walk_boy_2",
+            "x": 68.0,
+            "y": 2.0,
+            "width": 25.0,
+            "height": 41.0,
+            "pivotX": 12.5,
+            "pivotY": 20.5
+        },
+        {
+            "name": "walk_boy_3",
+            "x": 96.0,
+            "y": 2.0,
+            "width": 25.0,
+            "height": 41.0,
+            "pivotX": 12.5,
+            "pivotY": 20.5
+        },
+        {
+            "name": "walk_boy_4",
+            "x": 124.0,
+            "y": 2.0,
+            "width": 23.0,
+            "height": 42.0,
+            "pivotX": 11.5,
+            "pivotY": 21.0
+        },
+        {
+            "name": "walk_boy_5",
+            "x": 150.0,
+            "y": 2.0,
+            "width": 23.0,
+            "height": 42.0,
+            "pivotX": 11.5,
+            "pivotY": 21.0
+        }
+    ]
+}
