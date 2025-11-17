@@ -10,6 +10,9 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
+# 아래쪽을 얼마나 띄울지(바닥 여유) - 필요시 조절
+BOTTOM_OFFSET = 100
+
 class door:
     def __init__(self,x):
         self.image = load_image('Images/door.png')
@@ -27,7 +30,7 @@ class door:
 class Background:
     def __init__(self, filenames=None, loop=True):
         if filenames is None:
-            filenames = ['Images/Babyroom.png','Images/childroom.png']
+            filenames = ['Images/Babyroom_demo.png','Images/childroom.png']
         self.images = [load_image(f) for f in filenames]
         self.frame_count = 3
         # 각 이미지의 프레임 폭/높이
@@ -69,6 +72,7 @@ class Background:
 
         # 한 프레임을 화면 폭으로 스케일
         scale_x = SCREEN_WIDTH / float(fw)
+        scale_y = (SCREEN_HEIGHT  - BOTTOM_OFFSET) / float(fh)
 
         # 현재 프레임 그리기
         primary_src_x = primary_frame * fw + i
@@ -76,9 +80,10 @@ class Background:
 
         if primary_src_w > 0:
             primary_dest_w = int(primary_src_w * scale_x)
+            primary_dest_h = int(fh*scale_y)
             self.images[self.stage].clip_draw(primary_src_x, 0, primary_src_w, fh,
-                                              primary_dest_w // 2, SCREEN_HEIGHT // 2,
-                                              primary_dest_w, SCREEN_HEIGHT)
+                                              primary_dest_w // 2, primary_dest_h // 2 + BOTTOM_OFFSET ,
+                                              primary_dest_w, primary_dest_h)
         else:
             primary_dest_w = 0
 
@@ -99,5 +104,6 @@ class Background:
             next_dest_w = SCREEN_WIDTH - primary_dest_w
             if next_dest_w > 0 and next_src_w > 0:
                 self.images[next_stage].clip_draw(next_src_x, 0, next_src_w, fh,
-                                                  primary_dest_w + next_dest_w // 2, SCREEN_HEIGHT // 2,
-                                                  next_dest_w, SCREEN_HEIGHT)
+                                                  primary_dest_w + next_dest_w // 2, primary_dest_h // 2 + BOTTOM_OFFSET,
+                                                  next_dest_w, primary_dest_h)
+
