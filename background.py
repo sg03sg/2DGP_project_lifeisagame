@@ -46,7 +46,6 @@ class Background:
 
     def update(self):
         self.offset += self.scroll_speed * game_framework.frame_time
-
         # 반복 모드: offset이 여러 스테이지를 그림
         if self.loop:
             while self.offset >= self.total_w[self.stage]:
@@ -59,6 +58,7 @@ class Background:
                 self.stage += 1
             if self.stage == len(self.images) - 1:
                 self.offset = min(self.offset, self.total_w[self.stage] - 1)
+
 
     def draw(self):
         ofs = int(self.offset)
@@ -97,13 +97,19 @@ class Background:
                 next_stage = (self.stage + 1) % len(self.images)
                 next_frame_idx = 0
 
-            next_src_x = next_frame_idx * fw
+            next_fw = self.frame_w[next_stage]
+            next_fh = self.frame_h[next_stage]
+            next_src_x = next_frame_idx * next_fw
             next_src_w = i
+
+            scale_next_x = SCREEN_WIDTH / float(next_fw)
+            scale_next_y = (SCREEN_HEIGHT - BOTTOM_OFFSET) / float(next_fh)
 
             # 남은 화면 폭을 next로 채움
             next_dest_w = SCREEN_WIDTH - primary_dest_w
+            next_dest_h = int(next_fh * scale_next_y)
             if next_dest_w > 0 and next_src_w > 0:
-                self.images[next_stage].clip_draw(next_src_x, 0, next_src_w, fh,
-                                                  primary_dest_w + next_dest_w // 2, primary_dest_h // 2 + BOTTOM_OFFSET,
-                                                  next_dest_w, primary_dest_h)
+                self.images[next_stage].clip_draw(next_src_x, 0, next_src_w, next_fh,
+                                                  primary_dest_w + next_dest_w // 2, next_dest_h // 2 + BOTTOM_OFFSET,
+                                                  next_dest_w, next_dest_h)
 
