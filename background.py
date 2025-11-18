@@ -1,5 +1,7 @@
 from pico2d import *
 import game_framework
+import play_mode
+
 # 화면 크기
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -43,9 +45,15 @@ class Background:
         self.scroll_speed = RUN_SPEED_PPS
         self.stage = 0
         self.loop = loop
+        self.hero_pos = self.frame_w[self.stage] * 0.5
 
     def update(self):
         self.offset += self.scroll_speed * game_framework.frame_time
+        self.hero_pos += self.scroll_speed * game_framework.frame_time
+
+        if self.hero_pos >= self.total_w[self.stage]:
+            self.hero_pos = 0
+            play_mode.hero.age += 1
         # 반복 모드: offset이 여러 스테이지를 그림
         if self.loop:
             while self.offset >= self.total_w[self.stage]:
