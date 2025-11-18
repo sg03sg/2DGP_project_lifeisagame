@@ -54,6 +54,8 @@ class Background:
         if self.hero_pos >= self.total_w[self.stage]:
             self.hero_pos = 0
             play_mode.hero.age = (play_mode.hero.age+1) % 2
+            if not play_mode.hero.state_machine.cur_state == play_mode.hero.jump:
+                play_mode.hero.y = 150 + int((play_mode.hero.tall[play_mode.hero.age]-100)//2)
         # 반복 모드: offset이 여러 스테이지를 그림
         if self.loop:
             while self.offset >= self.total_w[self.stage]:

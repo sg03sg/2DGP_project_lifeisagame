@@ -30,8 +30,8 @@ def hero_jump(hero, dt):
     hero.jump_vy += hero.gravity * dt
     hero.y += hero.jump_vy * dt
     # 착지 검사
-    if hero.y <= 150:
-        hero.y = 150
+    if hero.y <= 150 + int((hero.tall[hero.age]-100)//2):
+        hero.y = 150 + int((hero.tall[hero.age]-100)//2)
         hero.jump_vy = 0.0
         hero.state_machine.handle_state_event(("jump_end", None))
 
@@ -58,7 +58,7 @@ class Run:
         i = int(self.hero.frame)
         self.hero.walk_images[self.hero.age].clip_draw(int(hero_rounding_box_data[self.hero.age]['sprites'][i]["x"]),int(hero_rounding_box_data[self.hero.age]['sprites'][i]['y']) ,
                                   int(hero_rounding_box_data[self.hero.age]['sprites'][i]['width']), int(hero_rounding_box_data[self.hero.age]['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
-                                       100)
+                                       self.hero.tall[self.hero.age])
 
 class Idle:
     def __init__(self, hero):
@@ -106,7 +106,7 @@ class Jump:
                 int(hero_jump_rounding_box_data[age]['sprites'][i]['y']),
                 int(hero_jump_rounding_box_data[age]['sprites'][i]['width']),
                 int(hero_jump_rounding_box_data[age]['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
-                100)
+                self.hero.tall[self.hero.age])
 
 class Hero:
     def __init__(self,filename=None):
@@ -117,12 +117,14 @@ class Hero:
         self.walk_images = [load_image(f) for f in walk_filename]
         self.jump_images = [load_image(f) for f in jump_filename]
 
+        self.tall = [100,140,170,180]  # 각 나이대별 키
+        self.age = 0
+
         self.walk_frame_counts = [6,6]
         self.jump_frame_counts = [3]
-        self.x, self.y = 640, 150
+        self.x,self.y = 640,150
         self.frame = -1
         self.y_frame =-1
-        self.age = 0
 
         #ui 관련 값
         self.hp = 100
@@ -150,7 +152,8 @@ class Hero:
         self.state_machine.update()
 
     def get_bb(self):
-        return self.x - 50, self.y - 50, self.x + 50, self.y + 50
+        box_half_width = int(self.tall[self.age]//2)
+        return self.x - 50, self.y - box_half_width, self.x + 50, self.y + box_half_width
 
     def draw(self):
         self.state_machine.draw()
