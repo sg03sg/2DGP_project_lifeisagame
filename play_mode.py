@@ -12,6 +12,8 @@ import game_framework
 background = None
 hero = None
 
+item_pos = [[150,350],[570]]
+
 def handle_events():
     global running
 
@@ -36,6 +38,14 @@ def init():
 
     global black_img
 
+    global item_last_age,item_list
+    item_list = []
+    item_last_age = 0
+
+    global itemspawn_timer, item_last_spawn
+    itemspawn_timer = 1.5
+    item_last_spawn = game_framework.game_time
+
     background = Background()
     game_world.add_object(background,0)
 
@@ -54,13 +64,30 @@ def init():
 
 def update():
     global item
-    item_timer = game_framework.game_time
-    if int(item_timer) % 2 == 0:
-        if not any(isinstance(obj, Item) for obj in game_world.world[1]):
-            item_y = 150 + 200 * (random.randint(0, 1))
-            item = Item(item_y)
-            game_world.add_object(item, 1)
-            game_world.add_collision_pair('hero:item', None, item)
+    global hero
+
+    global itemspawn_timer, item_last_spawn
+    global item_pos
+
+    global item_last_age,item_list
+
+    if hero.age > item_last_age:
+        removes = [remove for remove in item_list if remove.age < hero.age]
+        for remove in removes:
+            game_world.remove_object(remove)
+            item_list.remove(remove)
+        item_last_age = hero.age
+
+    now = game_framework.game_time
+    if now - item_last_spawn >= itemspawn_timer:
+        # if not any(isinstance(obj, Item) for obj in game_world.world[1]):
+        item_y = random.choice(item_pos[hero.age])
+        item = Item(None,item_y, hero.age)
+        game_world.add_object(item, 1)
+        game_world.add_collision_pair('hero:item', None, item)
+        item_list.append(item)
+        item_last_spawn = now
+
     game_world.update()
     game_world.handle_collisions()
 
