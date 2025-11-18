@@ -2,24 +2,15 @@
     "sprites": [
         {
             "name": "door_0",
-            "x": 0.0,
+            "x": 114.0,
             "y": 0.0,
-            "width": 39.0,
+            "width": 11.0,
             "height": 130.0,
-            "pivotX": 19.5,
+            "pivotX": 5.5,
             "pivotY": 65.0
         },
         {
             "name": "door_1",
-            "x": 40.0,
-            "y": 0.0,
-            "width": 45.0,
-            "height": 130.0,
-            "pivotX": 22.5,
-            "pivotY": 65.0
-        },
-        {
-            "name": "door_2",
             "x": 86.0,
             "y": 0.0,
             "width": 27.0,
@@ -28,12 +19,21 @@
             "pivotY": 65.0
         },
         {
-            "name": "door_3",
-            "x": 114.0,
+            "name": "door_2",
+            "x": 0.0,
             "y": 0.0,
-            "width": 11.0,
+            "width": 39.0,
             "height": 130.0,
-            "pivotX": 5.5,
+            "pivotX": 19.5,
+            "pivotY": 65.0
+        },
+        {
+            "name": "door_3",
+            "x": 40.0,
+            "y": 0.0,
+            "width": 45.0,
+            "height": 130.0,
+            "pivotX": 22.5,
             "pivotY": 65.0
         }
     ]

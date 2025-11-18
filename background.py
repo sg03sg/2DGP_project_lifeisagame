@@ -1,6 +1,7 @@
 from pico2d import *
 import game_framework
 import play_mode
+import game_world
 
 # 화면 크기
 SCREEN_WIDTH = 1280
@@ -15,18 +16,38 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 # 아래쪽을 얼마나 띄울지(바닥 여유) - 필요시 조절
 BOTTOM_OFFSET = 100
 
-class door:
-    def __init__(self,x):
+#문 속도
+TIME_PER_ACTION = 1.0 #사람이 뛸때 두걸음 내딛는 평균 시간은 약 0.7초
+ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION = 4
+
+def screen_speed(frame_width):
+    scale_x = SCREEN_WIDTH / float(frame_width)
+    return RUN_SPEED_PPS * scale_x
+
+#문 관련
+with open('Json/door_data.json', 'r', encoding='utf-8') as f:
+    door_rounding_box_data = json.load(f)
+
+class Door:
+    def __init__(self):
         self.image = load_image('Images/door.png')
-        self.frame = 0
-        self.x = x
-        self.y = 130
+        self.frame = -1
+        self.x = 1320
+        self.y = SCREEN_HEIGHT//2
+        self.frame_move = False
 
     def update(self):
-        pass
+        if self.frame_move:
+            self.frame = (self.frame+ FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+            if self.frame > 3:
+                self.frame = 3
 
     def draw(self):
-        self.image.clip_draw(self.x,self.y)
+        i = int(self.frame)
+        self.image.clip_draw(int(door_rounding_box_data['sprites'][i]["x"]),int(door_rounding_box_data['sprites'][i]['y']) ,
+                                  int(door_rounding_box_data['sprites'][i]['width']), int(door_rounding_box_data['sprites'][i]['height']), self.x, self.y, 80,
+                                       SCREEN_HEIGHT)
 
 
 class Background:
@@ -46,12 +67,28 @@ class Background:
         self.stage = 0
         self.loop = loop
         self.hero_pos = self.frame_w[self.stage] * 0.5
+        self.total_run = 0
+
+        self.door_pos = self.total_w[0] - self.frame_w[0]
+        self.door = Door()
+        self.door_exist = False
 
     def update(self):
         self.offset += self.scroll_speed * game_framework.frame_time
         self.hero_pos += self.scroll_speed * game_framework.frame_time
+        self.total_run += self.scroll_speed * game_framework.frame_time
+
+        if self.door_pos <= self.total_run and self.total_run <= self.total_w[0]+40:
+            self.door.x -= screen_speed(self.frame_w[self.stage]) * game_framework.frame_time
+            if not self.door_exist:
+                game_world.add_object(self.door,2)
+                self.door_exist = True
+            if self.door.x < 0:
+                game_world.remove_object(self.door)
+                self.door_exist = False
 
         if self.hero_pos >= self.total_w[self.stage]:
+            self.door.frame_move = True
             self.hero_pos = 0
             play_mode.hero.age = (play_mode.hero.age+1) % 2
             if not play_mode.hero.state_machine.cur_state == play_mode.hero.jump:
