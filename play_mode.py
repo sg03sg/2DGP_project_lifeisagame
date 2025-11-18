@@ -9,6 +9,8 @@ from ui import Ui
 import game_world
 import game_framework
 
+background = None
+hero = None
 
 def handle_events():
     global running

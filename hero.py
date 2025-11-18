@@ -6,9 +6,12 @@ import game_world
 import game_framework
 
 import json
-
+hero_rounding_box_data = []
 with open('Json/baby_sprite_sheet_data.json', 'r', encoding='utf-8') as f:
-    baby_rounding_box_data = json.load(f)
+    hero_rounding_box_data.append(json.load(f))
+
+with open('Json/walk_boy_data.json', 'r', encoding='utf-8') as f:
+    hero_rounding_box_data.append(json.load(f))
 
 def space_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
@@ -44,13 +47,13 @@ class Run:
         pass
 
     def do(self):
-        self.hero.frame = (self.hero.frame+FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time)%5
+        self.hero.frame = (self.hero.frame+FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time)%self.hero.frame_counts[self.hero.age]
         if self.hero.frame %10 ==0:
             self.hero.y_frame = (self.hero.y_frame +1)%3
     def draw(self):
         i = int(self.hero.frame)
-        self.hero.image.clip_draw(int(baby_rounding_box_data['sprites'][i]["x"])+7,int(baby_rounding_box_data['sprites'][i]['y']) ,
-                                  int(baby_rounding_box_data['sprites'][i]['width'])-7, int(baby_rounding_box_data['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
+        self.hero.images[self.hero.age].clip_draw(int(hero_rounding_box_data[self.hero.age]['sprites'][i]["x"]),int(hero_rounding_box_data[self.hero.age]['sprites'][i]['y']) ,
+                                  int(hero_rounding_box_data[self.hero.age]['sprites'][i]['width']), int(hero_rounding_box_data[self.hero.age]['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
                                        100)
 
 class Idle:
@@ -83,18 +86,22 @@ class Jump:
 
     def draw(self):
         i = int(self.hero.frame)
-        self.hero.image.clip_draw(int(baby_rounding_box_data['sprites'][i]["x"]),
-                                  int(baby_rounding_box_data['sprites'][i]['y']),
-                                  int(baby_rounding_box_data['sprites'][i]['width']),
-                                  int(baby_rounding_box_data['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
+        self.hero.images[self.hero.age].clip_draw(int(hero_rounding_box_data[self.hero.age]['sprites'][i]["x"]),
+                                  int(hero_rounding_box_data[self.hero.age]['sprites'][i]['y']),
+                                  int(hero_rounding_box_data[self.hero.age]['sprites'][i]['width']),
+                                  int(hero_rounding_box_data[self.hero.age]['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
                                   100)
 
 class Hero:
-    def __init__(self):
+    def __init__(self,filename=None):
+        if filename is None:
+            filename = ['Images/baby_sprite_sheet.png','Images/walk_boy.png']
+        self.images = [load_image(f) for f in filename]
+        self.frame_counts = [6,6]
         self.x, self.y = 640, 150
         self.frame = -1
         self.y_frame =-1
-        self.image = load_image('Images/baby_sprite_sheet.png')
+        self.age = 0
 
         #ui 관련 값
         self.hp = 100
