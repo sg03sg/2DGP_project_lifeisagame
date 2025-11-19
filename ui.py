@@ -7,8 +7,62 @@ import play_mode
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
+class Skillui:
+    def __init__(self,name = None):
+        if name == 'hobby':
+            filename = ["Images/skill_hobby1.png","Images/skill_hobby2.png","Images/skill_hobby3.png",
+                        "Images/skill_hobby4.png"]
+            self.run = False
+            self.images = [load_image(f) for f in filename]
+            self. percent = 0
+            self.x = 100
+        elif name == 'friend':
+            self.image = load_image("Images/skill_friend.png")
+            self.run = False
+            self.percent = 0
+            self.x= 220
+        elif name == 'family':
+            self.image = load_image("Images/skill_friend.png")
+            self.run = False
+            self.percent = 0
+            self.x= 340
+        self.image_H = self.image.h
+        self.image_W = self.image.w
+        self.y = 60
+        self.size = 120
+
+        def update(self):
+            pass
+
+        def draw(self):
+            pass
+
+class Itemui:
+    def __init__(self,name = None):
+        if name == 'baby':
+            self.image = load_image("Images/love_baby.png")
+            self. percent = play_mode.hero.hp
+            self.age = 1
+        elif name == 'smart':
+            self.image = load_image("Images/ui_smart.png")
+            self.percent = play_mode.hero.smart
+            self.age = 1
+        elif name == 'painting':
+            self.image = load_image("Images/ui_painting.png")
+            self.percent = play_mode.hero.happy
+            self.age = 1
+        self.name = name
+        self.image_H = self.image.h
+        self.image_W = self.image.w
+
+    def update(self):
+        pass
+
+    def draw(self):
+        pass
+
 class Ui:
-    def __init__(self,name,x):
+    def __init__(self,name,x,age=0):
         if name == 'hp':
             self.image = load_image("Images/hp_bar.png")
             self. percent = play_mode.hero.hp / 100
