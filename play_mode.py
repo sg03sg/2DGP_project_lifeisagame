@@ -4,15 +4,17 @@ import random
 from background import Background
 from hero import Hero
 from item import Item
-from ui import Ui
+from ui import Ui,Skillui
 
 import game_world
 import game_framework
+from savelist import Itemlist,Skilllist
 
 background = None
 hero = None
 
-item_pos = [[150,350],[570]]
+itemlist = Itemlist()
+skilllist = Skilllist()
 
 def handle_events():
     global running
@@ -30,6 +32,7 @@ def handle_events():
 def init():
     global hero
     global background
+    global Skill
 
     global hp
     global happy
@@ -38,8 +41,8 @@ def init():
 
     global black_img
 
-    global item_last_age,item_list
-    item_list = []
+    global item_last_age,exist_item
+    exist_item = []
     item_last_age = 0
 
     global itemspawn_timer, item_last_spawn
@@ -51,6 +54,9 @@ def init():
 
     hero = Hero()
     game_world.add_object(hero,1)
+
+    skills = [Skillui(i) for i in skilllist.skillname]
+    game_world.add_objects(skills,1)
 
     hp= Ui("hp",50)
     game_world.add_object(hp,1)
@@ -69,23 +75,23 @@ def update():
     global itemspawn_timer, item_last_spawn
     global item_pos
 
-    global item_last_age,item_list
+    global item_last_age,exist_item
 
     if hero.age > item_last_age:
-        removes = [remove for remove in item_list if remove.age < hero.age]
+        removes = [remove for remove in exist_item if remove.age < hero.age]
         for remove in removes:
             game_world.remove_object(remove)
-            item_list.remove(remove)
+            exist_item.remove(remove)
         item_last_age = hero.age
 
     now = game_framework.game_time
     if now - item_last_spawn >= itemspawn_timer:
         # if not any(isinstance(obj, Item) for obj in game_world.world[1]):
-        item_y = random.choice(item_pos[hero.age])
+        item_y = random.choice(itemlist.item_pos[hero.age])
         item = Item(None,item_y, hero.age)
         game_world.add_object(item, 1)
         game_world.add_collision_pair('hero:item', None, item)
-        item_list.append(item)
+        exist_item.append(item)
         item_last_spawn = now
 
     game_world.update()

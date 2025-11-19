@@ -31,12 +31,12 @@ class Item:
     def handle_collision(self,group, other):
         if group == 'hero:item':
             game_world.remove_object(self)
-            play_mode.item_list.remove(self)
+            play_mode.exist_item.remove(self)
 
     def update(self):
         # 위치 업데이트
         self.x += self.xv * game_framework.frame_time
         if self.x <= 0:
             game_world.remove_object(self)
-            play_mode.item_list.remove(self)
+            play_mode.exist_item.remove(self)
 

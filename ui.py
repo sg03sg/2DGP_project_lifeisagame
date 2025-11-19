@@ -6,53 +6,43 @@ import play_mode
 # 화면 크기
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
-with open('Json/baby_sprite_sheet_data.json', 'r', encoding='utf-8') as f:
+with open('Json/button_data.json', 'r', encoding='utf-8') as f:
     button_rounding_box_data = json.load(f)
 
 class Skillui:
     def __init__(self,name = None):
         if name == 'hobby':
-            filename = ["Images/skill_hobby1.png","Images/skill_hobby2.png","Images/skill_hobby3.png",
-                        "Images/skill_hobby4.png"]
             self.run = False
-            self.images = [load_image(f) for f in filename]
             self. percent = 0
             self.x = 100
             self.kind = 0
             self.json_num = 2
         elif name == 'friend':
-            self.image = load_image("Images/skill_friend.png")
             self.run = False
             self.percent = 0
             self.x= 220
             self.json_num = 3
         elif name == 'family':
-            self.image = load_image("Images/skill_friend.png")
             self.run = False
             self.percent = 0
             self.x= 340
             self.json_num = 4
+        self.image = load_image("Images/button.png")
         self.name = name
         self.image_H = self.image.h
         self.image_W = self.image.w
         self.y = 60
-        self.size = 120
+        self.size = 100
 
-        def update(self):
-            # if self.run:
-            pass
+    def update(self):
+        pass
 
-        def draw(self):
-            if self.name == 'hobby':
-                self.images[0].clip_draw(button_rounding_box_data['sprites'][self.json_num]["x"],button_rounding_box_data['sprites'][self.json_num]["y"],
-                                         button_rounding_box_data['sprites'][self.json_num]["width"],button_rounding_box_data['sprites'][self.json_num]["height"],
-                                         self.x,self.y,self.size,self.size)
-            else:
-                self.image.clip_draw(button_rounding_box_data['sprites'][self.json_num]["x"],button_rounding_box_data['sprites'][self.json_num]["y"],
-                                     button_rounding_box_data['sprites'][self.json_num]["width"],button_rounding_box_data['sprites'][self.json_num]["height"],
-                                     self.x,self.y,self.size,self.size)
+    def draw(self):
+        self.image.clip_draw(int(button_rounding_box_data['sprites'][self.json_num]["x"]),int(button_rounding_box_data['sprites'][self.json_num]["y"]),
+                                 int(button_rounding_box_data['sprites'][self.json_num]["width"]),int(button_rounding_box_data['sprites'][self.json_num]["height"]),
+                                 self.x,self.y,self.size,self.size)
 
-class Itemui:
+class Age1ui:
     def __init__(self,name = None):
         if name == 'baby':
             self.image = load_image("Images/love_baby.png")
