@@ -129,6 +129,9 @@ class Hero:
         #ui 관련 값
         self.hp = 100
         self.happy = 50
+        self.smarter = 0
+        self.kinder = 0
+        self.artistic = 0
 
         # 점프 관련 기본값 : v0^2 / (2 * |g|) <-이거 계산하면 최고 높이
         self.jump_initial_v = [1000.0,1300.0]    # 초기 상승 속도(px/s)

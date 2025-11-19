@@ -8,13 +8,13 @@ from ui import Ui,Skillui
 
 import game_world
 import game_framework
-from savelist import Itemlist,Skilllist
+from savelist import Itemlist,Uilist
 
 background = None
 hero = None
 
 itemlist = Itemlist()
-skilllist = Skilllist()
+uilist = Uilist()
 
 def handle_events():
     global running
@@ -55,7 +55,7 @@ def init():
     hero = Hero()
     game_world.add_object(hero,1)
 
-    skills = [Skillui(i) for i in skilllist.skillname]
+    skills = [Skillui(i) for i in uilist.skillname]
     game_world.add_objects(skills,1)
 
     hp= Ui("hp",50)
