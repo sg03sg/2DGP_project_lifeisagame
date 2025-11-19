@@ -1,0 +1,202 @@
+{
+    "sprites": [
+        {
+            "name": "button_0",
+            "x": 290.0,
+            "y": 0.0,
+            "width": 90.0,
+            "height": 40.0,
+            "pivotX": 45.0,
+            "pivotY": 20.0
+        },
+        {
+            "name": "button_1",
+            "x": 65.0,
+            "y": 0.0,
+            "width": 90.0,
+            "height": 40.0,
+            "pivotX": 45.0,
+            "pivotY": 20.0
+        },
+        {
+            "name": "button_20",
+            "x": 1269.0,
+            "y": 0.0,
+            "width": 50.0,
+            "height": 50.0,
+            "pivotX": 25.0,
+            "pivotY": 25.0
+        },
+        {
+            "name": "button_21",
+            "x": 1049.0,
+            "y": 0.0,
+            "width": 50.0,
+            "height": 50.0,
+            "pivotX": 25.0,
+            "pivotY": 25.0
+        },
+        {
+            "name": "button_22",
+            "x": 1379.0,
+            "y": 0.0,
+            "width": 50.0,
+            "height": 50.0,
+            "pivotX": 25.0,
+            "pivotY": 25.0
+        },
+        {
+            "name": "button_30",
+            "x": 794.0,
+            "y": 1.0,
+            "width": 50.0,
+            "height": 50.0,
+            "pivotX": 25.0,
+            "pivotY": 25.0
+        },
+        {
+            "name": "button_31",
+            "x": 939.0,
+            "y": 0.0,
+            "width": 50.0,
+            "height": 50.0,
+            "pivotX": 25.0,
+            "pivotY": 25.0
+        },
+        {
+            "name": "button_32",
+            "x": 1104.0,
+            "y": 0.0,
+            "width": 50.0,
+            "height": 50.0,
+            "pivotX": 25.0,
+            "pivotY": 25.0
+        },
+        {
+            "name": "button_33",
+            "x": 1159.0,
+            "y": 0.0,
+            "width": 50.0,
+            "height": 50.0,
+            "pivotX": 25.0,
+            "pivotY": 25.0
+        },
+        {
+            "name": "button_34",
+            "x": 994.0,
+            "y": 0.0,
+            "width": 50.0,
+            "height": 50.0,
+            "pivotX": 25.0,
+            "pivotY": 25.0
+        },
+        {
+            "name": "button_40",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 60.0,
+            "height": 60.0,
+            "pivotX": 30.0,
+            "pivotY": 30.0
+        },
+        {
+            "name": "button_41",
+            "x": 160.0,
+            "y": 0.0,
+            "width": 60.0,
+            "height": 60.0,
+            "pivotX": 30.0,
+            "pivotY": 30.0
+        },
+        {
+            "name": "button_42",
+            "x": 482.0,
+            "y": 0.0,
+            "width": 60.0,
+            "height": 60.0,
+            "pivotX": 30.0,
+            "pivotY": 30.0
+        },
+        {
+            "name": "button_43",
+            "x": 417.0,
+            "y": 0.0,
+            "width": 60.0,
+            "height": 60.0,
+            "pivotX": 30.0,
+            "pivotY": 30.0
+        },
+        {
+            "name": "button_44",
+            "x": 225.0,
+            "y": 0.0,
+            "width": 60.0,
+            "height": 60.0,
+            "pivotX": 30.0,
+            "pivotY": 30.0
+        },
+        {
+            "name": "button_50",
+            "x": 387.0,
+            "y": 2.0,
+            "width": 25.0,
+            "height": 35.0,
+            "pivotX": 12.5,
+            "pivotY": 17.5
+        },
+        {
+            "name": "button_51",
+            "x": 737.0,
+            "y": 0.0,
+            "width": 52.0,
+            "height": 58.0,
+            "pivotX": 26.0,
+            "pivotY": 29.0
+        },
+        {
+            "name": "button_52",
+            "x": 610.0,
+            "y": 0.0,
+            "width": 59.0,
+            "height": 58.0,
+            "pivotX": 29.5,
+            "pivotY": 29.0
+        },
+        {
+            "name": "button_53",
+            "x": 851.0,
+            "y": 2.0,
+            "width": 25.0,
+            "height": 35.0,
+            "pivotX": 12.5,
+            "pivotY": 17.5
+        },
+        {
+            "name": "button_54",
+            "x": 884.0,
+            "y": 0.0,
+            "width": 50.0,
+            "height": 58.0,
+            "pivotX": 25.0,
+            "pivotY": 29.0
+        },
+        {
+            "name": "button_55",
+            "x": 673.0,
+            "y": 1.0,
+            "width": 58.0,
+            "height": 58.0,
+            "pivotX": 29.0,
+            "pivotY": 29.0
+        },
+        {
+            "name": "button_56",
+            "x": 547.0,
+            "y": 0.0,
+            "width": 58.0,
+            "height": 58.0,
+            "pivotX": 29.0,
+            "pivotY": 29.0
+        }
+    ]
+}

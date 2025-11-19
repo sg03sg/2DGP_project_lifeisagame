@@ -6,6 +6,8 @@ import play_mode
 # 화면 크기
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
+with open('Json/baby_sprite_sheet_data.json', 'r', encoding='utf-8') as f:
+    button_rounding_box_data = json.load(f)
 
 class Skillui:
     def __init__(self,name = None):
@@ -16,26 +18,39 @@ class Skillui:
             self.images = [load_image(f) for f in filename]
             self. percent = 0
             self.x = 100
+            self.kind = 0
+            self.json_num = 2
         elif name == 'friend':
             self.image = load_image("Images/skill_friend.png")
             self.run = False
             self.percent = 0
             self.x= 220
+            self.json_num = 3
         elif name == 'family':
             self.image = load_image("Images/skill_friend.png")
             self.run = False
             self.percent = 0
             self.x= 340
+            self.json_num = 4
+        self.name = name
         self.image_H = self.image.h
         self.image_W = self.image.w
         self.y = 60
         self.size = 120
 
         def update(self):
+            # if self.run:
             pass
 
         def draw(self):
-            pass
+            if self.name == 'hobby':
+                self.images[0].clip_draw(button_rounding_box_data['sprites'][self.json_num]["x"],button_rounding_box_data['sprites'][self.json_num]["y"],
+                                         button_rounding_box_data['sprites'][self.json_num]["width"],button_rounding_box_data['sprites'][self.json_num]["height"],
+                                         self.x,self.y,self.size,self.size)
+            else:
+                self.image.clip_draw(button_rounding_box_data['sprites'][self.json_num]["x"],button_rounding_box_data['sprites'][self.json_num]["y"],
+                                     button_rounding_box_data['sprites'][self.json_num]["width"],button_rounding_box_data['sprites'][self.json_num]["height"],
+                                     self.x,self.y,self.size,self.size)
 
 class Itemui:
     def __init__(self,name = None):
