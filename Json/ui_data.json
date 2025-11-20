@@ -1,0 +1,103 @@
+{
+    "sprites": [
+        {
+            "name": "ui_11",
+            "x": 134.0,
+            "y": 0.0,
+            "width": 24.0,
+            "height": 24.0,
+            "pivotX": 12.0,
+            "pivotY": 12.0
+        },
+        {
+            "name": "ui_12",
+            "x": 82.0,
+            "y": 0.0,
+            "width": 42.0,
+            "height": 30.0,
+            "pivotX": 21.0,
+            "pivotY": 15.0
+        },
+        {
+            "name": "ui_13",
+            "x": 256.0,
+            "y": 0.0,
+            "width": 17.0,
+            "height": 23.0,
+            "pivotX": 8.5,
+            "pivotY": 11.5
+        },
+        {
+            "name": "ui_14",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 14.0,
+            "height": 18.0,
+            "pivotX": 7.0,
+            "pivotY": 9.0
+        },
+        {
+            "name": "ui_15",
+            "x": 168.0,
+            "y": 0.0,
+            "width": 21.0,
+            "height": 22.0,
+            "pivotX": 10.5,
+            "pivotY": 11.0
+        },
+        {
+            "name": "ui_16",
+            "x": 53.0,
+            "y": 0.0,
+            "width": 19.0,
+            "height": 18.0,
+            "pivotX": 9.5,
+            "pivotY": 9.0
+        },
+        {
+            "name": "ui_17",
+            "x": 24.0,
+            "y": 0.0,
+            "width": 19.0,
+            "height": 19.0,
+            "pivotX": 9.5,
+            "pivotY": 9.5
+        },
+        {
+            "name": "ui_18",
+            "x": 229.0,
+            "y": 0.0,
+            "width": 17.0,
+            "height": 19.0,
+            "pivotX": 8.5,
+            "pivotY": 9.5
+        },
+        {
+            "name": "ui_19",
+            "x": 199.0,
+            "y": 0.0,
+            "width": 20.0,
+            "height": 20.0,
+            "pivotX": 10.0,
+            "pivotY": 10.0
+        },
+        {
+            "name": "ui_20",
+            "x": 283.0,
+            "y": 0.0,
+            "width": 14.0,
+            "height": 23.0,
+            "pivotX": 7.0,
+            "pivotY": 11.5
+        },
+        {
+            "name": "ui_21",
+            "x": 283.0,
+            "y": 0.0,
+            "width": 22.0,
+            "height": 23.0,
+            "pivotX": 11.0,
+            "pivotY": 11.5
+        }
+    ]
+}
