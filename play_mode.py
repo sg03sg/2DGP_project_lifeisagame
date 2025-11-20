@@ -4,7 +4,7 @@ import random
 from background import Background
 from hero import Hero
 from item import Item
-from ui import Ui,Skillui
+from ui import Ui,Skillui,Age1ui
 
 import game_world
 import game_framework
@@ -69,6 +69,7 @@ def init():
 
 
 def update():
+    global age1uis
     global item
     global hero
 
@@ -77,12 +78,23 @@ def update():
 
     global item_last_age,exist_item
 
-    if hero.age > item_last_age:
-        removes = [remove for remove in exist_item if remove.age < hero.age]
+    if hero.age != item_last_age:
+        removes = [remove for remove in exist_item if remove.age != hero.age]
         for remove in removes:
             game_world.remove_object(remove)
             exist_item.remove(remove)
         item_last_age = hero.age
+
+    if hero.age == 1:
+        if 'age1uis' not in globals():
+            age1uis = [Age1ui(i) for i in uilist.age1uiname]
+            game_world.add_objects(age1uis,1)
+    else:
+        if 'age1uis' in globals():
+            for ui in age1uis:
+                try:
+                    game_world.remove_object(ui)
+                except ValueError: pass
 
     now = game_framework.game_time
     if now - item_last_spawn >= itemspawn_timer:

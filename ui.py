@@ -52,28 +52,32 @@ class Age1ui:
         self.image = load_image("Images/ui.png")
         self.number_img = load_image("Images/number.png")
         self.name = name
-        self.size = 10
+        self.size = 20
         if name == 'smart':
             self.count = play_mode.hero.smarter
             self.json_num = 2
-            self.x,self.y = 410,70
+            self.x,self.y = 510,55
             self.num = 0
         elif name == 'baby':
             self.count = play_mode.hero.kinder
             self.json_num = 3
-            self.x,self.y = 510,70
+            self.x,self.y = 610,55
             self.num = 1
         elif name == 'painting':
             self.count = play_mode.hero.artistic
             self.json_num = 4
-            self.x,self.y = 410,73 + self.size
+            self.x,self.y = 510,52 - self.size
             self.num = 2
-        self.space_num = 5
-        self.spacing =2
-        self.num_size = self.size - self.spacing
+        self.num_size = self.size * 0.8
+        self.spacing = self.num_size //2 + 5
 
     def update(self):
-        pass
+        if self.num == 0:
+            self.count = play_mode.hero.smarter
+        elif self.num ==1:
+            self.count = play_mode.hero.kinder
+        elif self.num ==2:
+            self.count = play_mode.hero.artistic
 
     def draw(self):
         #아이콘
@@ -83,8 +87,8 @@ class Age1ui:
                              int(ui_data['sprites'][self.json_num]["height"]),
                              self.x, self.y, self.size, self.size)
         #숫자
-        x = self.x + self.space_num
-        y = self.y - self.spacing
+        x = self.x + self.size//2 + self.spacing+ 10
+        y = self.y
         #2자리 수일때
         if self.count >=10:
             tens = self.count //10
@@ -93,27 +97,27 @@ class Age1ui:
                                  int(number_data['sprites'][tens]["y"]),
                                  int(number_data['sprites'][tens]["width"]),
                                  int(number_data['sprites'][tens]["height"]),
-                                 x, y, self.num_size, self.num_size)
+                                 x-self.spacing, y, self.num_size, self.num_size)
             self.number_img.clip_draw(int(number_data['sprites'][units]["x"]),
                                  int(number_data['sprites'][units]["y"]),
                                  int(number_data['sprites'][units]["width"]),
                                  int(number_data['sprites'][units]["height"]),
-                                 x+int(self.spacing//2), y, self.num_size, self.num_size)
+                                 x, y, self.num_size, self.num_size)
         #1자리 수일때
         else:
             i= self.count
-            self.image.clip_draw(int(number_data['sprites'][i]["x"]),
+            self.number_img.clip_draw(int(number_data['sprites'][i]["x"]),
                                  int(number_data['sprites'][i]["y"]),
                                  int(number_data['sprites'][i]["width"]),
                                  int(number_data['sprites'][i]["height"]),
                                  x, y, self.num_size, self.num_size)
         x += self.spacing
         #슬래시
-        self.image.clip_draw(int(slash["x"]),int(slash["y"]),int(slash["width"]),int(slash["height"]),x, y, self.num_size,self.num_size)
+        self.number_img.clip_draw(int(slash["x"]),int(slash["y"]),int(slash["width"]),int(slash["height"]),x, y, self.num_size,self.num_size)
         x += self.spacing
         #최대 숫자
         i = play_mode.uilist.age1ui_max_count[self.num]
-        self.image.clip_draw(int(number_data['sprites'][i]["x"]),
+        self.number_img.clip_draw(int(number_data['sprites'][i]["x"]),
                              int(number_data['sprites'][i]["y"]),
                              int(number_data['sprites'][i]["width"]),
                              int(number_data['sprites'][i]["height"]),

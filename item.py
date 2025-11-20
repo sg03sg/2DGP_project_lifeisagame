@@ -32,6 +32,10 @@ class Item:
         if group == 'hero:item':
             game_world.remove_object(self)
             play_mode.exist_item.remove(self)
+            if self.name == 'smart':
+                play_mode.hero.smarter += 1
+                if play_mode.hero.smarter >100:
+                    play_mode.hero.smarter = 100
 
     def update(self):
         # 위치 업데이트
