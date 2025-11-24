@@ -55,7 +55,7 @@ class Door:
 class Background:
     def __init__(self, filenames=None, loop=True):
         if filenames is None:
-            filenames = ['Images/Babyroom_demo.png','Images/childroom.png']
+            filenames = ['Images/Babyroom_demo.png','Images/childroom.png','Images/hobby_map.png', 'Images/school_map.png']
         self.images = [load_image(f) for f in filenames]
         self.frame_count = 3
         # 각 이미지의 프레임 폭/높이
@@ -63,6 +63,7 @@ class Background:
         self.frame_h = [f.h for f in self.images]
         # 각 이미지의 총 폭(프레임수 * 한 프레임 폭)
         self.total_w = [fw * self.frame_count for fw in self.frame_w]
+        self.logic_stage_age = [0, 1, 2, 2]
 
         self.offset = 0.0
         self.scroll_speed = RUN_SPEED_PPS
@@ -92,7 +93,9 @@ class Background:
         if self.hero_pos >= self.total_w[self.stage]:
             self.door.frame_move = True
             self.hero_pos = 0
-            play_mode.hero.age = (play_mode.hero.age+1) % 2
+            next_stage = (self.stage + 1) % len(self.images)
+            if self.logic_stage_age[self.stage] != self.logic_stage_age[next_stage]:
+                play_mode.hero.age = (play_mode.hero.age+1) % 2
             if not play_mode.hero.state_machine.cur_state == play_mode.hero.jump:
                 play_mode.hero.y = 150 + int((play_mode.hero.tall[play_mode.hero.age]-100)//2)
         # 반복 모드: offset이 여러 스테이지를 그림
