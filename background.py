@@ -57,17 +57,17 @@ class Background:
         if filenames is None:
             filenames = ['Images/Babyroom_demo.png','Images/childroom.png','Images/hobby_map.png', 'Images/school_map.png']
         self.images = [load_image(f) for f in filenames]
-        self.frame_count = 3
-        # 각 이미지의 프레임 폭/높이
-        self.frame_w = [f.w // self.frame_count for f in self.images]
-        self.frame_h = [f.h for f in self.images]
-        # 각 이미지의 총 폭(프레임수 * 한 프레임 폭)
-        self.total_w = [fw * self.frame_count for fw in self.frame_w]
+        # 각 이미지 별 프레임 수(픽셀 170으로 분할한 값)와 그에 따른 폭/높이/총폭을 각각 계산
+        self.frame_count = [img.w // 170 if img.w >= 170 else 1 for img in self.images]
+        self.frame_w = [img.w // cnt if cnt > 0 else img.w for img, cnt in zip(self.images, self.frame_count)]
+        self.frame_h = [img.h for img in self.images]
+        self.total_w = [fw * cnt for fw, cnt in zip(self.frame_w, self.frame_count)]
+
+        self.stage = 0
         self.logic_stage_age = [0, 1, 2, 2]
 
         self.offset = 0.0
         self.scroll_speed = RUN_SPEED_PPS
-        self.stage = 0
         self.loop = loop
         self.hero_pos = self.frame_w[self.stage] * 0.5
         self.total_run = 0
@@ -76,10 +76,17 @@ class Background:
         self.door = Door()
         self.door_exist = False
 
+        self.base_scale = SCREEN_WIDTH / float(self.frame_w[0])
+        self.display_speed = RUN_SPEED_PPS * self.base_scale  # 화면상에서 고정된 픽셀/초 속도
+
     def update(self):
-        self.offset += self.scroll_speed * game_framework.frame_time
-        self.hero_pos += self.scroll_speed * game_framework.frame_time
-        self.total_run += self.scroll_speed * game_framework.frame_time
+        scale = SCREEN_WIDTH / float(self.frame_w[self.stage])
+        # 화면 기준 고정 속도(display_speed)를 원본 픽셀(offset) 단위로 변환
+        src_speed = self.display_speed / scale
+
+        self.offset += src_speed * game_framework.frame_time
+        self.hero_pos += src_speed * game_framework.frame_time
+        self.total_run += src_speed * game_framework.frame_time
 
         if self.door_pos <= self.total_run and self.total_run <= self.total_w[0]+55:
             self.door.x -= screen_speed(self.frame_w[self.stage]) * game_framework.frame_time
@@ -120,7 +127,7 @@ class Background:
         # 현재 프레임에서 잘린 픽셀 수 = i
         primary = ofs // fw
         i = ofs % fw
-        primary_frame = int(primary % self.frame_count)
+        primary_frame = int(primary % self.frame_count[self.stage])
 
         # 한 프레임을 화면 폭으로 스케일
         scale_x = SCREEN_WIDTH / float(fw)
@@ -142,7 +149,7 @@ class Background:
         # 다음 부분이 필요하면 그리기
         if i > 0:
             # 다음 프레임이 같은 스테이지에 있는지, 다음 이미지의 첫 프레임인지 검사
-            if primary_frame < self.frame_count - 1:
+            if primary_frame < self.frame_count[self.stage] - 1:
                 next_stage = self.stage
                 next_frame_idx = primary_frame + 1
             else:
