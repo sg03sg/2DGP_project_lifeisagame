@@ -15,7 +15,7 @@ PIXEL_PER_METER = (10.0 / 1.7)  # 방 사진 크기/3 = 170 pixel = 약300 cm
 RUN_SPEED_KMPH = 20.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER) *2
 
 # 아래쪽을 얼마나 띄울지(바닥 여유) - 필요시 조절
 BOTTOM_OFFSET = 100
@@ -45,9 +45,8 @@ class Background:
         self.total_run = 0
 
         self.gate_pos = [total_pos - end_frame  for total_pos,end_frame in zip(self.map_total_w, self.frame_w)]
-        self.door = gate.Door()
-        self.gate = gate.Gate()
-        self.gate_exist = False
+        self.gate = []
+        self.gate_exist = [False for _ in range(len(self.images))]
 
         self.base_scale = SCREEN_WIDTH / float(self.frame_w[0])
         self.display_speed = RUN_SPEED_PPS * self.base_scale  # 화면상에서 고정된 픽셀/초 속도
@@ -64,7 +63,7 @@ class Background:
         self.gate_make()
 
         if self.hero_pos >= self.total_w[self.stage]:
-            self.door.frame_move = True
+            self.gate[0].frame_move = True
             self.hero_pos = 0
             next_stage = (self.stage + 1) % len(self.images)
             if self.logic_stage_age[self.stage] != self.logic_stage_age[next_stage]:
@@ -86,25 +85,20 @@ class Background:
 
     def gate_make(self):
         for i, g_pos in enumerate(self.gate_pos):
-            if i == 0:
-                if g_pos <= self.total_run and self.total_run <= self.map_total_w[i]+55:
-                    self.door.x -= self.display_speed * game_framework.frame_time
-                    if not self.gate_exist:
-                        game_world.add_object(self.door,2)
-                        self.gate_exist = True
-                    if self.door.x < -55:
-                        game_world.remove_object(self.door)
-                        self.gate_exist = False
-            else:
-                if g_pos <= self.total_run and self.total_run <= self.map_total_w[i] +55:
-                    self.gate.x -= self.display_speed * game_framework.frame_time
-                    if not self.gate_exist:
-                        game_world.add_object(self.gate,2)
-                        self.gate_exist = True
-                    if self.gate.x < -55:
-                        game_world.remove_object(self.gate)
-                        self.gate_exist = False
-                        self.gate.x = 1310
+            if g_pos <= self.total_run and self.total_run <= self.map_total_w[i] + float(gate.gate_size / 2) and not self.gate_exist[i]:
+                if i == 0:
+                    # if g_pos <= self.total_run and self.total_run <= self.map_total_w[i]+55:
+                    #     if not self.gate_exist[i]:
+                    self.gate_exist[i] = True
+                    new_gate= gate.Door()
+                    self.gate.append(new_gate)
+                    game_world.add_object(self.gate[i],2)
+
+                else:
+                    self.gate_exist[i] = True
+                    new_gate = gate.Gate()
+                    self.gate.append(new_gate)
+                    game_world.add_object(self.gate[i],2)
 
 
     def draw(self):
