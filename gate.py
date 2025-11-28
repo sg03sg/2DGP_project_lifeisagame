@@ -1,5 +1,7 @@
 from pico2d import *
 import game_framework
+import game_world
+import play_mode
 
 with open('Json/door_data.json', 'r', encoding='utf-8') as f:
     door_rounding_box_data = json.load(f)
@@ -12,6 +14,8 @@ TIME_PER_ACTION = 0.5 #문을 박차고 나갈때 열리는 평균 시간은 약
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 4
 
+gate_size = 30
+
 class Door:
     def __init__(self):
         self.image = load_image('Images/door.png')
@@ -22,6 +26,10 @@ class Door:
         self.frame_move = False
 
     def update(self):
+        self.x -= play_mode.background.display_speed * game_framework.frame_time
+        if self.x < - 55:
+            game_world.remove_object(self)
+
         if self.frame_move:
             self.frame = self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time
             if self.frame > 3:
@@ -41,12 +49,14 @@ class Door:
 class Gate:
     def __init__(self):
         self.image = load_image('Images/gate_out.png')
-        self.size = 30
-        self.x = 1310
+        self.size = gate_size
+        self.x = 1317
         self.y = SCREEN_HEIGHT // 2 + BOTTOM_OFFSET // 2
 
     def update(self):
-        pass
+        self.x -= play_mode.background.display_speed * game_framework.frame_time
+        if self.x < - float((60 + self.size)/2):
+            game_world.remove_object(self)
 
     def draw(self):
         self.image.clip_draw(0,0,91,260,self.x, self.y, 60 + self.size, SCREEN_HEIGHT - BOTTOM_OFFSET)
