@@ -1,7 +1,11 @@
 from pico2d import *
 import game_framework
 import play_mode
+import gate
 import game_world
+
+import itertools
+
 
 # 화면 크기
 SCREEN_WIDTH = 1280
@@ -16,41 +20,9 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 # 아래쪽을 얼마나 띄울지(바닥 여유) - 필요시 조절
 BOTTOM_OFFSET = 100
 
-#문 속도
-TIME_PER_ACTION = 0.5 #사람이 뛸때 두걸음 내딛는 평균 시간은 약 0.7초
-ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION = 4
-
 def screen_speed(frame_width):
     scale_x = SCREEN_WIDTH / float(frame_width)
     return RUN_SPEED_PPS * scale_x
-
-#문 관련
-with open('Json/door_data.json', 'r', encoding='utf-8') as f:
-    door_rounding_box_data = json.load(f)
-
-class Door:
-    def __init__(self):
-        self.image = load_image('Images/door.png')
-        self.frame = 0
-        self.size = [10,25,40,45]
-        self.x = 1310
-        self.y = SCREEN_HEIGHT//2 + BOTTOM_OFFSET//2
-        self.frame_move = False
-
-    def update(self):
-        if self.frame_move:
-            self.frame = self.frame+ FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time
-            if self.frame > 3:
-                self.frame = 3
-                self.frame_move = False
-
-    def draw(self):
-        i = int(self.frame)
-        self.image.clip_draw(int(door_rounding_box_data['sprites'][i]["x"]),int(door_rounding_box_data['sprites'][i]['y']) ,
-                                  int(door_rounding_box_data['sprites'][i]['width']), int(door_rounding_box_data['sprites'][i]['height']), self.x + self.size[int(self.frame)] // 2 , self.y, 60 + self.size[i],
-                                       SCREEN_HEIGHT - BOTTOM_OFFSET)
-
 
 class Background:
     def __init__(self, filenames=None, loop=True):
@@ -62,7 +34,7 @@ class Background:
         self.frame_w = [img.w // cnt if cnt > 0 else img.w for img, cnt in zip(self.images, self.frame_count)]
         self.frame_h = [img.h for img in self.images]
         self.total_w = [fw * cnt for fw, cnt in zip(self.frame_w, self.frame_count)]
-
+        self.map_total_w = list(itertools.accumulate(self.total_w))
         self.stage = 0
         self.logic_stage_age = [0, 1, 2, 2]
 
@@ -72,9 +44,10 @@ class Background:
         self.hero_pos = self.frame_w[self.stage] * 0.5
         self.total_run = 0
 
-        self.door_pos = self.total_w[0] - self.frame_w[0]
-        self.door = Door()
-        self.door_exist = False
+        self.gate_pos = [total_pos - end_frame  for total_pos,end_frame in zip(self.map_total_w, self.frame_w)]
+        self.door = gate.Door()
+        self.gate = gate.Gate()
+        self.gate_exist = False
 
         self.base_scale = SCREEN_WIDTH / float(self.frame_w[0])
         self.display_speed = RUN_SPEED_PPS * self.base_scale  # 화면상에서 고정된 픽셀/초 속도
@@ -88,14 +61,7 @@ class Background:
         self.hero_pos += src_speed * game_framework.frame_time
         self.total_run += src_speed * game_framework.frame_time
 
-        if self.door_pos <= self.total_run and self.total_run <= self.total_w[0]+55:
-            self.door.x -= screen_speed(self.frame_w[self.stage]) * game_framework.frame_time
-            if not self.door_exist:
-                game_world.add_object(self.door,2)
-                self.door_exist = True
-            if self.door.x < -55:
-                game_world.remove_object(self.door)
-                self.door_exist = False
+        self.gate_make()
 
         if self.hero_pos >= self.total_w[self.stage]:
             self.door.frame_move = True
@@ -117,6 +83,28 @@ class Background:
                 self.stage += 1
             if self.stage == len(self.images) - 1:
                 self.offset = min(self.offset, self.total_w[self.stage] - 1)
+
+    def gate_make(self):
+        for i, g_pos in enumerate(self.gate_pos):
+            if i == 0:
+                if g_pos <= self.total_run and self.total_run <= self.map_total_w[i]+55:
+                    self.door.x -= self.display_speed * game_framework.frame_time
+                    if not self.gate_exist:
+                        game_world.add_object(self.door,2)
+                        self.gate_exist = True
+                    if self.door.x < -55:
+                        game_world.remove_object(self.door)
+                        self.gate_exist = False
+            else:
+                if g_pos <= self.total_run and self.total_run <= self.map_total_w[i] +55:
+                    self.gate.x -= self.display_speed * game_framework.frame_time
+                    if not self.gate_exist:
+                        game_world.add_object(self.gate,2)
+                        self.gate_exist = True
+                    if self.gate.x < -55:
+                        game_world.remove_object(self.gate)
+                        self.gate_exist = False
+                        self.gate.x = 1310
 
 
     def draw(self):
