@@ -27,8 +27,7 @@ def screen_speed(frame_width):
 class Background:
     def __init__(self, filenames=None, loop=True):
         if filenames is None:
-            filenames = ['Images/Babyroom_demo.png','Images/childroom.png','Images/hobby_map.png', 'Images/school_map.png',
-                         'Images/class_map.png']
+            filenames = ['Images/Babyroom_demo.png','Images/childroom.png','Images/hobby_map.png', 'Images/student_map.png']
         self.images = [load_image(f) for f in filenames]
         # 각 이미지 별 프레임 수(픽셀 170으로 분할한 값)와 그에 따른 폭/높이/총폭을 각각 계산
         self.frame_count = [img.w // 170 if img.w >= 170 else 1 for img in self.images]
