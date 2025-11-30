@@ -68,7 +68,7 @@ class Background:
             self.hero_pos = 0
             next_stage = (self.stage + 1) % len(self.images)
             if self.logic_stage_age[self.stage] != self.logic_stage_age[next_stage]:
-                play_mode.hero.age = (play_mode.hero.age+1) % 2
+                play_mode.hero.age = (play_mode.hero.age+1) % 3
             if not play_mode.hero.state_machine.cur_state == play_mode.hero.jump:
                 play_mode.hero.y = 150 + int((play_mode.hero.tall[play_mode.hero.age]-100)//2)
         # 반복 모드: offset이 여러 스테이지를 그림

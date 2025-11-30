@@ -11,11 +11,20 @@ hero_jump_rounding_box_data = []
 with open('Json/baby_sprite_sheet_data.json', 'r', encoding='utf-8') as f:
     hero_rounding_box_data.append(json.load(f))
 
-with open('Json/walk_boy_data.json', 'r', encoding='utf-8') as f:
+with open('Json/walk_boy1_data.json', 'r', encoding='utf-8') as f:
+    hero_rounding_box_data.append(json.load(f))
+
+with open('Json/student_run1_data.json', 'r', encoding='utf-8') as f:
     hero_rounding_box_data.append(json.load(f))
 
 with open('Json/jump_boy_data.json', 'r', encoding='utf-8') as f:
     hero_jump_rounding_box_data.append(json.load(f))
+
+scale_hero = []
+for i in range(len(hero_rounding_box_data)):
+    age = hero_rounding_box_data[i]['sprites']
+    x = max(frame['width'] for frame in age)
+    scale_hero.append(x)
 
 def space_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
@@ -56,8 +65,12 @@ class Run:
         #     self.hero.y_frame = (self.hero.y_frame +1)%3
     def draw(self):
         i = int(self.hero.frame)
-        self.hero.walk_images[self.hero.age].clip_draw(int(hero_rounding_box_data[self.hero.age]['sprites'][i]["x"]),int(hero_rounding_box_data[self.hero.age]['sprites'][i]['y']) ,
-                                  int(hero_rounding_box_data[self.hero.age]['sprites'][i]['width']), int(hero_rounding_box_data[self.hero.age]['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
+        frame_data = hero_rounding_box_data[self.hero.age]['sprites'][i]
+        base_width = scale_hero[self.hero.age]
+        scale = 100 / base_width
+        draw_w = int(int(frame_data['width']) * scale)
+        self.hero.walk_images[self.hero.age].clip_draw(int(frame_data["x"]),int(frame_data['y']) ,
+                                  int(frame_data['width']), int(frame_data['height']), self.hero.x, self.hero.y, draw_w,
                                        self.hero.tall[self.hero.age])
 
 class Idle:
@@ -85,7 +98,7 @@ class Jump:
         pass
 
     def do(self):
-        if not self.hero.age ==0:
+        if self.hero.age ==1:
             self.hero.frame = 0
             self.hero.frame = (self.hero.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % self.hero.jump_frame_counts[self.hero.age-1]
         dt = game_framework.frame_time
@@ -93,14 +106,8 @@ class Jump:
 
     def draw(self):
         i = int(self.hero.frame)
-        if self.hero.age ==0:
-            self.hero.walk_images[self.hero.age].clip_draw(int(hero_rounding_box_data[self.hero.age]['sprites'][i]["x"]),
-                                  int(hero_rounding_box_data[self.hero.age]['sprites'][i]['y']),
-                                  int(hero_rounding_box_data[self.hero.age]['sprites'][i]['width']),
-                                  int(hero_rounding_box_data[self.hero.age]['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
-                                  100)
-        else:
-            age = self.hero.age -1
+        if self.hero.age ==1:
+            age = self.hero.age - 1
             self.hero.jump_images[age].clip_draw(
                 int(hero_jump_rounding_box_data[age]['sprites'][i]["x"]),
                 int(hero_jump_rounding_box_data[age]['sprites'][i]['y']),
@@ -108,10 +115,19 @@ class Jump:
                 int(hero_jump_rounding_box_data[age]['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
                 self.hero.tall[self.hero.age])
 
+        else:
+            self.hero.walk_images[self.hero.age].clip_draw(
+                int(hero_rounding_box_data[self.hero.age]['sprites'][i]["x"]),
+                int(hero_rounding_box_data[self.hero.age]['sprites'][i]['y']),
+                int(hero_rounding_box_data[self.hero.age]['sprites'][i]['width']),
+                int(hero_rounding_box_data[self.hero.age]['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
+                100)
+
+
 class Hero:
     def __init__(self,filename=None):
         if filename is None:
-            walk_filename = ['Images/baby_sprite_sheet.png','Images/walk_boy.png']
+            walk_filename = ['Images/baby_sprite_sheet.png','Images/walk_boy.png','Images/student_run.png']
             jump_filename = ['Images/jump_boy.png']
 
         self.walk_images = [load_image(f) for f in walk_filename]
@@ -120,7 +136,7 @@ class Hero:
         self.tall = [100,140,170,180]  # 각 나이대별 키
         self.age = 0
 
-        self.walk_frame_counts = [6,6]
+        self.walk_frame_counts = [6,6,6]
         self.jump_frame_counts = [3]
         self.x,self.y = 640,150
         self.frame = -1
@@ -134,7 +150,7 @@ class Hero:
         self.artistic = 0
 
         # 점프 관련 기본값 : v0^2 / (2 * |g|) <-이거 계산하면 최고 높이
-        self.jump_initial_v = [1000.0,1300.0]    # 초기 상승 속도(px/s)
+        self.jump_initial_v = [1000.0,1300.0,1300.0]    # 초기 상승 속도(px/s)
         self.gravity = -2500.0         # 중력(px/s^2)
         self.jump_vy = 0.0
 
