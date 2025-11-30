@@ -70,7 +70,7 @@ class Run:
         i = int(self.hero.frame)
         frame_data = hero_rounding_box_data[self.hero.age]['sprites'][i]
         base_width = scale_hero[self.hero.age]
-        scale = 100 / base_width
+        scale = self.hero.side_size[self.hero.age] / base_width
         draw_w = int(int(frame_data['width']) * scale)
         self.hero.walk_images[self.hero.age].clip_draw(int(frame_data["x"]),int(frame_data['y']) ,
                                   int(frame_data['width']), int(frame_data['height']), self.hero.x, self.hero.y, draw_w,
@@ -112,7 +112,7 @@ class Jump:
         if self.hero.age ==0:
             frame_data = hero_rounding_box_data[self.hero.age]['sprites'][i]
             base_width = scale_hero[self.hero.age]
-            scale = 100 / base_width
+            scale = self.hero.side_size[self.hero.age] / base_width
             draw_w = int(int(frame_data['width']) * scale)
             self.hero.walk_images[self.hero.age].clip_draw(int(frame_data["x"]), int(frame_data['y']),
                                                            int(frame_data['width']), int(frame_data['height']),
@@ -161,6 +161,7 @@ class Hero:
         self.jump_images = [load_image(f) for f in jump_filename]
 
         self.tall = [100,140,230,260]  # 각 나이대별 키
+        self.side_size = [100,120,150,160]  # 각 나이대별 옆 크기
         self.age = 0
 
         self.walk_frame_counts = [6,6,6]
@@ -198,8 +199,9 @@ class Hero:
         self.state_machine.update()
 
     def get_bb(self):
-        box_half_width = int(self.tall[self.age]//2)
-        return self.x - 50, self.y - box_half_width, self.x + 50, self.y + box_half_width
+        box_half_width = int(self.tall[self.age]/2)
+        box_half_height = int(self.side_size[self.age]/2)
+        return self.x - box_half_height, self.y - box_half_width, self.x + box_half_height, self.y + box_half_width
 
     def draw(self):
         self.state_machine.draw()
