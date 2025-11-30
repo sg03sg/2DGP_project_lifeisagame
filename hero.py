@@ -108,20 +108,24 @@ class Jump:
         i = int(self.hero.frame)
         if self.hero.age ==1:
             age = self.hero.age - 1
+            frame_data = hero_jump_rounding_box_data[age]['sprites'][i]
+            base_width = scale_hero[self.hero.age]
+            scale = 100 / base_width
+            draw_w = int(int(frame_data['width']) * scale)
             self.hero.jump_images[age].clip_draw(
-                int(hero_jump_rounding_box_data[age]['sprites'][i]["x"]),
-                int(hero_jump_rounding_box_data[age]['sprites'][i]['y']),
-                int(hero_jump_rounding_box_data[age]['sprites'][i]['width']),
-                int(hero_jump_rounding_box_data[age]['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
+                int(frame_data["x"]),int(frame_data['y']), int(frame_data['width']),int(frame_data['height']),
+                self.hero.x, self.hero.y, draw_w,
                 self.hero.tall[self.hero.age])
 
         else:
-            self.hero.walk_images[self.hero.age].clip_draw(
-                int(hero_rounding_box_data[self.hero.age]['sprites'][i]["x"]),
-                int(hero_rounding_box_data[self.hero.age]['sprites'][i]['y']),
-                int(hero_rounding_box_data[self.hero.age]['sprites'][i]['width']),
-                int(hero_rounding_box_data[self.hero.age]['sprites'][i]['height']), self.hero.x, self.hero.y, 100,
-                100)
+            frame_data = hero_rounding_box_data[self.hero.age]['sprites'][i]
+            base_width = scale_hero[self.hero.age]
+            scale = 100 / base_width
+            draw_w = int(int(frame_data['width']) * scale)
+            self.hero.walk_images[self.hero.age].clip_draw(int(frame_data["x"]), int(frame_data['y']),
+                                                           int(frame_data['width']), int(frame_data['height']),
+                                                           self.hero.x, self.hero.y, draw_w,
+                                                           self.hero.tall[self.hero.age])
 
 
 class Hero:
@@ -133,7 +137,7 @@ class Hero:
         self.walk_images = [load_image(f) for f in walk_filename]
         self.jump_images = [load_image(f) for f in jump_filename]
 
-        self.tall = [100,140,170,180]  # 각 나이대별 키
+        self.tall = [100,140,210,250]  # 각 나이대별 키
         self.age = 0
 
         self.walk_frame_counts = [6,6,6]
