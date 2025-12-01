@@ -3,22 +3,24 @@ import random
 
 from background import Background
 from hero import Hero
+from item_spawner import ItemSpawner
 from item import Item
-from ui import Ui,Skillui,Age1ui
+from ui import Ui, Skillui, Age1ui
 
 import game_world
 import game_framework
-from savelist import Itemlist,Uilist
+from savelist import Itemlist, Uilist
 
 background = None
 hero = None
-
 itemlist = Itemlist()
 uilist = Uilist()
+item_spawner = None
+
+black_img = None
+age1uis = None
 
 def handle_events():
-    global running
-
     event_list = get_events()
     for event in event_list:
         if event.type == SDL_QUIT:
@@ -28,88 +30,51 @@ def handle_events():
         else:
             hero.handle_event(event)
 
-
 def init():
-    global hero
-    global background
-    global Skill
-
-    global hp
-    global happy
-
-    global running
-
-    global black_img
-
-    global item_last_age,exist_item
-    exist_item = []
-    item_last_age = 0
-
-    global itemspawn_timer, item_last_spawn
-    itemspawn_timer = 1.5
-    item_last_spawn = game_framework.game_time
+    global hero, background, black_img, item_spawner
 
     background = Background()
-    game_world.add_object(background,0)
+    game_world.add_object(background, 0)
 
     hero = Hero()
-    game_world.add_object(hero,1)
+    game_world.add_object(hero, 1)
 
     skills = [Skillui(i) for i in uilist.skillname]
-    game_world.add_objects(skills,1)
+    game_world.add_objects(skills, 1)
 
-    hp= Ui("hp",50)
-    game_world.add_object(hp,1)
-    happy= Ui("happy",250)
-    game_world.add_object(happy,1)
+    hp = Ui("hp", 50)
+    game_world.add_object(hp, 1)
+    happy = Ui("happy", 250)
+    game_world.add_object(happy, 1)
 
-    game_world.add_collision_pair('hero:item', hero, None)
     black_img = load_image('Images/black.png')
 
+    # 기존 충돌 설정 유지
+    game_world.add_collision_pair('hero:item', hero, None)
 
+    item_spawner = ItemSpawner(itemlist, init_spawn_interval=1.5)
 
 def update():
-    global age1uis
-    global item
-    global hero
+    global age1uis, hero, item_spawner
 
-    global itemspawn_timer, item_last_spawn
-    global item_pos
-
-    global item_last_age,exist_item
-
-    if hero.age != item_last_age:
-        removes = [remove for remove in exist_item if remove.age != hero.age]
-        for remove in removes:
-            game_world.remove_object(remove)
-            exist_item.remove(remove)
-        item_last_age = hero.age
-
+    # 기존 나이 UI 로직 그대로 유지
     if hero.age == 1:
-        if 'age1uis' not in globals():
+        if not age1uis:
             age1uis = [Age1ui(i) for i in uilist.age1uiname]
-            game_world.add_objects(age1uis,1)
+            game_world.add_objects(age1uis, 1)
     else:
-        if 'age1uis' in globals():
+        if age1uis:
             for ui in age1uis:
                 try:
                     game_world.remove_object(ui)
-                except ValueError: pass
+                except ValueError:
+                    pass
+            age1uis = None
 
-    now = game_framework.game_time
-    if now - item_last_spawn >= itemspawn_timer:
-        # if not any(isinstance(obj, Item) for obj in game_world.world[1]):
-        item_y = random.choice(itemlist.item_pos[hero.age])
-        item = Item(None,item_y, hero.age)
-        game_world.add_object(item, 1)
-        game_world.add_collision_pair('hero:item', None, item)
-        exist_item.append(item)
-        item_last_spawn = now
+    item_spawner.update(hero)
 
     game_world.update()
     game_world.handle_collisions()
-
-
 
 def draw():
     clear_canvas()
@@ -120,9 +85,13 @@ def draw():
     update_canvas()
 
 def finish():
+    global item_spawner
+    if item_spawner:
+        item_spawner.clear()
     game_world.clear()
 
-def pauese():
+def pause():
     pass
+
 def resume():
     pass
