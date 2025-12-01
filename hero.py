@@ -48,7 +48,7 @@ def hero_jump(hero, dt):
         hero.state_machine.handle_state_event(("jump_end", None))
 
 
-TIME_PER_ACTION = 0.7 #사람이 뛸때 두걸음 내딛는 평균 시간은 약 0.7초
+TIME_PER_ACTION = 0.6 #사람이 뛸때 두걸음 내딛는 평균 시간은 약 0.7초
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 6
 
