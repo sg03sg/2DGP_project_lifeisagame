@@ -4,16 +4,23 @@ import game_framework
 import background
 import play_mode
 
+
+stu_it_num = [1,2,6,7]
+with open('Json/ui_data.json', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+##아이템 번호 뽑는 작업
+stu_item_data = [data['sprites'][i] for i in stu_it_num]
+
 class Item:
     image = None
 
     def __init__(self, filename = None,y = 150,age=0, num=0):
         if filename == None:
-            filename = ['Images/ITEMIMAGE_babymilk.png','Images/item_smart.png']
+            filename = ['Images/ITEMIMAGE_babymilk.png','Images/item_smart.png','Images/ui.png']
 
         self.age = age
         self.num = num
-        name = [['babymilk'],['smart']]
+        name = [['babymilk'],['smart'],['study','paint','soccer','music']]
         self.name = name[age][num]
         self.images = [load_image(f) for f in filename]
         self.x = 1300
@@ -25,13 +32,19 @@ class Item:
         return self.x - 20, self.y - 20, self.x + 20, self.y + 20
 
     def draw(self):
+        if self.age == 2:
+            self.images[self.age].clip_draw( int( stu_item_data[self.num]["x"]),
+                                             int( stu_item_data[self.num]["y"]),
+                                             int( stu_item_data[self.num]["width"]),
+                                             int( stu_item_data[self.num]["height"]),
+                                             self.x, self.y,40,40)
         self.images[self.age].draw(self.x, self.y,40,40)
         draw_rectangle(*self.get_bb())
 
     def handle_collision(self,group, other):
         if group == 'hero:item':
             game_world.remove_object(self)
-            play_mode.exist_item.remove(self)
+            play_mode.item_spawner.exist_items.remove(self)
             if self.name == 'smart':
                 play_mode.hero.smarter += 1
                 if play_mode.hero.smarter >100:
@@ -42,5 +55,5 @@ class Item:
         self.x += self.xv * game_framework.frame_time
         if self.x <= 0:
             game_world.remove_object(self)
-            play_mode.exist_item.remove(self)
+            play_mode.item_spawner.exist_items.remove(self)
 
