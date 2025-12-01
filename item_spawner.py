@@ -68,15 +68,46 @@ class ItemSpawner:
     # - 후보들에 대해서만 확률 재계산 후 랜덤 선택
     # - 더 이상 소환 가능 아이템이 없으면 None 반환
     def select_item(self, age):
-        pass
+        # age 범위를 벗어난 경우 예외 처리
+        if age >= len(self.item_probabilities):
+            return None
 
+        probs_for_age = self.item_probabilities[age]
+        limits = self.itemlist.max_item_count[age]
+        counts = self.item_spawn_count[age]
 
+        # 아직 limit를 넘지 않은 아이템들 모음
+        no_limit_items = [
+            i for i in range(len(probs_for_age))
+            if counts[i] < limits[i]
+        ]
+
+        # 모든 아이템이 limit에 도달했을때 예외처리
+        if not no_limit_items:
+            return None
+
+        # 후보 아이템들의 확률만 모아서 다시 가중치 적용
+        weights = [probs_for_age[i] for i in no_limit_items]
+        total = sum(weights)
+        if total == 0:
+            return None
+        r = random.randint(0, total)
+
+        acc = 0
+        for idx, w in zip(no_limit_items, weights):
+            acc += w
+            if r <= acc:
+                return idx
 
         # y축 타이머들 관리
         # - 기본 간격은 base_spawn_interval
         # - 40% 확률로 타이머 간격 줄이기
     def timer_for_y(self, index, now):
-        pass
+        interval = self.base_spawn_interval
+        if random.random() < 0.4:
+            # 너무 짧아지지 않도록 최소값 설정
+            interval = max(0.1, interval - 0.5)
+        self.y_spawn_times[index] = now + interval
 
 
     def update(self, hero):
