@@ -6,9 +6,13 @@ from item import Item
 
 
 class ItemSpawner:
-    def __init__(self, itemlist, base_spawn_interval=1.5):
+    def __init__(self, itemlist, init_spawn_interval=1.5):
         self.itemlist = itemlist
-        self.base_spawn_interval = float(base_spawn_interval)
+        self.base_spawn_interval = [
+            [timer for timer in per_age_timer]
+            for per_age_timer in self.itemlist.y_timer_interval
+        ]
+        self.init_spawn_interval = init_spawn_interval
 
         # 나이/아이템 타입별 스폰 카운트
         # itemlist.max_item_count 와 동일한 모양으로 0으로 초기화
@@ -58,9 +62,12 @@ class ItemSpawner:
 
         now = game_framework.game_time
 
+        offset = min(self.base_spawn_interval[age])
+
         # 각 저장한 y 위치마다 하나씩 타이머 생성
-        for _ in self.itemlist.item_pos[age]:
-            self.y_spawn_times.append(now + self.base_spawn_interval)
+        for i in range(len(self.itemlist.item_pos[age])):
+            interval = self.base_spawn_interval[age][i] - offset
+            self.y_spawn_times.append(now + interval)
 
 
     #아이템 결정 함수
@@ -102,8 +109,8 @@ class ItemSpawner:
         # y축 타이머들 관리
         # - 기본 간격은 base_spawn_interval
         # - 40% 확률로 타이머 간격 줄이기
-    def timer_for_y(self, index, now):
-        interval = self.base_spawn_interval
+    def timer_for_y(self, index, now,age):
+        interval = self.base_spawn_interval[age][index]
         if random.random() < 0.4:
             # 너무 짧아지지 않도록 최소값 설정
             interval = max(0.1, interval - 0.5)
@@ -152,7 +159,7 @@ class ItemSpawner:
             self.item_spawn_count[age][item_index] += 1
 
             # 이 y축 타이머 리셋 (40% 확률로 간격 -0.5초)
-            self.timer_for_y(i, now)
+            self.timer_for_y(i, now,age)
 
     # 스테이지 전환 등에서 스포너 초기화할 때 사용.
     # - 필드에 남아있는 아이템 제거
