@@ -111,7 +111,48 @@ class ItemSpawner:
 
 
     def update(self, hero):
-        pass
+        age = hero.age
+
+        # 나이가 바뀌었으면 그에 맞게 정리+타이머 초기화
+        if age != self.last_age:
+            self.reset_for_age(age)
+
+        # 해당 age에 대한 y 위치 정보가 없으면 할 일 없음
+        if age >= len(self.itemlist.item_pos):
+            return
+
+        now = game_framework.game_time
+
+        # 각 y축별 타이머 체크
+        for i, y in enumerate(self.itemlist.item_pos[age]):
+            # 방어 코드: y_spawn_times 길이가 맞지 않을 경우
+            if i >= len(self.y_spawn_times):
+                continue
+
+            # 아직 이 y축의 타이머가 안 됐으면 패스
+            if now < self.y_spawn_times[i]:
+                continue
+
+            # 이 나이에서 어떤 아이템을 뽑을지 확률 기반으로 결정
+            item_index = self.select_item(age)
+
+            # 소환 가능한 아이템이 더 이상 없으면
+            # 이 y축은 앞으로도 소환하지 않도록 타이머를 무한대로
+            if item_index is None:
+                self.y_spawn_times[i] = float('inf')
+                continue
+
+            # 아이템 생성 및 월드에 추가
+            item = Item(None, y, age, item_index)
+            game_world.add_object(item, 1)
+            game_world.add_collision_pair('hero:item', None, item)
+            self.exist_items.append(item)
+
+            # 지금까지 소환된 해당 아이템의 갯수 +1
+            self.item_spawn_count[age][item_index] += 1
+
+            # 이 y축 타이머 리셋 (40% 확률로 간격 -0.5초)
+            self.timer_for_y(i, now)
 
     # 스테이지 전환 등에서 스포너 초기화할 때 사용.
     # - 필드에 남아있는 아이템 제거
