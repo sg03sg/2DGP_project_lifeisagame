@@ -3,22 +3,22 @@ import random
 import game_world
 import game_framework
 from item import Item
+import savelist
 
 
 class ItemSpawner:
-    def __init__(self, itemlist, init_spawn_interval=1.5):
-        self.itemlist = itemlist
+    def __init__(self, init_spawn_interval=1.5):
         self.base_spawn_interval = [
             [timer for timer in per_age_timer]
-            for per_age_timer in self.itemlist.y_timer_interval
+            for per_age_timer in savelist.y_timer_interval
         ]
         self.init_spawn_interval = init_spawn_interval
 
         # 나이/아이템 타입별 스폰 카운트
-        # itemlist.max_item_count 와 동일한 모양으로 0으로 초기화
+        # savelist.max_item_count 와 동일한 모양으로 0으로 초기화
         self.item_spawn_count = [
             [0 for _ in per_age_limits]
-            for per_age_limits in self.itemlist.max_item_count
+            for per_age_limits in savelist.max_item_count
         ]
 
         # 나이/아이템번호 타입별 확률 테이블
@@ -59,7 +59,7 @@ class ItemSpawner:
         self.y_spawn_times = []
 
         # 해당 age에 대한 y 위치 정보가 없으면 끝
-        if age >= len(self.itemlist.item_pos):
+        if age >= len(savelist.item_pos):
             return
 
         now = game_framework.game_time
@@ -67,7 +67,7 @@ class ItemSpawner:
         offset = min(self.base_spawn_interval[age])
 
         # 각 저장한 y 위치마다 하나씩 타이머 생성
-        for i in range(len(self.itemlist.item_pos[age])):
+        for i in range(len(savelist.item_pos[age])):
             interval = self.base_spawn_interval[age][i] - offset
             self.y_spawn_times.append(now + interval)
 
@@ -82,7 +82,7 @@ class ItemSpawner:
             return None
 
         probs_for_age = self.item_probabilities[age]
-        limits = self.itemlist.max_item_count[age]
+        limits = savelist.max_item_count[age]
         counts = self.item_spawn_count[age]
 
         # 아직 limit를 넘지 않은 아이템들 모음
@@ -132,13 +132,13 @@ class ItemSpawner:
             self.reset_for_age(age)
 
         # 해당 age에 대한 y 위치 정보가 없으면 할 일 없음
-        if age >= len(self.itemlist.item_pos):
+        if age >= len(savelist.item_pos):
             return
 
         now = game_framework.game_time
 
         # 각 y축별 타이머 체크
-        for i, y in enumerate(self.itemlist.item_pos[age]):
+        for i, y in enumerate(savelist.item_pos[age]):
             # 방어 코드: y_spawn_times 길이가 맞지 않을 경우
             if i >= len(self.y_spawn_times):
                 continue
@@ -185,7 +185,7 @@ class ItemSpawner:
         # 게임 전체를 리셋할  타이머 아예 초기화
         # self.item_spawn_count = [
         #     [0 for _ in per_age_limits]
-        #     for per_age_limits in self.itemlist.max_item_count
+        #     for per_age_limits in savelist.max_item_count
         # ]
 
     def pause(self,stage):
