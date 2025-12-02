@@ -5,7 +5,7 @@ import background
 import play_mode
 
 
-stu_it_num = [1,2,6,7]
+stu_it_num = [5,6,7,8]
 with open('Json/ui_data.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 ##아이템 번호 뽑는 작업
@@ -20,16 +20,18 @@ class Item:
 
         self.age = age
         self.num = num
-        name = [['babymilk'],['smart'],['study','paint','soccer','music']]
+        name = [['babymilk'],['smart'],['study','paint','music','soccer']]
         self.name = name[age][num]
         self.images = [load_image(f) for f in filename]
         self.x = 1300
         self.y = y
         self.speed = background.RUN_SPEED_PPS + 400  # 아이템의 속도 (배경보다 빠르게)
         self.xv = -self.speed  # x 축 속도
+        self.size = [40,40,60]
 
     def get_bb(self):
-        return self.x - 20, self.y - 20, self.x + 20, self.y + 20
+        s = self.size[self.age] // 2
+        return self.x - s, self.y - s, self.x + s, self.y + s
 
     def draw(self):
         if self.age == 2:
@@ -37,8 +39,9 @@ class Item:
                                              int( stu_item_data[self.num]["y"]),
                                              int( stu_item_data[self.num]["width"]),
                                              int( stu_item_data[self.num]["height"]),
-                                             self.x, self.y,40,40)
-        self.images[self.age].draw(self.x, self.y,40,40)
+                                             self.x, self.y,self.size[self.age],self.size[self.age])
+        else:
+            self.images[self.age].draw(self.x, self.y,40,40)
         draw_rectangle(*self.get_bb())
 
     def handle_collision(self,group, other):
@@ -56,4 +59,6 @@ class Item:
         if self.x <= 0:
             game_world.remove_object(self)
             play_mode.item_spawner.exist_items.remove(self)
+
+
 
