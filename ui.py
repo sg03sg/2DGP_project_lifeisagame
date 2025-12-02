@@ -2,6 +2,8 @@ from pico2d import *
 import game_framework
 
 import play_mode
+import common
+import savelist
 
 # 화면 크기
 SCREEN_WIDTH = 1280
@@ -46,6 +48,43 @@ class Skillui:
         self.image.clip_draw(int(button_data['sprites'][self.json_num]["x"]),int(button_data['sprites'][self.json_num]["y"]),
                                  int(button_data['sprites'][self.json_num]["width"]),int(button_data['sprites'][self.json_num]["height"]),
                                  self.x,self.y,self.size,self.size)
+
+class Ageui:
+    def __init__(self,age=0):
+        if age ==1:
+            self.uis = [Age1ui(i) for i in savelist.age1uiname]
+        elif age ==2:
+            self.uis = [Age2ui(i) for i in savelist.age2uiname]
+        else:
+            self.uis = []
+        self.i = len(self.uis)
+        self.age = age
+
+    def update(self,age=0):
+        if self.age == age:
+            if not self.uis:
+                return
+            for ui in self.uis:
+                ui.update()
+        else:
+            self.uis.clear()
+            self.i = 0
+            self.age = age
+
+            if age == 1:
+                self.uis = [Age1ui(i) for i in savelist.age1uiname]
+            elif age == 2:
+                self.uis = [Age2ui(i) for i in savelist.age2uiname]
+            else:
+                self.uis = []
+            self.i = len(self.uis)
+
+
+    def draw(self):
+        if not self.uis:
+            return
+        for ui in self.uis:
+            ui.draw()
 
 class Age1ui:
     def __init__(self,name = None):
@@ -116,12 +155,97 @@ class Age1ui:
         self.number_img.clip_draw(int(slash["x"]),int(slash["y"]),int(slash["width"]),int(slash["height"]),x, y, self.num_size,self.num_size)
         x += self.spacing
         #최대 숫자
-        i = play_mode.uilist.age1ui_max_count[self.num]
+        i = savelist.age1ui_max_count[self.num]
         self.number_img.clip_draw(int(number_data['sprites'][i]["x"]),
                              int(number_data['sprites'][i]["y"]),
                              int(number_data['sprites'][i]["width"]),
                              int(number_data['sprites'][i]["height"]),
                              x, y, self.num_size, self.num_size)
+
+class Age2ui:
+    def __init__(self, name=None):
+        self.image = load_image("Images/ui.png")
+        self.number_img = load_image("Images/number.png")
+        self.name = name
+        self.size = 20
+        if name == 'study':
+            self.count = play_mode.hero.smarter
+            self.json_num = 5
+            self.x, self.y = 510, 55
+            self.num = 0
+        elif name == 'paint':
+            self.count = play_mode.hero.kinder
+            self.json_num = 6
+            self.x, self.y = 610, 55
+            self.num = 1
+        elif name == 'music':
+            self.count = play_mode.hero.artistic
+            self.json_num = 7
+            self.x, self.y = 510, 52 - self.size
+            self.num = 2
+        elif name == 'soccer':
+            self.count = play_mode.hero.artistic
+            self.json_num = 8
+            self.x, self.y = 610, 52 - self.size
+            self.num = 3
+
+        self.num_size = self.size * 0.8
+        self.spacing = self.num_size // 2 + 5
+
+    def update(self):
+        if self.num == 0:
+            self.count = common.job_select.job_study
+        elif self.num == 1:
+            self.count = common.job_select.job_paint
+        elif self.num == 2:
+            self.count = common.job_select.job_music
+        elif self.num == 3:
+            self.count = common.job_select.job_soccer
+
+    def draw(self):
+        # 아이콘
+        self.image.clip_draw(int(ui_data['sprites'][self.json_num]["x"]),
+                             int(ui_data['sprites'][self.json_num]["y"]),
+                             int(ui_data['sprites'][self.json_num]["width"]),
+                             int(ui_data['sprites'][self.json_num]["height"]),
+                             self.x, self.y, self.size, self.size)
+        # 숫자
+        x = self.x + self.size // 2 + self.spacing + 10
+        y = self.y
+        # 2자리 수일때
+        if self.count >= 10:
+            tens = self.count // 10
+            units = self.count % 10
+            self.number_img.clip_draw(int(number_data['sprites'][tens]["x"]),
+                                      int(number_data['sprites'][tens]["y"]),
+                                      int(number_data['sprites'][tens]["width"]),
+                                      int(number_data['sprites'][tens]["height"]),
+                                      x - self.spacing, y, self.num_size, self.num_size)
+            self.number_img.clip_draw(int(number_data['sprites'][units]["x"]),
+                                      int(number_data['sprites'][units]["y"]),
+                                      int(number_data['sprites'][units]["width"]),
+                                      int(number_data['sprites'][units]["height"]),
+                                      x, y, self.num_size, self.num_size)
+        # 1자리 수일때
+        else:
+            i = self.count
+            self.number_img.clip_draw(int(number_data['sprites'][i]["x"]),
+                                      int(number_data['sprites'][i]["y"]),
+                                      int(number_data['sprites'][i]["width"]),
+                                      int(number_data['sprites'][i]["height"]),
+                                      x, y, self.num_size, self.num_size)
+        x += self.spacing
+        # 슬래시
+        self.number_img.clip_draw(int(slash["x"]), int(slash["y"]), int(slash["width"]), int(slash["height"]), x, y,
+                                  self.num_size, self.num_size)
+        x += self.spacing
+        # 최대 숫자
+        i = savelist.age2ui_max_count[self.num]
+        self.number_img.clip_draw(int(number_data['sprites'][i]["x"]),
+                                  int(number_data['sprites'][i]["y"]),
+                                  int(number_data['sprites'][i]["width"]),
+                                  int(number_data['sprites'][i]["height"]),
+                                  x, y, self.num_size, self.num_size)
 
 
 

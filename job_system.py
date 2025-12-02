@@ -24,6 +24,9 @@ class Job_select:
     def get_job(self):
         pass
 
+## 직업 관련 아이템의 획득 갯수를 가지고 max_item보다 크거나 같다면 선택할 수 있는 직업을 가지게 해주는 함수 1
+##
+
 
 
 

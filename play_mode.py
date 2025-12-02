@@ -5,20 +5,18 @@ from background import Background
 from hero import Hero
 from item_spawner import ItemSpawner
 from item import Item
-from ui import Ui, Skillui, Age1ui
+from ui import Ui, Skillui, Ageui
 
 import game_world
 import game_framework
-from savelist import Itemlist, Uilist
+import savelist
 
 background = None
 hero = None
-itemlist = Itemlist()
-uilist = Uilist()
 item_spawner = None
 
 black_img = None
-age1uis = None
+ageui = None
 
 def handle_events():
     event_list = get_events()
@@ -31,7 +29,7 @@ def handle_events():
             hero.handle_event(event)
 
 def init():
-    global hero, background, black_img, item_spawner
+    global hero, background, black_img, item_spawner, ageui
 
     background = Background()
     game_world.add_object(background, 0)
@@ -39,7 +37,9 @@ def init():
     hero = Hero()
     game_world.add_object(hero, 1)
 
-    skills = [Skillui(i) for i in uilist.skillname]
+    ageui = Ageui(hero.age)
+
+    skills = [Skillui(i) for i in savelist.skillname]
     game_world.add_objects(skills, 1)
 
     hp = Ui("hp", 50)
@@ -52,25 +52,25 @@ def init():
     # 기존 충돌 설정 유지
     game_world.add_collision_pair('hero:item', hero, None)
 
-    item_spawner = ItemSpawner(itemlist, init_spawn_interval=1.5)
+    item_spawner = ItemSpawner(init_spawn_interval=1.5)
 
 def update():
-    global age1uis, hero, item_spawner
+    global ageui, hero, item_spawner
 
     # 기존 나이 UI 로직 그대로 유지
-    if hero.age == 1:
-        if not age1uis:
-            age1uis = [Age1ui(i) for i in uilist.age1uiname]
-            game_world.add_objects(age1uis, 1)
-    else:
-        if age1uis:
-            for ui in age1uis:
-                try:
-                    game_world.remove_object(ui)
-                except ValueError:
-                    pass
-            age1uis = None
-
+    # if hero.age == 1:
+    #     if not age1uis:
+    #         age1uis = [Age1ui(i) for i in uilist.age1uiname]
+    #         game_world.add_objects(age1uis, 1)
+    # else:
+    #     if age1uis:
+    #         for ui in age1uis:
+    #             try:
+    #                 game_world.remove_object(ui)
+    #             except ValueError:
+    #                 pass
+    #         age1uis = None
+    ageui.update(hero.age)
     item_spawner.update(hero,background)
 
     game_world.update()
@@ -81,6 +81,7 @@ def draw():
     if black_img:
         black_img.draw(get_canvas_width()//2, get_canvas_height()//2,
                        get_canvas_width(), get_canvas_height())
+    ageui.draw()
     game_world.draw()
     update_canvas()
 
