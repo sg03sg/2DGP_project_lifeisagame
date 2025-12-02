@@ -49,7 +49,7 @@ class Item:
             game_world.remove_object(self)
             play_mode.item_spawner.exist_items.remove(self)
             if self.age == 2:
-                common.job_select.handle_collision(self)
+                common.job_stat.handle_collision(self)
                 return
             if self.name == 'smart':
                 play_mode.hero.smarter += 1

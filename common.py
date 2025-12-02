@@ -1,3 +1,3 @@
-from job_system import Job_select
+from job_system import Job_stat
 
-job_select = Job_select()
+job_stat = Job_stat()
