@@ -3,7 +3,7 @@ import game_world
 import game_framework
 import background
 import play_mode
-
+import common
 
 stu_it_num = [5,6,7,8]
 with open('Json/ui_data.json', 'r', encoding='utf-8') as f:
@@ -48,10 +48,14 @@ class Item:
         if group == 'hero:item':
             game_world.remove_object(self)
             play_mode.item_spawner.exist_items.remove(self)
+            if self.age == 2:
+                common.job_select.handle_collision(self)
+                return
             if self.name == 'smart':
                 play_mode.hero.smarter += 1
                 if play_mode.hero.smarter >100:
                     play_mode.hero.smarter = 100
+
 
     def update(self):
         # 위치 업데이트
