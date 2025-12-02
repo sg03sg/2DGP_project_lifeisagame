@@ -1,0 +1,40 @@
+{
+    "sprites": [
+        {
+            "name": "select_job_0",
+            "x": 2.0,
+            "y": 86.0,
+            "width": 35.0,
+            "height": 34.0,
+            "pivotX": 17.5,
+            "pivotY": 17.0
+        },
+        {
+            "name": "select_job_1",
+            "x": 45.0,
+            "y": 86.0,
+            "width": 35.0,
+            "height": 34.0,
+            "pivotX": 17.5,
+            "pivotY": 17.0
+        },
+        {
+            "name": "select_job_2",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 35.0,
+            "height": 34.0,
+            "pivotX": 17.5,
+            "pivotY": 17.0
+        },
+        {
+            "name": "select_job_3",
+            "x": 45.0,
+            "y": 44.0,
+            "width": 35.0,
+            "height": 34.0,
+            "pivotX": 17.5,
+            "pivotY": 17.0
+        }
+    ]
+}
