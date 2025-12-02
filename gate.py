@@ -1,7 +1,7 @@
 from pico2d import *
 import game_framework
 import game_world
-import play_mode
+import common
 
 with open('Json/door_data.json', 'r', encoding='utf-8') as f:
     door_rounding_box_data = json.load(f)
@@ -26,7 +26,7 @@ class Door:
         self.frame_move = False
 
     def update(self):
-        self.x -= play_mode.background.display_speed * game_framework.frame_time
+        self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - 55:
             game_world.remove_object(self)
 
@@ -54,7 +54,7 @@ class Gate:
         self.y = SCREEN_HEIGHT // 2 + BOTTOM_OFFSET // 2
 
     def update(self):
-        self.x -= play_mode.background.display_speed * game_framework.frame_time
+        self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - float((60 + self.size)/2):
             game_world.remove_object(self)
 

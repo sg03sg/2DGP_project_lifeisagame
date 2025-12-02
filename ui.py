@@ -93,17 +93,17 @@ class Age1ui:
         self.name = name
         self.size = 20
         if name == 'smart':
-            self.count = play_mode.hero.smarter
+            self.count = common.hero.smarter
             self.json_num = 2
             self.x,self.y = 510,55
             self.num = 0
         elif name == 'baby':
-            self.count = play_mode.hero.kinder
+            self.count = common.hero.kinder
             self.json_num = 3
             self.x,self.y = 610,55
             self.num = 1
         elif name == 'painting':
-            self.count = play_mode.hero.artistic
+            self.count = common.hero.artistic
             self.json_num = 4
             self.x,self.y = 510,52 - self.size
             self.num = 2
@@ -112,11 +112,11 @@ class Age1ui:
 
     def update(self):
         if self.num == 0:
-            self.count = play_mode.hero.smarter
+            self.count = common.hero.smarter
         elif self.num ==1:
-            self.count = play_mode.hero.kinder
+            self.count = common.hero.kinder
         elif self.num ==2:
-            self.count = play_mode.hero.artistic
+            self.count = common.hero.artistic
 
     def draw(self):
         #아이콘
@@ -169,22 +169,22 @@ class Age2ui:
         self.name = name
         self.size = 20
         if name == 'study':
-            self.count = play_mode.hero.smarter
+            self.count = common.hero.smarter
             self.json_num = 5
             self.x, self.y = 510, 55
             self.num = 0
         elif name == 'paint':
-            self.count = play_mode.hero.kinder
+            self.count = common.hero.kinder
             self.json_num = 6
             self.x, self.y = 610, 55
             self.num = 1
         elif name == 'music':
-            self.count = play_mode.hero.artistic
+            self.count = common.hero.artistic
             self.json_num = 7
             self.x, self.y = 510, 52 - self.size
             self.num = 2
         elif name == 'soccer':
-            self.count = play_mode.hero.artistic
+            self.count = common.hero.artistic
             self.json_num = 8
             self.x, self.y = 610, 52 - self.size
             self.num = 3
@@ -257,11 +257,11 @@ class Ui:
     def __init__(self,name,x,age=0):
         if name == 'hp':
             self.image = load_image("Images/hp_bar.png")
-            self. percent = play_mode.hero.hp / 100
+            self. percent = common.hero.hp / 100
             self.kind = 0
         elif name == 'happy':
             self.image = load_image("Images/happy_bar.png")
-            self.percent = play_mode.hero.happy / 100
+            self.percent = common.hero.happy / 100
             self.kind =1
         self.image_H = self.image.h
         self.image_W = self.image.w
@@ -270,9 +270,9 @@ class Ui:
 
     def update(self):
         if self.kind == 0:
-            self.percent = play_mode.hero.hp / 100
+            self.percent = common.hero.hp / 100
         elif self.kind ==1:
-            self.percent = play_mode.hero.happy / 100
+            self.percent = common.hero.happy / 100
 
     def draw(self):
         head_img_w = 12

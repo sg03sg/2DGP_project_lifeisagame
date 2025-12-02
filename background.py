@@ -1,6 +1,6 @@
 from pico2d import *
 import game_framework
-import play_mode
+import common
 import gate
 import game_world
 
@@ -15,7 +15,7 @@ PIXEL_PER_METER = (10.0 / 1.7)  # 방 사진 크기/3 = 170 pixel = 약300 cm
 RUN_SPEED_KMPH = 22.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER) *2
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER) *2.5
 
 # 아래쪽을 얼마나 띄울지(바닥 여유) - 필요시 조절
 BOTTOM_OFFSET = 100
@@ -70,9 +70,9 @@ class Background:
             self.hero_stage = (self.hero_stage+1) % len(self.images)
             next_stage = (self.stage + 1) % len(self.images)
             if self.logic_stage_age[self.stage] != self.logic_stage_age[next_stage]:
-                play_mode.hero.age = (play_mode.hero.age+1) % 3
-            if not play_mode.hero.state_machine.cur_state == play_mode.hero.jump:
-                play_mode.hero.y = 150 + int((play_mode.hero.tall[play_mode.hero.age]-100)//2)
+                common.hero.age = (common.hero.age+1) % 3
+            if not common.hero.state_machine.cur_state == common.hero.jump:
+                common.hero.y = 150 + int((common.hero.tall[common.hero.age]-100)//2)
         # 반복 모드: offset이 여러 스테이지를 그림
         if self.loop:
             while self.offset >= self.total_w[self.stage]:

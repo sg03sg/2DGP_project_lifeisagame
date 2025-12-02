@@ -52,9 +52,9 @@ class Item:
                 common.job_stat.handle_collision(self)
                 return
             if self.name == 'smart':
-                play_mode.hero.smarter += 1
-                if play_mode.hero.smarter >100:
-                    play_mode.hero.smarter = 100
+                common.hero.smarter += 1
+                if common.hero.smarter >100:
+                    common.hero.smarter = 100
 
 
     def update(self):

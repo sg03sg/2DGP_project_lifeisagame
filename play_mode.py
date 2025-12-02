@@ -10,11 +10,10 @@ from ui import Ui, Skillui, Ageui
 import game_world
 import game_framework
 import savelist
+import common
 
-background = None
-hero = None
+
 item_spawner = None
-
 black_img = None
 ageui = None
 
@@ -26,18 +25,18 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
         else:
-            hero.handle_event(event)
+            common.hero.handle_event(event)
 
 def init():
-    global hero, background, black_img, item_spawner, ageui
+    global black_img, item_spawner, ageui
 
-    background = Background()
-    game_world.add_object(background, 0)
+    common.background = Background()
+    game_world.add_object(common.background, 0)
 
-    hero = Hero()
-    game_world.add_object(hero, 1)
+    common.hero = Hero()
+    game_world.add_object(common.hero, 1)
 
-    ageui = Ageui(hero.age)
+    ageui = Ageui(common.hero.age)
 
     skills = [Skillui(i) for i in savelist.skillname]
     game_world.add_objects(skills, 1)
@@ -50,28 +49,15 @@ def init():
     black_img = load_image('Images/black.png')
 
     # 기존 충돌 설정 유지
-    game_world.add_collision_pair('hero:item', hero, None)
+    game_world.add_collision_pair('hero:item', common.hero, None)
 
     item_spawner = ItemSpawner(init_spawn_interval=1.5)
 
 def update():
-    global ageui, hero, item_spawner
+    global ageui, item_spawner
 
-    # 기존 나이 UI 로직 그대로 유지
-    # if hero.age == 1:
-    #     if not age1uis:
-    #         age1uis = [Age1ui(i) for i in uilist.age1uiname]
-    #         game_world.add_objects(age1uis, 1)
-    # else:
-    #     if age1uis:
-    #         for ui in age1uis:
-    #             try:
-    #                 game_world.remove_object(ui)
-    #             except ValueError:
-    #                 pass
-    #         age1uis = None
-    ageui.update(hero.age)
-    item_spawner.update(hero,background)
+    ageui.update(common.hero.age)
+    item_spawner.update(common.hero,common.background)
 
     game_world.update()
     game_world.handle_collisions()
