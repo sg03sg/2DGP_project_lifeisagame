@@ -71,7 +71,7 @@ def update():
                     pass
             age1uis = None
 
-    item_spawner.update(hero)
+    item_spawner.update(hero,background)
 
     game_world.update()
     game_world.handle_collisions()

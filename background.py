@@ -15,7 +15,7 @@ PIXEL_PER_METER = (10.0 / 1.7)  # 방 사진 크기/3 = 170 pixel = 약300 cm
 RUN_SPEED_KMPH = 22.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER) *2
 
 # 아래쪽을 얼마나 띄울지(바닥 여유) - 필요시 조절
 BOTTOM_OFFSET = 100
@@ -51,6 +51,8 @@ class Background:
         self.base_scale = SCREEN_WIDTH / float(self.frame_w[0])
         self.display_speed = RUN_SPEED_PPS * self.base_scale  # 화면상에서 고정된 픽셀/초 속도
 
+        self.hero_stage =0
+
     def update(self):
         scale = SCREEN_WIDTH / float(self.frame_w[self.stage])
         # 화면 기준 고정 속도(display_speed)를 원본 픽셀(offset) 단위로 변환
@@ -65,6 +67,7 @@ class Background:
         if self.hero_pos >= self.total_w[self.stage]:
             self.gate[0].frame_move = True
             self.hero_pos = 0
+            self.hero_stage = (self.hero_stage+1) % len(self.images)
             next_stage = (self.stage + 1) % len(self.images)
             if self.logic_stage_age[self.stage] != self.logic_stage_age[next_stage]:
                 play_mode.hero.age = (play_mode.hero.age+1) % 3

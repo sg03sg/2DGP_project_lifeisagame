@@ -28,6 +28,8 @@ class ItemSpawner:
             [25, 25, 25, 25],      # age 2 : study / paint / soccer / music
         ]
 
+        self.stop = False
+
         # 현재 필드에 존재하는 아이템들 저장용
         self.exist_items = []
 
@@ -117,8 +119,13 @@ class ItemSpawner:
         self.y_spawn_times[index] = now + interval
 
 
-    def update(self, hero):
+    def update(self, hero,background):
         age = hero.age
+        self.pause(background.hero_stage)
+
+        if self.stop:
+            self.clear()
+            return
 
         # 나이가 바뀌었으면 그에 맞게 정리+타이머 초기화
         if age != self.last_age:
@@ -180,3 +187,9 @@ class ItemSpawner:
         #     [0 for _ in per_age_limits]
         #     for per_age_limits in self.itemlist.max_item_count
         # ]
+
+    def pause(self,stage):
+        if stage == 2:
+            self.stop = True
+        else:
+            self.stop = False
