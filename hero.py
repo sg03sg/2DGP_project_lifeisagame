@@ -177,6 +177,9 @@ class Hero:
         self.kinder = 0
         self.artistic = 0
 
+        #직업
+        self.job = {0: 'no_job', 1:'study', 2 : 'paint', 3 : 'music', 4 : 'soccer'}
+
         # 점프 관련 기본값 : v0^2 / (2 * |g|) <-이거 계산하면 최고 높이
         self.jump_initial_v = [1000.0,1300.0,1300.0]    # 초기 상승 속도(px/s)
         self.gravity = -2500.0         # 중력(px/s^2)
