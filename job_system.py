@@ -4,28 +4,20 @@ import common
 
 
 ## hero에서 해당 클래스 선언하고 age2아이템과 충돌했을때 해당 스텟을 관리해주는 작업을 하는 함수 1
-## age2 아이템 최종 스텟을 가지고 age3으로 넘어갈때 그에 맞는 직업을 반환하는 함수 (인덱스를 반환)
 class Job_stat:
     def __init__(self):
-        self.job_soccer = 0
-        self.job_music = 0
-        self.job_paint = 0
-        self.job_study = 0
+        self.stats = [0, 0, 0, 0]  # study, paint, music, soccer
 
     ##함수 1
     def handle_collision(self, other):
             if other.name == 'study':
-                self.job_study += 1
+                self.stats[0] += 1
             elif other.name == 'paint':
-                self.job_paint += 1
+                self.stats[1] += 1
             elif other.name == 'music':
-                self.job_music += 1
+                self.stats[2] += 1
             elif other.name == 'soccer':
-                self.job_soccer += 1
-
-    ##함수 2
-    def get_job(self):
-        pass
+                self.stats[3] += 1
 
 ## 선택 가능 직업변수
 ## 함수1:직업 관련 아이템의 획득 갯수를 가지고 max_item보다 크거나 같다면 선택할 수 있는 직업을 가지게 해줌
@@ -36,15 +28,19 @@ class Job_select:
         self.select = False
         self.index = 0 # 현재 직업 인덱스
         self.wait_time = get_time()
+        self.selectable_jobs = []  # 선택 가능한 직업들
+
 
     def compare_item_count(self, max_item_counts):
-        self.selectable_jobs = []  # 선택 가능한 직업들
+        for i,v in enumerate(max_item_counts):
+            if v <= self.job_item_stat.stats[i]:
+                self.selectable_jobs.append(v)
         pass
 
     def get_job(self,job):
         self.now_job = job
         if self.select:
-            common.hero.job
+            common.hero.job = job
         pass
 
     def update(self):
@@ -61,6 +57,8 @@ class Job_select:
     def draw(self):
         pass
 
+    def select_collision(self):
+        self.select = True
 
 
 

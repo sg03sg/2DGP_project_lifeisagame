@@ -194,13 +194,13 @@ class Age2ui:
 
     def update(self):
         if self.num == 0:
-            self.count = common.job_stat.job_study
+            self.count = common.job_stat.stats[self.num]
         elif self.num == 1:
-            self.count = common.job_stat.job_paint
+            self.count = common.job_stat.stats[self.num]
         elif self.num == 2:
-            self.count = common.job_stat.job_music
+            self.count = common.job_stat.stats[self.num]
         elif self.num == 3:
-            self.count = common.job_stat.job_soccer
+            self.count = common.job_stat.stats[self.num]
 
     def draw(self):
         # 아이콘
