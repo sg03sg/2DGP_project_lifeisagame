@@ -9,3 +9,6 @@ age1uiname = ['smart', 'baby', 'painting']
 age2uiname = ['study', 'paint', 'music', 'soccer']
 age1ui_max_count = [9, 3, 3]
 age2ui_max_count = [9, 9, 9, 9]
+
+##-------------------------------------------
+job = {0: 'no_job', 1:'study', 2 : 'paint', 3 : 'music', 4 : 'soccer'}
