@@ -4,6 +4,7 @@ import random
 from background import Background
 from hero import Hero
 from item_spawner import ItemSpawner
+from pause import Pause_test
 from item import Item
 from ui import Ui, Skillui, Ageui
 
@@ -13,7 +14,6 @@ import savelist
 import common
 
 
-item_spawner = None
 black_img = None
 ageui = None
 
@@ -28,13 +28,15 @@ def handle_events():
             common.hero.handle_event(event)
 
 def init():
-    global black_img, item_spawner, ageui
+    global black_img, ageui
 
     common.background = Background()
     game_world.add_object(common.background, 0)
 
     common.hero = Hero()
     game_world.add_object(common.hero, 1)
+
+    common.pause_test = Pause_test(common.pause_def,common.hero.age)
 
     ageui = Ageui(common.hero.age)
 
@@ -51,14 +53,16 @@ def init():
     # 기존 충돌 설정 유지
     game_world.add_collision_pair('hero:item', common.hero, None)
 
-    item_spawner = ItemSpawner(init_spawn_interval=1.5)
+    common.item_spawner = ItemSpawner(init_spawn_interval=1.5)
 
 def update():
-    global ageui, item_spawner
+    global ageui
 
     ageui.update(common.hero.age)
-    item_spawner.update(common.hero,common.background)
+    common.pause_test.update(common.hero)
+    # pause 상태를 먼저 반영해서 item_spawner.update에서 즉시 적용되게 함
 
+    common.item_spawner.update(common.hero)
     game_world.update()
     game_world.handle_collisions()
 
@@ -72,9 +76,8 @@ def draw():
     update_canvas()
 
 def finish():
-    global item_spawner
-    if item_spawner:
-        item_spawner.clear()
+    if common.item_spawner:
+        common.item_spawner.clear()
     game_world.clear()
 
 def pause():

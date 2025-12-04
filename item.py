@@ -29,6 +29,8 @@ class Item:
         self.xv = -self.speed  # x 축 속도
         self.size = [40,40,60]
 
+        self.stop = False
+
     def get_bb(self):
         s = self.size[self.age] // 2
         return self.x - s, self.y - s, self.x + s, self.y + s
@@ -47,7 +49,7 @@ class Item:
     def handle_collision(self,group, other):
         if group == 'hero:item':
             game_world.remove_object(self)
-            play_mode.item_spawner.exist_items.remove(self)
+            common.item_spawner.exist_items.remove(self)
             if self.age == 2:
                 common.job_stat.handle_collision(self)
                 return
@@ -58,11 +60,12 @@ class Item:
 
 
     def update(self):
+        if self.stop:
+            return
         # 위치 업데이트
         self.x += self.xv * game_framework.frame_time
         if self.x <= 0:
             game_world.remove_object(self)
-            play_mode.item_spawner.exist_items.remove(self)
-
+            common.item_spawner.exist_items.remove(self)
 
 

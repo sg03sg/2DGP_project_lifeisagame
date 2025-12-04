@@ -197,8 +197,12 @@ class Hero:
              }
         )
 
+        self.stop = False
+
 
     def update(self):
+        if self.stop:
+            return
         self.state_machine.update()
 
     def get_bb(self):

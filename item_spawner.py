@@ -4,6 +4,7 @@ import game_world
 import game_framework
 from item import Item
 import savelist
+import common
 
 
 class ItemSpawner:
@@ -93,6 +94,7 @@ class ItemSpawner:
 
         # 모든 아이템이 limit에 도달했을때 예외처리
         if not no_limit_items:
+            print('yes')
             return None
 
         # 후보 아이템들의 확률만 모아서 다시 가중치 적용
@@ -119,18 +121,16 @@ class ItemSpawner:
         self.y_spawn_times[index] = now + interval
 
 
-    def update(self, hero,background):
-        age = hero.age
-        self.pause(background.hero_stage)
-
+    def update(self, hero):
         if self.stop:
-            self.clear()
+            print('stop')
             return
+
+        age = hero.age
 
         # 나이가 바뀌었으면 그에 맞게 정리+타이머 초기화
         if age != self.last_age:
             self.reset_for_age(age)
-
         # 해당 age에 대한 y 위치 정보가 없으면 할 일 없음
         if age >= len(savelist.item_pos):
             return
@@ -162,6 +162,7 @@ class ItemSpawner:
             game_world.add_collision_pair('hero:item', None, item)
             self.exist_items.append(item)
 
+
             # 지금까지 소환된 해당 아이템의 갯수 +1
             self.item_spawn_count[age][item_index] += 1
 
@@ -187,9 +188,3 @@ class ItemSpawner:
         #     [0 for _ in per_age_limits]
         #     for per_age_limits in savelist.max_item_count
         # ]
-
-    def pause(self,stage):
-        if stage == 2:
-            self.stop = True
-        else:
-            self.stop = False
