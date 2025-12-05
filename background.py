@@ -77,6 +77,8 @@ class Background:
                 common.hero.age = (common.hero.age+1) % 3
             if not common.hero.state_machine.cur_state == common.hero.jump:
                 common.hero.y = 150 + int((common.hero.tall[common.hero.age]-100)//2)
+            common.pause_test.update(common.hero)
+
         # 반복 모드: offset이 여러 스테이지를 그림
         if self.loop:
             while self.offset >= self.total_w[self.stage]:

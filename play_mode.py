@@ -4,6 +4,7 @@ import random
 from background import Background
 from hero import Hero
 from item_spawner import ItemSpawner
+from job_system import Job_select
 from pause import Pause_test
 from item import Item
 from ui import Ui, Skillui, Ageui
@@ -36,8 +37,6 @@ def init():
     common.hero = Hero()
     game_world.add_object(common.hero, 1)
 
-    common.pause_test = Pause_test(common.pause_def,common.hero.age)
-
     ageui = Ageui(common.hero.age)
 
     skills = [Skillui(i) for i in savelist.skillname]
@@ -49,6 +48,7 @@ def init():
     game_world.add_object(happy, 1)
 
     black_img = load_image('Images/black.png')
+    common.job_select = Job_select()
 
     # 기존 충돌 설정 유지
     game_world.add_collision_pair('hero:item', common.hero, None)
@@ -59,12 +59,15 @@ def update():
     global ageui
 
     ageui.update(common.hero.age)
-    common.pause_test.update(common.hero)
-    # pause 상태를 먼저 반영해서 item_spawner.update에서 즉시 적용되게 함
 
     common.item_spawner.update(common.hero)
     game_world.update()
     game_world.handle_collisions()
+
+    if common.pause_test.select_job:
+        import select_job_mode
+        game_framework.push_mode(select_job_mode)
+        return
 
 def draw():
     clear_canvas()

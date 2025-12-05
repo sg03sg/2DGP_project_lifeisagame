@@ -4,19 +4,16 @@ class Pause_test:
     def __init__(self, pause_def,age = 0):
         self.pause_def = pause_def
         self.break_map = False
-        self.select_job = False
+        self.do_select_job = False
         self.last_age = age
 
     def update(self,age):
         if self.last_age == 2 and age == 3:
-            self.select_job = True
-
-        if self.select_job:
-            self.pause_def.pause_game_switch()
-            ## 직업선택 모드 진입 코드 추가예정
+            self.do_select_job = True
+            self.last_age = 3
+            common.hero.age = 2  # 직업선택 모드 진입 전까지 age 고정
             return
-        elif self.select_job == False and self.break_map == False:
-            self.pause_def.resume_game_switch()
+        self.last_age = age
 
         print(f'{common.background.map_idx}')
         if common.background.map_idx == 2:
@@ -28,8 +25,6 @@ class Pause_test:
             self.pause_def.pause_item_and_clear()
         else:
             self.pause_def.resume_item()
-
-        print('pause_item after:', common.item_spawner.stop, id(common.item_spawner))
 
 
 
