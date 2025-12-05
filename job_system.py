@@ -1,6 +1,7 @@
 from pico2d import *
 
 import common
+import pause
 
 with open('Json/select_job_data.json', 'r', encoding='utf-8') as f:
     sel_job_data = json.load(f)

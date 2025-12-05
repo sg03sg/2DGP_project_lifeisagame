@@ -11,13 +11,19 @@ class Pause_test:
         if self.last_age == 2 and age == 3:
             self.select_job = True
 
+        if self.select_job:
+            self.pause_def.pause_game_switch()
+            ## 직업선택 모드 진입 코드 추가예정
+            return
+        elif self.select_job == False and self.break_map == False:
+            self.pause_def.resume_game_switch()
+
         print(f'{common.background.map_idx}')
         if common.background.map_idx == 2:
             self.break_map = True
         else:
             self.break_map = False
 
-        # print(f'{self.break_map}')
         if self.break_map:
             self.pause_def.pause_item_and_clear()
         else:
@@ -25,10 +31,7 @@ class Pause_test:
 
         print('pause_item after:', common.item_spawner.stop, id(common.item_spawner))
 
-        # if self.select_job:
-        #     self.pause_def.pause_game_switch()
-        # else:
-        #     self.pause_def.resume_game_switch()
+
 
 class Pause:
     def pause_item_and_clear(self):
