@@ -2,6 +2,7 @@ from pico2d import *
 
 import common
 import pause
+import game_framework
 
 with open('Json/select_job_data.json', 'r', encoding='utf-8') as f:
     sel_job_data = json.load(f)
@@ -44,8 +45,9 @@ class Job_select:
         pass
 
     def get_job(self):
-        if self.select:
-            common.hero.job = self.now_job
+        common.hero.job = self.now_job
+
+        game_framework.pop_mode()
         pass
 
     def update(self):
@@ -56,15 +58,11 @@ class Job_select:
             self.index = (self.index + 1) % max
             wait_time = time
         self.now_job = self.selectable_jobs[self.index]
-        self.get_job()
         pass
 
     def draw(self):
         sel_job = sel_job_data['sprites'][self.now_job]
         self.image.clip_draw(int(sel_job["x"]),int(sel_job['y']),int(sel_job["width"]),int(sel_job["height"]),self.x,self.y,100,90)
-
-    def select_collision(self):
-        self.select = True
 
 
 

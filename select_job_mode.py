@@ -14,6 +14,8 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_TAB:
+            common.job_select.get_job()
 
 def update():
     common.job_select.update()
@@ -25,7 +27,7 @@ def draw():
 def finish():
     common.pause_def.resume_game_switch()  # 게임 재개
     common.hero.age = 3  # 직업 선택 모드 종료 후 age 변경
-    ##최종직업 주기(common.hero)
 
 def pause(): pass
+
 def resume(): pass

@@ -49,6 +49,7 @@ def init():
 
     black_img = load_image('Images/black.png')
     common.job_select = Job_select()
+    common.pause_test = Pause_test(common.pause_def)
 
     # 기존 충돌 설정 유지
     game_world.add_collision_pair('hero:item', common.hero, None)
@@ -64,7 +65,7 @@ def update():
     game_world.update()
     game_world.handle_collisions()
 
-    if common.pause_test.select_job:
+    if common.pause_test.do_select_job:
         import select_job_mode
         game_framework.push_mode(select_job_mode)
         return
