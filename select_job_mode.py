@@ -92,15 +92,15 @@ def finish():
     job = common.hero.job  # 0~4
 
     if job == 0: # 무직
-        common.background.stage_order += [5,4,11,12,13,5,13]
+        common.background.stage_order += [5,4,11,12,13,5,13,14,15]
     elif job == 1:  # 직장인
-        common.background.stage_order += [6,4,11,12,13,6,13]
+        common.background.stage_order += [6,4,11,12,13,6,13,14,15]
     elif job == 2:  # 화가
-        common.background.stage_order += [7,4,11,12,13,7,13]
+        common.background.stage_order += [7,4,11,12,13,7,13,14,15]
     elif job == 3:  # 음악가
-        common.background.stage_order += [8,4,11,12,13,8,13]
+        common.background.stage_order += [8,4,11,12,13,8,13,14,15]
     elif job == 4:  # 축구선수
-        common.background.stage_order += [9,4,11,12,13,9,13]
+        common.background.stage_order += [9,4,11,12,13,9,13,14,15]
 
     apply_job_resources(job)
 

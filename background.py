@@ -27,10 +27,11 @@ def screen_speed(frame_width):
 class Background:
     def __init__(self, filenames=None, loop=True):
         if filenames is None:
-            ##청년맵 == 6부터 10
+            ##청년맵 == 5부터 9, 결혼 관련 맵 10부터 12, 중년 브릿지맵: 13, 집 상점맵 14, 노년 브릿지맵 15
             filenames = ['Images/Babyroom_demo.png','Images/childroom.png','Images/hobby_map.png', 'Images/student_map.png','Images/adult_bridge_map.png',
                          'Images/no_job_map.png','Images/office_map.png','Images/art_map.png','Images/musician_map.png','Images/soccer_map.png',
-                         'Images/merry_bridge_map.png','Images/merry_shop_map.png','Images/merry_map.png','Images/middle_bridge_map.png']
+                         'Images/merry_bridge_map.png','Images/merry_shop_map.png','Images/merry_map.png','Images/middle_bridge_map.png',
+                         'Images/house_shop_map.png','Images/old_bridge_map.png']
         self.images = [load_image(f) for f in filenames]
         # 각 이미지 별 프레임 수(픽셀 240으로 분할한 값)와 그에 따른 폭/높이/총폭을 각각 계산
         self.frame_count = [img.w // 240 if img.w >= 240 else 1 for img in self.images]
@@ -40,7 +41,7 @@ class Background:
         self.map_total_w = list(itertools.accumulate(self.total_w))
 
         self.stage = 0
-        self.logic_stage_age = [0, 1, 2, 2, 3, 3, 3, 3, 3, 4, 4]
+        self.logic_stage_age = [0, 1, 2, 2, 3, 3, 3, 3, 3, 4, 4,4,4,5,5]
         self.stage_order = [0, 1, 2, 3, 4]
 
         self.offset = 0.0
