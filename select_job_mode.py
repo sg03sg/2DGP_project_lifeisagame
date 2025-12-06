@@ -2,6 +2,7 @@ from pico2d import *
 import game_framework
 import common
 import play_mode
+import itertools
 
 def init():
     common.pause_def.pause_game_switch()  # 배경/캐릭터/아이템 stop = freeze
@@ -61,6 +62,10 @@ def apply_job_resources(job_num):
 
     h.scale_hero_def(h.scale_hero)
 
+    bg = common.background
+    bg.map_total_w = list(itertools.accumulate(bg.total_w[i] for i in bg.stage_order))
+    bg.gate_pos = [total - bg.frame_w[i] for i, total in zip(bg.stage_order, bg.map_total_w)]
+
 # 방향키/스페이스로 직업 선택
 def handle_events():
     event_list = get_events()
@@ -85,15 +90,15 @@ def finish():
     job = common.hero.job  # 0~4
 
     if job == 0: # 무직
-        common.background.stage_order += [5]
+        common.background.stage_order += [5,10,11,12,13,5]
     elif job == 1:  # 직장인
-        common.background.stage_order += [6]
+        common.background.stage_order += [6,10,11,12,6]
     elif job == 2:  # 화가
-        common.background.stage_order += [7]
+        common.background.stage_order += [7,10,11,12,7]
     elif job == 3:  # 음악가
-        common.background.stage_order += [8]
+        common.background.stage_order += [8,10,11,12,8]
     elif job == 4:  # 축구선수
-        common.background.stage_order += [9]
+        common.background.stage_order += [9,10,11,12,9]
 
     apply_job_resources(job)
 
