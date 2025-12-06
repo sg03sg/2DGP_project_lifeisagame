@@ -80,7 +80,7 @@ class Background:
             self.map_idx = (self.map_idx+1) % len(self.stage_order)
             next_stage = (self.stage + 1) % len(self.stage_order)
             if self.logic_stage_age[self.stage] != self.logic_stage_age[next_stage]:
-                common.hero.age = (common.hero.age+1) % 4
+                common.hero.age = (common.hero.age+1) % 5
             if not common.hero.state_machine.cur_state == common.hero.jump:
                 common.hero.y = 150 + int((common.hero.tall[common.hero.age]-100)//2)
             common.pause_test.update(common.hero.age)

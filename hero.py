@@ -165,12 +165,12 @@ class Hero:
         self.walk_images = [load_image(f) for f in walk_filename]
         self.jump_images = [load_image(f) for f in jump_filename]
 
-        self.tall = [100,140,230,260]  # 각 나이대별 키
-        self.side_size = [100,120,150,160]  # 각 나이대별 옆 크기
+        self.tall = [100,140,230,260,260]  # 각 나이대별 키
+        self.side_size = [100,120,150,160,160]  # 각 나이대별 옆 크기
         self.age = 0
 
-        self.walk_frame_counts = [6,6,6,6]
-        self.jump_frame_counts = [3,5,5]
+        self.walk_frame_counts = [6,6,6,6,6]
+        self.jump_frame_counts = [3,5,5,5]
         self.x,self.y = 640,150
         self.frame = -1
         self.y_frame =-1
@@ -186,7 +186,7 @@ class Hero:
         self.job = 0
 
         # 점프 관련 기본값 : v0^2 / (2 * |g|) <-이거 계산하면 최고 높이
-        self.jump_initial_v = [1000.0,1300.0,1300.0,1300.0]    # 초기 상승 속도(px/s)
+        self.jump_initial_v = [1000.0,1300.0,1300.0,1300.0,1200.0]    # 초기 상승 속도(px/s)
         self.gravity = -2500.0         # 중력(px/s^2)
         self.jump_vy = 0.0
 

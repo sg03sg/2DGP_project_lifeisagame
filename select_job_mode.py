@@ -12,34 +12,34 @@ def init():
 def apply_job_resources(job_num):
     job_data = {
         0: {
-            "walk_img": 'Images/no_job_run.png',
-            "jump_img": 'Images/no_job_jump.png',
-            "walk_json": 'Json/no_job_run_data.json',
-            "jump_json": 'Json/no_job_jump_data.json',
+            "walk_img": ['Images/no_job_run.png', 'Images/middle_no_job_run.png'],
+            "jump_img": ['Images/no_job_jump.png', 'Images/middle_no_job_jump.png'],
+            "walk_json": ['Json/no_job_run_data.json', 'Json/middle_no_job_run_data.json'],
+            "jump_json": ['Json/no_job_jump_data.json', 'Json/middle_no_job_jump_data.json'],
         },
         1: {
-            "walk_img": 'Images/officer_run.png',
-            "jump_img": 'Images/officer_jump.png',
-            "walk_json": 'Json/officer_run_data.json',
-            "jump_json": 'Json/officer_jump_data.json',
+            "walk_img": ['Images/officer_run.png', 'Images/middle_officer_run.png'],
+            "jump_img": ['Images/officer_jump.png', 'Images/middle_officer_jump.png'],
+            "walk_json": ['Json/officer_run_data.json', 'Json/middle_officer_run_data.json'],
+            "jump_json": ['Json/officer_jump_data.json', 'Json/middle_officer_jump_data.json'],
         },
         2: {
-            "walk_img": 'Images/art_run.png',
-            "jump_img": 'Images/art_jump.png',
-            "walk_json": 'Json/art_run_data.json',
-            "jump_json": 'Json/art_jump_data.json',
+            "walk_img": ['Images/art_run.png', 'Images/middle_art_run.png'],
+            "jump_img": ['Images/art_jump.png', 'Images/middle_art_jump.png'],
+            "walk_json": ['Json/art_run_data.json', 'Json/middle_art_run_data.json'],
+            "jump_json": ['Json/art_jump_data.json', 'Json/middle_art_jump_data.json'],
         },
         3: {
-            "walk_img": 'Images/musician_run.png',
-            "jump_img": 'Images/musician_jump.png',
-            "walk_json": 'Json/musician_run_data.json',
-            "jump_json": 'Json/musician_jump_data.json',
+            "walk_img": ['Images/musician_run.png', 'Images/middle_musician_run.png'],
+            "jump_img": ['Images/musician_jump.png', 'Images/middle_musician_jump.png'],
+            "walk_json": ['Json/musician_run_data.json', 'Json/middle_musician_run_data.json'],
+            "jump_json": ['Json/musician_jump_data.json', 'Json/middle_musician_jump_data.json'],
         },
         4: {
-            "walk_img": 'Images/soccer_run.png',
-            "jump_img": 'Images/soccer_jump.png',
-            "walk_json": 'Json/soccer_run_data.json',
-            "jump_json": 'Json/soccer_jump_data.json',
+            "walk_img": ['Images/soccer_run.png', 'Images/middle_soccer_run.png'],
+            "jump_img": ['Images/soccer_jump.png', 'Images/middle_soccer_jump.png'],
+            "walk_json": ['Json/soccer_run_data.json', 'Json/middle_soccer_run_data.json'],
+            "jump_json": ['Json/soccer_jump_data.json', 'Json/middle_soccer_jump_data.json'],
         },
     }
 
@@ -48,17 +48,19 @@ def apply_job_resources(job_num):
     hero = common.hero
 
     # Hero 이미지 등록
-    hero.walk_images.append(load_image(info["walk_img"]))
-    hero.jump_images.append(load_image(info["jump_img"]))
+    for fn in range(2):
+        hero.walk_images.append(load_image(info["walk_img"][fn]))
+        hero.jump_images.append(load_image(info["jump_img"][fn]))
 
     # JSON 데이터 등록
     import json
     import hero as h
-    with open(info["walk_json"], 'r', encoding='utf-8') as f:
-        h.hero_rounding_box_data.append(json.load(f))
+    for fn in range(2):
+        with open(info["walk_json"][fn], 'r', encoding='utf-8') as f:
+            h.hero_rounding_box_data.append(json.load(f))
 
-    with open(info["jump_json"], 'r', encoding='utf-8') as f:
-        h.hero_jump_rounding_box_data.append(json.load(f))
+        with open(info["jump_json"][fn], 'r', encoding='utf-8') as f:
+            h.hero_jump_rounding_box_data.append(json.load(f))
 
     h.scale_hero_def(h.scale_hero)
 
@@ -90,15 +92,15 @@ def finish():
     job = common.hero.job  # 0~4
 
     if job == 0: # 무직
-        common.background.stage_order += [5,10,11,12,13,5]
+        common.background.stage_order += [5,4,11,12,13,5,13]
     elif job == 1:  # 직장인
-        common.background.stage_order += [6,10,11,12,6]
+        common.background.stage_order += [6,4,11,12,13,6,13]
     elif job == 2:  # 화가
-        common.background.stage_order += [7,10,11,12,7]
+        common.background.stage_order += [7,4,11,12,13,7,13]
     elif job == 3:  # 음악가
-        common.background.stage_order += [8,10,11,12,8]
+        common.background.stage_order += [8,4,11,12,13,8,13]
     elif job == 4:  # 축구선수
-        common.background.stage_order += [9,10,11,12,9]
+        common.background.stage_order += [9,4,11,12,13,9,13]
 
     apply_job_resources(job)
 
