@@ -1,0 +1,49 @@
+{
+    "sprites": [
+        {
+            "name": "middle_soccer_jump_0",
+            "x": 280.0,
+            "y": 0.0,
+            "width": 96.0,
+            "height": 146.0,
+            "pivotX": 48.0,
+            "pivotY": 73.0
+        },
+        {
+            "name": "middle_soccer_jump_1",
+            "x": 141.0,
+            "y": 2.0,
+            "width": 136.0,
+            "height": 98.0,
+            "pivotX": 68.0,
+            "pivotY": 49.0
+        },
+        {
+            "name": "middle_soccer_jump_3",
+            "x": 379.0,
+            "y": 2.0,
+            "width": 136.0,
+            "height": 98.0,
+            "pivotX": 68.0,
+            "pivotY": 49.0
+        },
+        {
+            "name": "middle_soccer_jump_4",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 136.0,
+            "height": 98.0,
+            "pivotX": 68.0,
+            "pivotY": 49.0
+        },
+        {
+            "name": "middle_soccer_jump_5",
+            "x": 516.0,
+            "y": 0.0,
+            "width": 71.0,
+            "height": 144.0,
+            "pivotX": 35.5,
+            "pivotY": 72.0
+        }
+    ]
+}

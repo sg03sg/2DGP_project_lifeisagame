@@ -1,0 +1,58 @@
+{
+    "sprites": [
+        {
+            "name": "middle_misic_run_11",
+            "x": 465.0,
+            "y": 2.0,
+            "width": 60.0,
+            "height": 150.0,
+            "pivotX": 30.0,
+            "pivotY": 75.0
+        },
+        {
+            "name": "middle_misic_run_12",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 112.0,
+            "height": 146.0,
+            "pivotX": 56.0,
+            "pivotY": 73.0
+        },
+        {
+            "name": "middle_misic_run_13",
+            "x": 236.0,
+            "y": 2.0,
+            "width": 79.0,
+            "height": 147.0,
+            "pivotX": 39.5,
+            "pivotY": 73.5
+        },
+        {
+            "name": "middle_misic_run_14",
+            "x": 317.0,
+            "y": 2.0,
+            "width": 70.0,
+            "height": 150.0,
+            "pivotX": 35.0,
+            "pivotY": 75.0
+        },
+        {
+            "name": "middle_misic_run_15",
+            "x": 117.0,
+            "y": 2.0,
+            "width": 116.0,
+            "height": 146.0,
+            "pivotX": 58.0,
+            "pivotY": 73.0
+        },
+        {
+            "name": "middle_misic_run_16",
+            "x": 390.0,
+            "y": 2.0,
+            "width": 72.0,
+            "height": 148.0,
+            "pivotX": 36.0,
+            "pivotY": 74.0
+        }
+    ]
+}
