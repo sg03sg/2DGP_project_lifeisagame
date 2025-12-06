@@ -29,7 +29,8 @@ class Background:
         if filenames is None:
             ##청년맵 == 6부터 10
             filenames = ['Images/Babyroom_demo.png','Images/childroom.png','Images/hobby_map.png', 'Images/student_map.png','Images/adult_bridge_map.png',
-                         'Images/no_job_map.png','Images/office_map.png','Images/art_map.png','Images/musician_map.png','Images/soccer_map.png']
+                         'Images/no_job_map.png','Images/office_map.png','Images/art_map.png','Images/musician_map.png','Images/soccer_map.png',
+                         'Images/merry_bridge_map.png']
         self.images = [load_image(f) for f in filenames]
         # 각 이미지 별 프레임 수(픽셀 170으로 분할한 값)와 그에 따른 폭/높이/총폭을 각각 계산
         self.frame_count = [img.w // 170 if img.w >= 240 else 1 for img in self.images]
@@ -50,7 +51,7 @@ class Background:
 
         self.gate_pos = [total_pos - end_frame  for total_pos,end_frame in zip(self.map_total_w, self.frame_w)]
         self.gate = []
-        self.gate_exist = [False for _ in range(len(self.stage_order))]
+        self.gate_exist = [False for _ in range(len(self.logic_stage_age))]
 
         self.base_scale = SCREEN_WIDTH / float(self.frame_w[0])
         self.display_speed = RUN_SPEED_PPS * self.base_scale  # 화면상에서 고정된 픽셀/초 속도
@@ -100,7 +101,7 @@ class Background:
     def gate_make(self):
         cur_idx = self.stage_order[self.stage]
         g_pos = self.gate_pos[cur_idx]
-        if g_pos <= self.total_run <= self.map_total_w[cur_idx] + float(gate.gate_size / 2) and not self.gate_exist[cur_idx]:
+        if g_pos <= self.total_run <= self.map_total_w[cur_idx] + float(gate.gate_size / 2) and not self.gate_exist[self.stage]:
             self.gate_exist[cur_idx] = True
             new_gate = gate.Gate() if cur_idx != 0 else gate.Door()
             self.gate.append(new_gate)

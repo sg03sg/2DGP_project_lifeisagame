@@ -79,6 +79,14 @@ def draw():
     game_world.draw()
     update_canvas()
 
+def draw_another_mode():
+    if black_img:
+        black_img.draw(get_canvas_width()//2, get_canvas_height()//2,
+                       get_canvas_width(), get_canvas_height())
+    ageui.draw()
+    game_world.draw()
+
+
 def finish():
     if common.item_spawner:
         common.item_spawner.clear()

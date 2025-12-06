@@ -3,6 +3,7 @@ from pico2d import *
 import common
 import pause
 import game_framework
+import savelist
 
 with open('Json/select_job_data.json', 'r', encoding='utf-8') as f:
     sel_job_data = json.load(f)
@@ -36,6 +37,9 @@ class Job_select:
         self.index = 0 # 현재 직업 인덱스
         self.wait_time = get_time()
         self.selectable_jobs = []  # 선택 가능한 직업들
+        self.now_job = -1
+
+        self.compare = False  # 비교 함수가 실행되었는지 여부
 
 
     def compare_item_count(self, max_item_counts):
@@ -45,22 +49,34 @@ class Job_select:
         pass
 
     def get_job(self):
-        common.hero.job = self.now_job
+        common.hero.job = self.now_job + 1  # 직업 설정
 
         game_framework.pop_mode()
         pass
 
     def update(self):
-        self.compare_item_count(self.job_item_stat.count)
-        max = len(self.selectable_jobs)
+        if not self.compare:
+            self.compare = True
+            self.compare_item_count(savelist.age2ui_max_count)
+            self.max = len(self.selectable_jobs)
+            if self.max ==0:
+                game_framework.pop_mode()
+                return
+            elif self.max == 1:
+                common.hero.job = self.selectable_jobs[0] + 1
+                game_framework.pop_mode()
+                return
         time = get_time()
         if time - self.wait_time > 1:
-            self.index = (self.index + 1) % max
-            wait_time = time
+            self.index = (self.index + 1) % self.max
+            self.wait_time = time
         self.now_job = self.selectable_jobs[self.index]
+        print(self.now_job)
         pass
 
     def draw(self):
+        if self.now_job == -1:
+            return
         sel_job = sel_job_data['sprites'][self.now_job]
         self.image.clip_draw(int(sel_job["x"]),int(sel_job['y']),int(sel_job["width"]),int(sel_job["height"]),self.x,self.y,100,90)
 
