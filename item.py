@@ -20,7 +20,7 @@ class Item:
 
         self.age = age
         self.num = num
-        name = [['babymilk'],['smart'],['study','paint','music','soccer']]
+        name = [['babymilk'],['smart'],['study','paint','music','soccer'],['cigarette','money','hambuger','pizza','hotdog','ramen','dumbel']]
         self.name = name[age][num]
         self.images = [load_image(f) for f in filename]
         self.x = 1300

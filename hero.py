@@ -17,10 +17,16 @@ with open('Json/walk_boy1_data.json', 'r', encoding='utf-8') as f:
 with open('Json/student_run1_data.json', 'r', encoding='utf-8') as f:
     hero_rounding_box_data.append(json.load(f))
 
+with open('Json/officer_run_data.json', 'r', encoding='utf-8') as f:
+    hero_rounding_box_data.append(json.load(f))
+
 with open('Json/jump_boy_data.json', 'r', encoding='utf-8') as f:
     hero_jump_rounding_box_data.append(json.load(f))
 
 with open('Json/stu_jump_data.json', 'r', encoding='utf-8') as f:
+    hero_jump_rounding_box_data.append(json.load(f))
+
+with open('Json/officer_jump_data.json', 'r', encoding='utf-8') as f:
     hero_jump_rounding_box_data.append(json.load(f))
 
 scale_hero = []
@@ -154,8 +160,8 @@ class Jump:
 class Hero:
     def __init__(self,filename=None):
         if filename is None:
-            walk_filename = ['Images/baby_sprite_sheet.png','Images/walk_boy.png','Images/student_run.png']
-            jump_filename = ['Images/jump_boy.png','Images/stu_jump.png']
+            walk_filename = ['Images/baby_sprite_sheet.png','Images/walk_boy.png','Images/student_run.png','Images/officer_run.png']
+            jump_filename = ['Images/jump_boy.png','Images/stu_jump.png','Images/officer_jump.png']
 
         self.walk_images = [load_image(f) for f in walk_filename]
         self.jump_images = [load_image(f) for f in jump_filename]
@@ -164,8 +170,8 @@ class Hero:
         self.side_size = [100,120,150,160]  # 각 나이대별 옆 크기
         self.age = 0
 
-        self.walk_frame_counts = [6,6,6]
-        self.jump_frame_counts = [3,5]
+        self.walk_frame_counts = [6,6,6,6]
+        self.jump_frame_counts = [3,5,5]
         self.x,self.y = 640,150
         self.frame = -1
         self.y_frame =-1
@@ -178,10 +184,10 @@ class Hero:
         self.artistic = 0
 
         #직업
-        self.job = None
+        self.job = 0
 
         # 점프 관련 기본값 : v0^2 / (2 * |g|) <-이거 계산하면 최고 높이
-        self.jump_initial_v = [1000.0,1300.0,1300.0]    # 초기 상승 속도(px/s)
+        self.jump_initial_v = [1000.0,1300.0,1300.0,1300.0]    # 초기 상승 속도(px/s)
         self.gravity = -2500.0         # 중력(px/s^2)
         self.jump_vy = 0.0
 

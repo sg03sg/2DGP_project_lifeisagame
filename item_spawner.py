@@ -94,7 +94,7 @@ class ItemSpawner:
 
         # 모든 아이템이 limit에 도달했을때 예외처리
         if not no_limit_items:
-            print('yes')
+            # print('yes')
             return None
 
         # 후보 아이템들의 확률만 모아서 다시 가중치 적용

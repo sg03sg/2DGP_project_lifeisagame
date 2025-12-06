@@ -15,7 +15,6 @@ class Pause_test:
             return
         self.last_age = age
 
-        print(f'{common.background.map_idx}')
         if common.background.map_idx == 2:
             self.break_map = True
         else:
