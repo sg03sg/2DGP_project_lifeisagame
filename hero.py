@@ -178,6 +178,7 @@ class Hero:
         #ui 관련 값
         self.hp = 100
         self.happy = 50
+        self.money = 0
         self.smarter = 0
         self.kinder = 0
         self.artistic = 0

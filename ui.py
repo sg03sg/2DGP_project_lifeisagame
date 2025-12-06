@@ -247,6 +247,76 @@ class Age2ui:
                                   int(number_data['sprites'][i]["height"]),
                                   x, y, self.num_size, self.num_size)
 
+class Age3ui:
+    def __init__(self, name=None):
+        self.image = load_image("Images/ui.png")
+        self.number_img = load_image("Images/number.png")
+        self.name = name
+        self.size = 20
+        if name == 'study':
+            self.count = common.hero.smarter
+            self.json_num = 5
+            self.x, self.y = 510, 55
+            self.num = 0
+
+        self.num_size = self.size * 0.8
+        self.spacing = self.num_size // 2 + 5
+
+    def update(self):
+        if self.num == 0:
+            self.count = common.job_stat.stats[self.num]
+        elif self.num == 1:
+            self.count = common.job_stat.stats[self.num]
+        elif self.num == 2:
+            self.count = common.job_stat.stats[self.num]
+        elif self.num == 3:
+            self.count = common.job_stat.stats[self.num]
+
+    def draw(self):
+        # 아이콘
+        self.image.clip_draw(int(ui_data['sprites'][self.json_num]["x"]),
+                             int(ui_data['sprites'][self.json_num]["y"]),
+                             int(ui_data['sprites'][self.json_num]["width"]),
+                             int(ui_data['sprites'][self.json_num]["height"]),
+                             self.x, self.y, self.size, self.size)
+        # 숫자
+        x = self.x + self.size // 2 + self.spacing + 10
+        y = self.y
+        # 2자리 수일때
+        if self.count >= 10:
+            tens = self.count // 10
+            units = self.count % 10
+            self.number_img.clip_draw(int(number_data['sprites'][tens]["x"]),
+                                      int(number_data['sprites'][tens]["y"]),
+                                      int(number_data['sprites'][tens]["width"]),
+                                      int(number_data['sprites'][tens]["height"]),
+                                      x - self.spacing, y, self.num_size, self.num_size)
+            self.number_img.clip_draw(int(number_data['sprites'][units]["x"]),
+                                      int(number_data['sprites'][units]["y"]),
+                                      int(number_data['sprites'][units]["width"]),
+                                      int(number_data['sprites'][units]["height"]),
+                                      x, y, self.num_size, self.num_size)
+        # 1자리 수일때
+        else:
+            i = self.count
+            self.number_img.clip_draw(int(number_data['sprites'][i]["x"]),
+                                      int(number_data['sprites'][i]["y"]),
+                                      int(number_data['sprites'][i]["width"]),
+                                      int(number_data['sprites'][i]["height"]),
+                                      x, y, self.num_size, self.num_size)
+        x += self.spacing
+        # 슬래시
+        self.number_img.clip_draw(int(slash["x"]), int(slash["y"]), int(slash["width"]), int(slash["height"]), x, y,
+                                  self.num_size, self.num_size)
+        x += self.spacing
+        # 최대 숫자
+        i = savelist.age2ui_max_count[self.num]
+        self.number_img.clip_draw(int(number_data['sprites'][i]["x"]),
+                                  int(number_data['sprites'][i]["y"]),
+                                  int(number_data['sprites'][i]["width"]),
+                                  int(number_data['sprites'][i]["height"]),
+                                  x, y, self.num_size, self.num_size)
+
 
 
 
@@ -292,3 +362,103 @@ class Ui:
         center_x = left_edge + (dst_w / 2)
 
         self.image.clip_draw(head_img_w, 0, src_w, self.image_H, center_x, self.y, dst_w, 40)
+
+
+class Money_ui:
+    def __init__(self, name=None):
+        self.image = load_image("Images/ui.png")
+        self.number_img = load_image("Images/number.png")
+        self.name = name
+        self.size = 30
+        if name == 'coin':
+            self.count = common.hero.money
+            self.json_num = 0
+            self.x, self.y = SCREEN_WIDTH//2 + 100, SCREEN_HEIGHT -50
+            self.num = 0
+
+        self.num_size = self.size * 0.7
+        self.spacing = self.num_size // 2 + 5
+
+    def update(self):
+        self.count = common.hero.money
+
+    def draw(self):
+        # 아이콘
+        self.image.clip_draw(int(ui_data['sprites'][self.json_num]["x"]),
+                             int(ui_data['sprites'][self.json_num]["y"]),
+                             int(ui_data['sprites'][self.json_num]["width"]),
+                             int(ui_data['sprites'][self.json_num]["height"]),
+                             self.x, self.y, self.size, self.size)
+        # 숫자
+        x = self.x + self.size // 2 + self.spacing + 10
+        y = self.y
+
+        ##4자리 수일때
+        if self.count >= 1000:
+            thousands = self.count // 1000
+            hundreds = (self.count // 100) % 10
+            tens = ((self.count // 10) % 100) % 10
+            units = self.count % 10
+            self.number_img.clip_draw(int(number_data['sprites'][thousands]["x"]),
+                                      int(number_data['sprites'][thousands]["y"]),
+                                      int(number_data['sprites'][thousands]["width"]),
+                                      int(number_data['sprites'][thousands]["height"]),
+                                      x - self.spacing, y, self.num_size, self.num_size)
+            self.number_img.clip_draw(int(number_data['sprites'][hundreds]["x"]),
+                                      int(number_data['sprites'][hundreds]["y"]),
+                                      int(number_data['sprites'][hundreds]["width"]),
+                                      int(number_data['sprites'][hundreds]["height"]),
+                                      x, y, self.num_size, self.num_size)
+            self.number_img.clip_draw(int(number_data['sprites'][tens]["x"]),
+                                      int(number_data['sprites'][tens]["y"]),
+                                      int(number_data['sprites'][tens]["width"]),
+                                      int(number_data['sprites'][tens]["height"]),
+                                      x + self.spacing, y, self.num_size, self.num_size)
+            self.number_img.clip_draw(int(number_data['sprites'][units]["x"]),
+                                      int(number_data['sprites'][units]["y"]),
+                                      int(number_data['sprites'][units]["width"]),
+                                      int(number_data['sprites'][units]["height"]),
+                                      x + (2*self.spacing), y, self.num_size, self.num_size)
+
+        # 3자리 수일때
+        elif self.count >= 100:
+            hundreds = self.count // 100
+            tens = (self.count // 10) % 10
+            units = self.count % 10
+            self.number_img.clip_draw(int(number_data['sprites'][hundreds]["x"]),
+                                      int(number_data['sprites'][hundreds]["y"]),
+                                      int(number_data['sprites'][hundreds]["width"]),
+                                      int(number_data['sprites'][hundreds]["height"]),
+                                      x - self.spacing, y, self.num_size, self.num_size)
+            self.number_img.clip_draw(int(number_data['sprites'][tens]["x"]),
+                                      int(number_data['sprites'][tens]["y"]),
+                                      int(number_data['sprites'][tens]["width"]),
+                                      int(number_data['sprites'][tens]["height"]),
+                                      x , y, self.num_size, self.num_size)
+            self.number_img.clip_draw(int(number_data['sprites'][units]["x"]),
+                                      int(number_data['sprites'][units]["y"]),
+                                      int(number_data['sprites'][units]["width"]),
+                                      int(number_data['sprites'][units]["height"]),
+                                      x + self.spacing, y, self.num_size, self.num_size)
+        # 2자리 수일때
+        elif self.count >= 10:
+            tens = self.count // 10
+            units = self.count % 10
+            self.number_img.clip_draw(int(number_data['sprites'][tens]["x"]),
+                                      int(number_data['sprites'][tens]["y"]),
+                                      int(number_data['sprites'][tens]["width"]),
+                                      int(number_data['sprites'][tens]["height"]),
+                                      x - self.spacing, y, self.num_size, self.num_size)
+            self.number_img.clip_draw(int(number_data['sprites'][units]["x"]),
+                                      int(number_data['sprites'][units]["y"]),
+                                      int(number_data['sprites'][units]["width"]),
+                                      int(number_data['sprites'][units]["height"]),
+                                      x, y, self.num_size, self.num_size)
+        # 1자리 수일때
+        else:
+            i = self.count
+            self.number_img.clip_draw(int(number_data['sprites'][i]["x"]),
+                                      int(number_data['sprites'][i]["y"]),
+                                      int(number_data['sprites'][i]["width"]),
+                                      int(number_data['sprites'][i]["height"]),
+                                      x, y, self.num_size, self.num_size)

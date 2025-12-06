@@ -7,7 +7,7 @@ from item_spawner import ItemSpawner
 from job_system import Job_select
 from pause import Pause_test
 from item import Item
-from ui import Ui, Skillui, Ageui
+from ui import Ui, Skillui, Ageui, Money_ui
 
 import game_world
 import game_framework
@@ -46,6 +46,8 @@ def init():
     game_world.add_object(hp, 1)
     happy = Ui("happy", 250)
     game_world.add_object(happy, 1)
+    money = Money_ui("coin")
+    game_world.add_object(money, 1)
 
     black_img = load_image('Images/black.png')
     common.job_select = Job_select()
