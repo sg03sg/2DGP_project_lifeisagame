@@ -17,16 +17,10 @@ with open('Json/walk_boy1_data.json', 'r', encoding='utf-8') as f:
 with open('Json/student_run1_data.json', 'r', encoding='utf-8') as f:
     hero_rounding_box_data.append(json.load(f))
 
-with open('Json/officer_run_data.json', 'r', encoding='utf-8') as f:
-    hero_rounding_box_data.append(json.load(f))
-
 with open('Json/jump_boy_data.json', 'r', encoding='utf-8') as f:
     hero_jump_rounding_box_data.append(json.load(f))
 
 with open('Json/stu_jump_data.json', 'r', encoding='utf-8') as f:
-    hero_jump_rounding_box_data.append(json.load(f))
-
-with open('Json/officer_jump_data.json', 'r', encoding='utf-8') as f:
     hero_jump_rounding_box_data.append(json.load(f))
 
 scale_hero = []
