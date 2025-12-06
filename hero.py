@@ -30,10 +30,15 @@ with open('Json/officer_jump_data.json', 'r', encoding='utf-8') as f:
     hero_jump_rounding_box_data.append(json.load(f))
 
 scale_hero = []
-for i in range(len(hero_rounding_box_data)):
-    age = hero_rounding_box_data[i]['sprites']
-    x = max(frame['width'] for frame in age)
-    scale_hero.append(x)
+
+def scale_hero_def(scale_hero_arr):
+    if scale_hero_arr:
+        scale_hero_arr.clear()
+    for i in range(len(hero_rounding_box_data)):
+        age = hero_rounding_box_data[i]['sprites']
+        x = max(frame['width'] for frame in age)
+        scale_hero_arr.append(x)
+scale_hero_def(scale_hero)
 
 def space_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
@@ -160,8 +165,8 @@ class Jump:
 class Hero:
     def __init__(self,filename=None):
         if filename is None:
-            walk_filename = ['Images/baby_sprite_sheet.png','Images/walk_boy.png','Images/student_run.png','Images/officer_run.png']
-            jump_filename = ['Images/jump_boy.png','Images/stu_jump.png','Images/officer_jump.png']
+            walk_filename = ['Images/baby_sprite_sheet.png','Images/walk_boy.png','Images/student_run.png']
+            jump_filename = ['Images/jump_boy.png','Images/stu_jump.png']
 
         self.walk_images = [load_image(f) for f in walk_filename]
         self.jump_images = [load_image(f) for f in jump_filename]
