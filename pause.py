@@ -1,6 +1,6 @@
 import common
 
-break_map_idxs = [2,4,6,7,8,10,11,12,13]
+break_map_idxs = [2,4,6,7,8,9,11,12,13]
 
 class Pause_test:
     def __init__(self, pause_def,age = 0):
