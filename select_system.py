@@ -11,9 +11,12 @@ with open('Json/flower_shop_select_data.json', 'r', encoding='utf-8') as f:
     flower = json.load(f)
 with open('Json/hosue_shop_select_data.json', 'r', encoding='utf-8') as f:
     house = json.load(f)
+with open('Json/propose_woman_data.json', 'r', encoding='utf-8') as f:
+    propose = json.load(f)
 hobby_select_data = h['sprites']
 flower_shop_select_data = flower['sprites']
 house_shop_select_data = house['sprites']
+propose_woman_data = propose['sprites']
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -24,7 +27,7 @@ select_offset = 20
 ##선택 시스템 객체 게임월드에 추가를 결정하는 클래스
 class Select_System:
     def __init__(self):
-        self.selects = [Hobby(0),Hobby(1),Hobby(2), Flower_shop(0),Flower_shop(1),Flower_shop(2),Flower_shop(3), House_shop(0),House_shop(1),House_shop(2),House_shop(3)]
+        self.selects = [Hobby(0),Hobby(1),Hobby(2), Flower_shop(0),Flower_shop(1),Flower_shop(2),Flower_shop(3), House_shop(0),House_shop(1),House_shop(2),House_shop(3),Propose(0)]
 
     def select_decision(self,other):
         background = common.background
@@ -181,3 +184,46 @@ class House_shop:
                              self.x, self.y + self.h //2, w, h)
         if not self.num == 0:
             draw_rectangle(*self.get_bb())
+
+class Propose:
+    def __init__(self,num = 0):
+        self.image = load_image('Images/propose_woman.png')
+        if num == 0:
+            self.w = propose_woman_data[num]['width'] * 3.2
+            self.h = propose_woman_data[num]['height'] * 3.4
+            self.y = common.hero.y + 15
+        self.num = num
+        self.x = 1310
+        self.pos = common.background.map_total_w[10] ## 아무값이나 넣어놓기
+        self.exist = False
+
+    def select_collision(self, other):
+        left_a, bottom_a, right_a, top_a = self.get_bb()
+        left_b, bottom_b, right_b, top_b = other.get_bb()
+
+        if left_a > right_b: return False
+        if right_a < left_b: return False
+        if top_a < bottom_b: return False
+        if bottom_a > top_b: return False
+
+        return True
+
+    def get_bb(self):
+        half_w = propose_woman_data[0]['width']
+        return self.x - half_w - select_offset, BOTTOM_OFFSET , self.x + half_w+select_offset, SCREEN_HEIGHT
+
+    def update(self):
+        self.x -= common.background.display_speed * game_framework.frame_time
+        if self.x < - 55:
+            game_world.remove_object(self)
+
+    def draw(self):
+        i = self.num
+        w = self.w
+        h = self.h
+        self.image.clip_draw(int(propose_woman_data[i]["x"]),
+                             int(propose_woman_data[i]['y']),
+                             int(propose_woman_data[i]['width']),
+                             int(propose_woman_data[i]['height']),
+                             self.x, self.y + self.h //2, w, h)
+        draw_rectangle(*self.get_bb())

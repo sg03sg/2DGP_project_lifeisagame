@@ -71,6 +71,7 @@ def apply_job_resources(job_num):
 def select_item_pos(sel):
     flower = sel[3:7] # 꽃집 아이템들
     house = sel[7:11] # 집 아이템들
+    propose = sel[11] # 프러포즈 아이템
     for s in flower:
         if s.num in (0, 1):
             s.pos = common.background.map_total_w[6] - common.background.frame_w[6] + 100 + 20 * s.num
@@ -81,6 +82,8 @@ def select_item_pos(sel):
             s.pos = common.background.map_total_w[11] - common.background.frame_w[11] + 100
         else:
             s.pos = common.background.map_total_w[11] - common.background.frame_w[11] + 110 +  50 * s.num
+
+        propose.pos = common.background.map_total_w[7] - common.background.frame_w[7] + 370
 
 
 
