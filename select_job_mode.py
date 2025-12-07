@@ -107,6 +107,7 @@ def finish():
     common.pause_def.resume_game_switch()  # 게임 재개
     common.pause_test.do_select_job = False
     common.hero.age = 3  # 직업 선택 모드 종료 후 age 변경
+    common.pause_test.update(common.hero.age)
 
 def pause(): pass
 
