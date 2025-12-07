@@ -27,6 +27,8 @@ class ItemSpawner:
             [100],                 # age 0 : babymilk
             [100],                 # age 1 : smart
             [25, 25, 25, 25],      # age 2 : study / paint / soccer / music
+            [50, 10, 10, 10, 10, 10],  # age 3 : coin / cigarette / dumbel / hamburger / pizza / ramen
+            [50, 10, 10, 10, 10, 10]  # age 4 : coin / cigarette / dumbel / hamburger / pizza / ramen
         ]
 
         self.stop = False
@@ -123,7 +125,6 @@ class ItemSpawner:
 
     def update(self, hero):
         if self.stop:
-            print('stop')
             return
 
         age = hero.age

@@ -1,5 +1,7 @@
 import common
 
+break_map_idxs = [2,4,6,7,8,10,11,12,13]
+
 class Pause_test:
     def __init__(self, pause_def,age = 0):
         self.pause_def = pause_def
@@ -15,10 +17,13 @@ class Pause_test:
             return
         self.last_age = age
 
-        if common.background.map_idx == 2:
-            self.break_map = True
-        else:
-            self.break_map = False
+        for check in break_map_idxs:
+            if common.background.map_idx == check:
+                self.break_map = True
+                break
+            else:
+                self.break_map = False
+        print(self.break_map)
 
         if self.break_map:
             self.pause_def.pause_item_and_clear()

@@ -182,6 +182,7 @@ class Hero:
         self.smarter = 0
         self.kinder = 0
         self.artistic = 0
+        self.smoking = 0
 
         #직업
         self.job = 0
