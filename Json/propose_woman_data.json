@@ -1,0 +1,40 @@
+{
+    "sprites": [
+        {
+            "name": "propose_woman_11",
+            "x": 74.0,
+            "y": 2.0,
+            "width": 21.0,
+            "height": 57.0,
+            "pivotX": 10.5,
+            "pivotY": 28.5
+        },
+        {
+            "name": "propose_woman_12",
+            "x": 98.0,
+            "y": 2.0,
+            "width": 33.0,
+            "height": 64.0,
+            "pivotX": 16.5,
+            "pivotY": 32.0
+        },
+        {
+            "name": "propose_woman_13",
+            "x": 38.0,
+            "y": 2.0,
+            "width": 33.0,
+            "height": 64.0,
+            "pivotX": 16.5,
+            "pivotY": 32.0
+        },
+        {
+            "name": "propose_woman_14",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 33.0,
+            "height": 64.0,
+            "pivotX": 16.5,
+            "pivotY": 32.0
+        }
+    ]
+}

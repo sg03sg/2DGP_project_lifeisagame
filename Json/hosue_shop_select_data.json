@@ -1,0 +1,41 @@
+{
+    "sprites": [
+
+        {
+            "name": "hosue_shop_select_0",
+            "x": 225.0,
+            "y": 2.0,
+            "width": 41.0,
+            "height": 64.0,
+            "pivotX": 20.5,
+            "pivotY": 32.0
+        },
+        {
+            "name": "hosue_shop_select_1",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 86.0,
+            "height": 106.0,
+            "pivotX": 43.0,
+            "pivotY": 53.0
+        },
+        {
+            "name": "hosue_shop_select_2",
+            "x": 91.0,
+            "y": 2.0,
+            "width": 64.0,
+            "height": 102.0,
+            "pivotX": 32.0,
+            "pivotY": 51.0
+        },
+        {
+            "name": "hosue_shop_select_3",
+            "x": 158.0,
+            "y": 2.0,
+            "width": 64.0,
+            "height": 88.0,
+            "pivotX": 32.0,
+            "pivotY": 44.0
+        }
+    ]
+}
