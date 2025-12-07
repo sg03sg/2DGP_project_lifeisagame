@@ -13,4 +13,4 @@ pause_def = Pause()
 
 select_system = None
 
-speed = 1.0
+speed = 3.0

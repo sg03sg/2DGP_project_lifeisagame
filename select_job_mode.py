@@ -73,9 +73,9 @@ def select_item_pos(sel):
     house = sel[7:11] # 집 아이템들
     for s in flower:
         if s.num in (0, 1):
-            s.pos = common.background.map_total_w[6] - common.background.frame_w[6] + 80 + 20 * s.num
+            s.pos = common.background.map_total_w[6] - common.background.frame_w[6] + 100 + 20 * s.num
         else:
-            s.pos = common.background.map_total_w[6] - common.background.frame_w[6] + 160 +  20 * s.num
+            s.pos = common.background.map_total_w[6] - common.background.frame_w[6] + 140 +  20 * s.num
     for s in house:
         if s.num == 0:
             s.pos = common.background.map_total_w[11] - common.background.frame_w[11] + 100
