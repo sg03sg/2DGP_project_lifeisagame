@@ -55,6 +55,8 @@ class Ageui:
             self.uis = [Age1ui(i) for i in savelist.age1uiname]
         elif age ==2:
             self.uis = [Age2ui(i) for i in savelist.age2uiname]
+        elif age ==3 or age ==4:
+            self.uis = [Age3and4ui(i) for i in savelist.age3and4uiname]
         else:
             self.uis = []
         self.i = len(self.uis)
@@ -75,6 +77,8 @@ class Ageui:
                 self.uis = [Age1ui(i) for i in savelist.age1uiname]
             elif age == 2:
                 self.uis = [Age2ui(i) for i in savelist.age2uiname]
+            elif age == 3 or age == 4:
+                self.uis = [Age3and4ui(i) for i in savelist.age3and4uiname]
             else:
                 self.uis = []
             self.i = len(self.uis)
@@ -247,30 +251,23 @@ class Age2ui:
                                   int(number_data['sprites'][i]["height"]),
                                   x, y, self.num_size, self.num_size)
 
-class Age3ui:
+class Age3and4ui:
     def __init__(self, name=None):
         self.image = load_image("Images/ui.png")
         self.number_img = load_image("Images/number.png")
         self.name = name
         self.size = 20
-        if name == 'study':
-            self.count = common.hero.smarter
-            self.json_num = 5
-            self.x, self.y = 510, 55
+        if name == 'cigarette':
+            self.count = common.hero.smoking
+            self.json_num = 9
+            self.x, self.y = 530, 55
             self.num = 0
 
         self.num_size = self.size * 0.8
         self.spacing = self.num_size // 2 + 5
 
     def update(self):
-        if self.num == 0:
-            self.count = common.job_stat.stats[self.num]
-        elif self.num == 1:
-            self.count = common.job_stat.stats[self.num]
-        elif self.num == 2:
-            self.count = common.job_stat.stats[self.num]
-        elif self.num == 3:
-            self.count = common.job_stat.stats[self.num]
+        self.count = common.hero.smoking
 
     def draw(self):
         # 아이콘
@@ -278,7 +275,7 @@ class Age3ui:
                              int(ui_data['sprites'][self.json_num]["y"]),
                              int(ui_data['sprites'][self.json_num]["width"]),
                              int(ui_data['sprites'][self.json_num]["height"]),
-                             self.x, self.y, self.size, self.size)
+                             self.x, self.y, self.size, self.size * 1.8)
         # 숫자
         x = self.x + self.size // 2 + self.spacing + 10
         y = self.y
@@ -310,7 +307,7 @@ class Age3ui:
                                   self.num_size, self.num_size)
         x += self.spacing
         # 최대 숫자
-        i = savelist.age2ui_max_count[self.num]
+        i = savelist.age3and4ui_max_count[self.num]
         self.number_img.clip_draw(int(number_data['sprites'][i]["x"]),
                                   int(number_data['sprites'][i]["y"]),
                                   int(number_data['sprites'][i]["width"]),
