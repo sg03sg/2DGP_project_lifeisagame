@@ -7,6 +7,7 @@ from item_spawner import ItemSpawner
 from job_system import Job_select
 from pause import Pause_test
 from item import Item
+from select_system import Select_System
 from ui import Ui, Skillui, Ageui, Money_ui
 
 import game_world
@@ -52,6 +53,9 @@ def init():
     black_img = load_image('Images/black.png')
     common.job_select = Job_select()
     common.pause_test = Pause_test(common.pause_def)
+
+    common.select_system = Select_System()
+    game_world.add_object(common.select_system, 0)
 
     # 기존 충돌 설정 유지
     game_world.add_collision_pair('hero:item', common.hero, None)
