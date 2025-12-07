@@ -1,0 +1,58 @@
+{
+    "sprites": [
+        {
+            "name": "adult_item_11",
+            "x": 115.0,
+            "y": 0.0,
+            "width": 21.0,
+            "height": 21.0,
+            "pivotX": 10.5,
+            "pivotY": 10.5
+        },
+        {
+            "name": "adult_item_12",
+            "x": 88.0,
+            "y": 0.0,
+            "width": 24.0,
+            "height": 25.0,
+            "pivotX": 12.0,
+            "pivotY": 12.5
+        },
+        {
+            "name": "adult_item_13",
+            "x": 66.0,
+            "y": 0.0,
+            "width": 19.0,
+            "height": 15.0,
+            "pivotX": 9.5,
+            "pivotY": 7.5
+        },
+        {
+            "name": "adult_item_14",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 19.0,
+            "height": 19.0,
+            "pivotX": 9.5,
+            "pivotY": 9.5
+        },
+        {
+            "name": "adult_item_15",
+            "x": 22.0,
+            "y": 0.0,
+            "width": 19.0,
+            "height": 19.0,
+            "pivotX": 9.5,
+            "pivotY": 9.5
+        },
+        {
+            "name": "adult_item_16",
+            "x": 44.0,
+            "y": 0.0,
+            "width": 19.0,
+            "height": 19.0,
+            "pivotX": 9.5,
+            "pivotY": 9.5
+        }
+    ]
+}

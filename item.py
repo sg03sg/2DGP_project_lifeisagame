@@ -63,10 +63,7 @@ class Item:
             if self.age == 2:
                 common.job_stat.handle_collision(self)
                 return
-            if self.name == 'smart':
-                common.hero.smarter += 1
-                if common.hero.smarter >100:
-                    common.hero.smarter = 100
+            self. item_updown_stats()
 
 
     def update(self):

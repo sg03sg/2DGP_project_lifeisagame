@@ -6,6 +6,7 @@ import game_world
 
 import itertools
 
+import savelist
 
 # 화면 크기
 SCREEN_WIDTH = 1280
@@ -15,7 +16,7 @@ PIXEL_PER_METER = (10.0 / 1.7)  # 방 사진 크기/3 = 170 pixel = 약300 cm
 RUN_SPEED_KMPH = 22.0  # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER) * 2.0
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER) * 1.5
 
 # 아래쪽을 얼마나 띄울지(바닥 여유) - 필요시 조절
 BOTTOM_OFFSET = 100
@@ -82,8 +83,12 @@ class Background:
             next_stage = (self.stage + 1) % len(self.stage_order)
             if self.logic_stage_age[self.stage] != self.logic_stage_age[next_stage]:
                 common.hero.age = (common.hero.age+1) % 5
+                if common.hero.age == 2 and common.hero.smarter >= savelist.age2ui_max_count[0]:
+                    savelist.item_stats['coin']['money'] *= 2
+
             if not common.hero.state_machine.cur_state == common.hero.jump:
                 common.hero.y = 150 + int((common.hero.tall[common.hero.age]-100)//2)
+                print(self.map_idx)
             common.pause_test.update(common.hero.age)
 
         # 반복 모드: offset이 여러 스테이지를 그림
@@ -110,9 +115,7 @@ class Background:
 
 
     def draw(self):
-        print(self.stage)
         cur_idx = self.stage_order[self.stage]
-        print(cur_idx)
         ofs = int(self.offset)
         fw = self.frame_w[cur_idx]
         fh = self.frame_h[cur_idx]
