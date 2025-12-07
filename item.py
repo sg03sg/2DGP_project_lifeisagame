@@ -29,7 +29,7 @@ class Item:
         self.images = [load_image(f) for f in filename]
         self.x = 1300
         self.y = y
-        self.speed = background.RUN_SPEED_PPS + 500  # 아이템의 속도 (배경보다 빠르게)
+        self.speed = (background.RUN_SPEED_PPS + (400 * common.speed) )  # 아이템의 속도 (배경보다 빠르게)
         self.xv = -self.speed  # x 축 속도
         self.size = [40,40,60,50,50]
 

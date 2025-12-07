@@ -12,3 +12,5 @@ job_stat = Job_stat()
 pause_def = Pause()
 
 select_system = None
+
+speed = 1.0

@@ -116,7 +116,7 @@ class ItemSpawner:
         # - 기본 간격은 base_spawn_interval
         # - 40% 확률로 타이머 간격 줄이기
     def timer_for_y(self, index, now,age):
-        interval = self.base_spawn_interval[age][index]
+        interval = self.base_spawn_interval[age][index] / common.speed
         if random.random() < 0.25:
             # 너무 짧아지지 않도록 최소값 설정
             interval = 1.0
