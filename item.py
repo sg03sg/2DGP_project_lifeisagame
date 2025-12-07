@@ -78,15 +78,16 @@ class Item:
             game_world.remove_object(self)
             common.item_spawner.exist_items.remove(self)
 
-    def item_updown_stats(self,name):
+    def item_updown_stats(self):
         item_name = self.name
         effects = savelist.item_stats.get(item_name, {})
 
         for stat, amount in effects.items():
-            setattr(common.hero, stat, getattr(common.hero, stat) + amount)
+            new_value = getattr(common.hero, stat) + amount
 
-            # 예: 0~100 범위 제한
+            # 0~100 범위 제한 스탯들 제한
             if stat in ('happy', 'health', 'smarter'):
-                setattr(common.hero, stat, max(0, min(100, getattr(common.hero, stat))))
+                new_value = clamp(0, new_value, 100)
 
+            setattr(common.hero, stat, new_value)
 
