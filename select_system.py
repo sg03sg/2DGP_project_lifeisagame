@@ -7,7 +7,13 @@ import json
 
 with open('Json/hobby_select_data.json', 'r', encoding='utf-8') as f:
     h = json.load(f)
+with open('Json/flower_shop_select_data.json', 'r', encoding='utf-8') as f:
+    flower = json.load(f)
+with open('Json/hosue_shop_select_data.json', 'r', encoding='utf-8') as f:
+    house = json.load(f)
 hobby_select_data = h['sprites']
+flower_shop_select_data = flower['sprites']
+house_shop_select_data = house['sprites']
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -18,7 +24,7 @@ select_offset = 20
 ##선택 시스템 객체 게임월드에 추가를 결정하는 클래스
 class Select_System:
     def __init__(self):
-        self.hobby = [Hobby(0), Hobby(1), Hobby(2)]
+        self.selects = [Hobby(0),Hobby(1),Hobby(2), Flower_shop(0),Flower_shop(1),Flower_shop(2),Flower_shop(3), House_shop(0),House_shop(1),House_shop(2),House_shop(3)]
 
     def select_decision(self,other):
         background = common.background
@@ -28,8 +34,8 @@ class Select_System:
             game_world.add_object(other, 0)
 
     def update(self):
-        for hobby in self.hobby:
-            self.select_decision(hobby)
+        for select in self.selects:
+            self.select_decision(select)
     def draw(self):
         pass
 
@@ -76,3 +82,102 @@ class Hobby:
                              int(hobby_select_data[i]['height']),
                              self.x, self.y + self.h //2, w, h)
         draw_rectangle(*self.get_bb())
+
+
+class Flower_shop:
+    def __init__(self,num = 0):
+        self.image = load_image('Images/flower_shop_select.png')
+        self.w = flower_shop_select_data[num]['width'] * 2
+        self.h = flower_shop_select_data[num]['height'] * 2
+        self.x = 1310
+        self.y = SCREEN_HEIGHT // 2 + BOTTOM_OFFSET // 2 - 100
+        self.num = num
+        self.pos = common.background.map_total_w[10] ## 아무값이나 넣어놓기
+        self.exist = False
+
+    def select_collision(self, other):
+        left_a, bottom_a, right_a, top_a = self.get_bb()
+        left_b, bottom_b, right_b, top_b = other.get_bb()
+
+        if left_a > right_b: return False
+        if right_a < left_b: return False
+        if top_a < bottom_b: return False
+        if bottom_a > top_b: return False
+
+        return True
+
+    def get_bb(self):
+        if self.num in (0,2):
+            half_w = flower_shop_select_data[0]['width']
+            flower_w = flower_shop_select_data[1]['width'] * 2
+            return self.x - half_w - select_offset, BOTTOM_OFFSET, self.x + half_w + select_offset + flower_w, SCREEN_HEIGHT
+        else:
+            return 0, 0, 0, 0
+
+    def update(self):
+        self.x -= common.background.display_speed * game_framework.frame_time
+        if self.x < - 55:
+            game_world.remove_object(self)
+
+    def draw(self):
+        i = self.num
+        w = self.w
+        h = self.h
+        self.image.clip_draw(int(flower_shop_select_data[i]["x"]),
+                             int(flower_shop_select_data[i]['y']),
+                             int(flower_shop_select_data[i]['width']),
+                             int(flower_shop_select_data[i]['height']),
+                             self.x, self.y + self.h //2, w, h)
+        if self.num in (0,2):
+            draw_rectangle(*self.get_bb())
+
+class House_shop:
+    def __init__(self,num = 0):
+        self.image = load_image('Images/house_shop_select.png')
+        if num == 0:
+            self.w = house_shop_select_data[num]['width'] * 3
+            self.h = house_shop_select_data[num]['height'] * 3
+            self.y = common.hero.y
+        else:
+            self.w = house_shop_select_data[num]['width'] * 2
+            self.h = house_shop_select_data[num]['height'] * 2
+            self.y = common.hero.y - 20
+        self.x = 1310
+        self.num = num
+        self.pos = common.background.map_total_w[10] ## 아무값이나 넣어놓기
+        self.exist = False
+
+    def select_collision(self, other):
+        left_a, bottom_a, right_a, top_a = self.get_bb()
+        left_b, bottom_b, right_b, top_b = other.get_bb()
+
+        if left_a > right_b: return False
+        if right_a < left_b: return False
+        if top_a < bottom_b: return False
+        if bottom_a > top_b: return False
+
+        return True
+
+    def get_bb(self):
+        if not self.num ==0:
+            half_w = house_shop_select_data[1]['width']
+            return self.x - half_w - select_offset, BOTTOM_OFFSET , self.x + half_w+select_offset, SCREEN_HEIGHT
+        else:
+            return 0,0,0,0
+
+    def update(self):
+        self.x -= common.background.display_speed * game_framework.frame_time
+        if self.x < - 55:
+            game_world.remove_object(self)
+
+    def draw(self):
+        i = self.num
+        w = self.w
+        h = self.h
+        self.image.clip_draw(int(house_shop_select_data[i]["x"]),
+                             int(house_shop_select_data[i]['y']),
+                             int(house_shop_select_data[i]['width']),
+                             int(house_shop_select_data[i]['height']),
+                             self.x, self.y + self.h //2, w, h)
+        if not self.num == 0:
+            draw_rectangle(*self.get_bb())

@@ -68,6 +68,23 @@ def apply_job_resources(job_num):
     bg.map_total_w = list(itertools.accumulate(bg.total_w[i] for i in bg.stage_order))
     bg.gate_pos = [total - bg.frame_w[i] for i, total in zip(bg.stage_order, bg.map_total_w)]
 
+def select_item_pos(sel):
+    flower = sel[3:7] # 꽃집 아이템들
+    house = sel[7:11] # 집 아이템들
+    for s in flower:
+        if s.num in (0, 1):
+            s.pos = common.background.map_total_w[6] - common.background.frame_w[6] + 40 + 20 * s.num
+        else:
+            s.pos = common.background.map_total_w[6] - common.background.frame_w[6] + 80 +  20 * s.num
+    for s in house:
+        if s.num == 0:
+            s.pos = common.background.map_total_w[11] - common.background.frame_w[11] + 100
+        else:
+            s.pos = common.background.map_total_w[11] - common.background.frame_w[11] + 110 +  50 * s.num
+
+
+
+
 # 방향키/스페이스로 직업 선택
 def handle_events():
     event_list = get_events()
@@ -90,6 +107,7 @@ def draw():
 
 def finish():
     job = common.hero.job  # 0~4
+    selects = common.select_system.selects
 
     if job == 0: # 무직
         common.background.stage_order += [5,4,11,12,13,5,13,14,15]
@@ -103,6 +121,7 @@ def finish():
         common.background.stage_order += [9,4,11,12,13,9,13,14,15]
 
     apply_job_resources(job)
+    select_item_pos(selects)
 
     common.pause_def.resume_game_switch()  # 게임 재개
     common.pause_test.do_select_job = False
