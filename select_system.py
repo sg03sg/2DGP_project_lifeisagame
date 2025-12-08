@@ -85,11 +85,25 @@ class Hobby:
         self.selected = False
         self.screen_pause = True
 
+    def handle_collision(self,other):
+        left_a, bottom_a, right_a, top_a = self.get_bb()
+        left_b, bottom_b, right_b, top_b = other.get_bb()
+
+        if left_a > right_b: return False
+        if right_a < left_b: return False
+        if top_a < bottom_b: return False
+        if bottom_a > top_b: return False
+
+        return True
     def select_collision(self):
-        if not self.selected:
+        if self.selected and self.handle_collision(common.hero):
+            common.selecting = True
+            common.hero.earn_hobby.num = self.num
+            common.hero.state_machine.handle_state_event(('select',None))
+            common.pause_def.pause_game_switch()
+            self.selected = False
+        else:
             return
-        common.pause_def.pause_game_switch()
-        pass
 
     def get_bb(self):
         half_w = self.w // 2
@@ -100,7 +114,7 @@ class Hobby:
         self.x -= common.background.display_speed * game_framework.frame_time
         self.select_collision()
         if self.x < - 55:
-            self.exsit = False
+            self.exist = False
             game_world.remove_object(self)
 
     def draw(self):
@@ -128,7 +142,7 @@ class Flower_shop:
         self.selected = False
         self.screen_pause = False
 
-    def select_collision(self, other):
+    def handle_collision(self, group, other):
         left_a, bottom_a, right_a, top_a = self.get_bb()
         left_b, bottom_b, right_b, top_b = other.get_bb()
 
@@ -150,7 +164,7 @@ class Flower_shop:
     def update(self):
         self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - 55:
-            self.exsit = False
+            self.exist = False
             game_world.remove_object(self)
 
     def draw(self):
@@ -204,7 +218,7 @@ class House_shop:
     def update(self):
         self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - 55:
-            self.exsit = False
+            self.exist = False
             game_world.remove_object(self)
 
     def draw(self):
