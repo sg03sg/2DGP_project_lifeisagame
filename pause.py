@@ -33,6 +33,8 @@ class Pause_test:
 
 
 class Pause:
+    def __init__(self):
+        self.display_speed = 0
     def pause_item_and_clear(self):
         if common.item_spawner.exist_items:
             common.item_spawner.clear()
@@ -51,11 +53,14 @@ class Pause:
         common.item_spawner.stop = False
 
     def pause_game_switch(self):
+        self.display_speed = common.background.display_speed
+        common.background.display_speed = 0
         common.background.stop = True
         common.hero.stop = True
         self.pause_item()
 
     def resume_game_switch(self):
+        common.background.display_speed = self.display_speed
         common.background.stop = False
         common.hero.stop = False
         self.resume_item()
