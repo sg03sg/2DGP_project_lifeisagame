@@ -26,6 +26,8 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_TAB:
+            common.select_system.select_state = True
         else:
             common.hero.handle_event(event)
 
