@@ -12,5 +12,6 @@ job_stat = Job_stat()
 pause_def = Pause()
 
 select_system = None
+selecting = False
 
-speed = 3.0
+speed = 5.0
