@@ -49,6 +49,10 @@ class Select_System:
         for obj in self.selects:
             if not obj.exist:
                 continue
+            if not obj.handle_collision(common.hero):
+                continue
+            if not obj.can_select:
+                continue
 
             # X 좌표 거리만 체크 (러닝게임 특성상 충분)
             dist = abs(obj.x - hero_x)
@@ -58,6 +62,10 @@ class Select_System:
                 selected_obj = obj
 
         if selected_obj:
+            selected_type = type(selected_obj)
+            for obj in self.selects:
+                if isinstance(obj, selected_type):
+                    obj.can_select = False  # 같은 타입은 선택 불가
             selected_obj.selected = True
             print("선택 객체:", selected_obj)
 
@@ -84,6 +92,7 @@ class Hobby:
         self.exist = False
         self.selected = False
         self.screen_pause = True
+        self.can_select = True
 
     def handle_collision(self,other):
         left_a, bottom_a, right_a, top_a = self.get_bb()
@@ -96,7 +105,7 @@ class Hobby:
 
         return True
     def select_collision(self):
-        if self.selected and self.handle_collision(common.hero):
+        if self.selected:
             common.selecting = True
             common.hero.earn_hobby.num = self.num
             common.hero.state_machine.handle_state_event(('select',None))
