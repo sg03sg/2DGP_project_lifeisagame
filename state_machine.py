@@ -19,4 +19,4 @@ class StateMachine:
                 self.cur_state.exit(state_event)
                 next_state.enter(state_event)
                 self.cur_state = next_state
-            return
+                return
