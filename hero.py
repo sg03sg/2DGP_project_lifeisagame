@@ -1,5 +1,7 @@
-from pico2d import load_image, draw_rectangle
+from pico2d import load_image, draw_rectangle, get_time
 from sdl2 import SDL_KEYDOWN, SDLK_SPACE
+
+import common
 from state_machine import StateMachine
 
 import game_world
@@ -23,6 +25,10 @@ with open('Json/jump_boy_data.json', 'r', encoding='utf-8') as f:
 with open('Json/stu_jump_data.json', 'r', encoding='utf-8') as f:
     hero_jump_rounding_box_data.append(json.load(f))
 
+with open('Json/get_hobby_data.json', 'r', encoding='utf-8') as f:
+    get_h = json.load(f)
+get_hobby_data = get_h['sprites']
+
 scale_hero = []
 
 def scale_hero_def(scale_hero_arr):
@@ -40,8 +46,10 @@ def space_down(e):
 def jump_end(e):
     return e[0] == 'jump_end'
 
-def No(e):
-    return False
+def select(e):
+    return e[0] == 'select'
+def select_end(e):
+    return e[0] == 'select_end'
 
 def hero_jump(hero, dt):
     hero.jump_vy += hero.gravity * dt
@@ -81,18 +89,28 @@ class Run:
                                   int(frame_data['width']), int(frame_data['height']), self.hero.x, self.hero.y, draw_w,
                                        self.hero.tall[self.hero.age])
 
-class Idle:
+class Earn_hobby:
     def __init__(self, hero):
         self.hero = hero
+        self.image = load_image('Images/get_hobby.png')
+        self.num = 0
 
     def enter(self,e):
-        pass
+        self.hero.x = 640
+        self.hero.y = 100 + (self.hero.tall[2]+50)//2
+        self.time = get_time()
     def exit(self,e):
-        pass
+        common.pause_def.resume_game_switch()
+        common.selecting = False
+
     def do(self):
         pass
     def draw(self):
-        pass
+        if get_time() - self.time > 1.5:
+            self.hero.state_machine.handle_state_event(('select_end',None))
+            return
+        i = self.num
+        self.image.clip_draw(int(get_hobby_data[i]["x"]),int(get_hobby_data[i]["y"]),int(get_hobby_data[i]["width"]),int(get_hobby_data[i]["height"]),self.hero.x,100 + (self.hero.tall[2]+50)//2,self.image.h,self.hero.tall[2]+50)
 
 class Jump:
     def __init__(self, hero):
@@ -133,27 +151,6 @@ class Jump:
                 int(frame_data["x"]),int(frame_data['y']), int(frame_data['width']),int(frame_data['height']),
                 self.hero.x, self.hero.y, draw_w,
                 self.hero.tall[self.hero.age])
-            #점프 모션 없을때 디버깅용
-            # if self.hero.age ==1:
-            #     age = self.hero.age - 1
-            #     frame_data = hero_jump_rounding_box_data[age]['sprites'][i]
-            #     base_width = scale_hero[self.hero.age]
-            #     scale = 100 / base_width
-            #     draw_w = int(int(frame_data['width']) * scale)
-            #     self.hero.jump_images[age].clip_draw(
-            #         int(frame_data["x"]),int(frame_data['y']), int(frame_data['width']),int(frame_data['height']),
-            #         self.hero.x, self.hero.y, draw_w,
-            #         self.hero.tall[self.hero.age])
-            #
-            # else:
-            #     frame_data = hero_rounding_box_data[self.hero.age]['sprites'][i]
-            #     base_width = scale_hero[self.hero.age]
-            #     scale = 100 / base_width
-            #     draw_w = int(int(frame_data['width']) * scale)
-            #     self.hero.walk_images[self.hero.age].clip_draw(int(frame_data["x"]), int(frame_data['y']),
-            #                                                    int(frame_data['width']), int(frame_data['height']),
-            #                                                    self.hero.x, self.hero.y, draw_w,
-            #                                                    self.hero.tall[self.hero.age])
 
 
 class Hero:
@@ -193,14 +190,14 @@ class Hero:
         self.jump_vy = 0.0
 
         self.run = Run(self)
-        self.idle = Idle(self)
         self.jump = Jump(self)
+        self.earn_hobby = Earn_hobby(self)
         self.state_machine = StateMachine(
               self.run,
         {
-                self.run: {space_down: self.jump},
-                self.jump: {jump_end: self.run},
-                self.idle: {No: self.idle},
+                self.run: {space_down: self.jump,select: self.earn_hobby},
+                self.jump: {jump_end: self.run,select: self.earn_hobby},
+                self.earn_hobby: {select_end: self.run}
              }
         )
 
