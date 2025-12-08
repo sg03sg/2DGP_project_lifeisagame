@@ -89,7 +89,7 @@ class Background:
             if not common.hero.state_machine.cur_state == common.hero.jump:
                 common.hero.y = 150 + int((common.hero.tall[common.hero.age]-100)//2)
                 print(self.map_idx)
-            common.pause_test.update(common.hero.age)
+        common.pause_test.update(common.hero.age)
 
         # 반복 모드: offset이 여러 스테이지를 그림
         if self.loop:
