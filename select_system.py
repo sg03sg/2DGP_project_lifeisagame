@@ -22,12 +22,14 @@ SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 BOTTOM_OFFSET = 100
 
-select_offset = 20
+select_offset = 2
 
-##선택 시스템 객체 게임월드에 추가를 결정하는 클래스
+##선택 시스템 객체 게임월드에 추가를 결정하는 함수1
+##Tab을 눌렀을때 선택 상태를 활성화 상태로 만든다 함수 2
 class Select_System:
     def __init__(self):
         self.selects = [Hobby(0),Hobby(1),Hobby(2), Flower_shop(0),Flower_shop(1),Flower_shop(2),Flower_shop(3), House_shop(0),House_shop(1),House_shop(2),House_shop(3),Propose(0)]
+        self.select_state = False
 
     def select_decision(self,other):
         background = common.background
@@ -36,9 +38,36 @@ class Select_System:
             other.exist = True
             game_world.add_object(other, 0)
 
+    def handle_select(self):
+        if not self.select_state:
+            return
+
+        hero_x = common.hero.x()
+        min_dist = 999999
+        selected_obj = None
+
+        for obj in self.selects:
+            if not obj.exist:
+                continue
+
+            # X 좌표 거리만 체크 (러닝게임 특성상 충분)
+            dist = abs(obj.x - hero_x)
+
+            if dist < min_dist:
+                min_dist = dist
+                selected_obj = obj
+
+        if selected_obj:
+            selected_obj.selected = True
+            print("선택 객체:", selected_obj)
+
+        self.select_state = False  # 선택 후 종료
+
+
     def update(self):
         for select in self.selects:
             self.select_decision(select)
+        self.handle_select()
     def draw(self):
         pass
 
@@ -53,6 +82,8 @@ class Hobby:
         self.num = num
         self.pos = common.background.map_total_w[1] - common.background.frame_w[1] + 80 * (num+1)
         self.exist = False
+        self.selected = False
+        self.screen_pause = True
 
     def select_collision(self, other):
         left_a, bottom_a, right_a, top_a = self.get_bb()
@@ -73,6 +104,7 @@ class Hobby:
     def update(self):
         self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - 55:
+            self.exsit = False
             game_world.remove_object(self)
 
     def draw(self):
@@ -97,6 +129,8 @@ class Flower_shop:
         self.num = num
         self.pos = common.background.map_total_w[10] ## 아무값이나 넣어놓기
         self.exist = False
+        self.selected = False
+        self.screen_pause = False
 
     def select_collision(self, other):
         left_a, bottom_a, right_a, top_a = self.get_bb()
@@ -120,6 +154,7 @@ class Flower_shop:
     def update(self):
         self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - 55:
+            self.exsit = False
             game_world.remove_object(self)
 
     def draw(self):
@@ -149,6 +184,8 @@ class House_shop:
         self.num = num
         self.pos = common.background.map_total_w[10] ## 아무값이나 넣어놓기
         self.exist = False
+        self.selected = False
+        self.screen_pause = False
 
     def select_collision(self, other):
         left_a, bottom_a, right_a, top_a = self.get_bb()
@@ -171,6 +208,7 @@ class House_shop:
     def update(self):
         self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - 55:
+            self.exsit = False
             game_world.remove_object(self)
 
     def draw(self):
@@ -196,6 +234,8 @@ class Propose:
         self.x = 1310
         self.pos = common.background.map_total_w[10] ## 아무값이나 넣어놓기
         self.exist = False
+        self.selected = False
+        self.screen_pause = True
 
     def select_collision(self, other):
         left_a, bottom_a, right_a, top_a = self.get_bb()
@@ -215,6 +255,7 @@ class Propose:
     def update(self):
         self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - 55:
+            self.exsit = False
             game_world.remove_object(self)
 
     def draw(self):
