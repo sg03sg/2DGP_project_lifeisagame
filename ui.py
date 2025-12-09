@@ -56,25 +56,31 @@ class Skillui:
 
     def draw(self):
         if not self.skill_earn:
+            # if self.name == 'hobby':
+                # print(0)
             self.image.clip_draw(int(button_data['sprites'][self.json_num]["x"]),int(button_data['sprites'][self.json_num]["y"]),
                                      int(button_data['sprites'][self.json_num]["width"]),int(button_data['sprites'][self.json_num]["height"]),
                                      self.x,self.y,self.size,self.size)
         else:
             if self.skill_on and self.name == 'hobby':
+                # print(1)
                 i = self.skill_on_json_num + common.hobby_num
                 self.image_skill_on.clip_draw(int(skill_on_data[i]["x"]),int(skill_on_data[i]["y"]),
                                          int(skill_on_data[i]["width"]),int(skill_on_data[i]["height"]),
                                          self.x,self.y,self.size,self.size)
             elif self.skill_on and not self.name == 'hobby':
+                # print(2)
                 i = self.skill_on_json_num
                 self.image_skill_on.clip_draw(int(skill_on_data[i]["x"]),int(skill_on_data[i]["y"]),
                                          int(skill_on_data[i]["width"]),int(skill_on_data[i]["height"]),
                                          self.x,self.y,self.size,self.size)
-            elif not skill_on and self.name == 'hobby':
+            elif not self.skill_on and self.name == 'hobby':
+                # print(3)
                 i = 10 + common.hobby_num
                 self.image.clip_draw(int(button_data['sprites'][i]["x"]),int(button_data['sprites'][i]["y"]),int(button_data['sprites'][i]["width"]),int(button_data['sprites'][i]["height"]),
                                      self.x,self.y,self.size,self.size)
-            elif not skill_on and not self.name == 'hobby':
+            elif not self.skill_on and not self.name == 'hobby':
+                # print(4)
                 i = self.json_num + 9
                 self.image.clip_draw(int(button_data['sprites'][i]["x"]),int(button_data['sprites'][i]["y"]),int(button_data['sprites'][i]["width"]),int(button_data['sprites'][i]["height"]),
                                      self.x,self.y,self.size,self.size)

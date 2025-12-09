@@ -1,13 +1,12 @@
 from pico2d import *
-import random
 
 from background import Background
 from hero import Hero
 from item_spawner import ItemSpawner
 from job_system import Job_select
 from pause import Pause_test
-from item import Item
 from select_system import Select_System
+from skill_system import Skill_system
 from ui import Ui, Skillui, Ageui, Money_ui
 
 import game_world
@@ -43,8 +42,10 @@ def init():
 
     ageui = Ageui(common.hero.age)
 
-    skills = [Skillui(i) for i in savelist.skillname]
-    game_world.add_objects(skills, 1)
+    common.skills = [Skillui(i) for i in savelist.skillname]
+    game_world.add_objects(common.skills, 1)
+
+    common.skill_system = Skill_system()
 
     hp = Ui("hp", 50)
     game_world.add_object(hp, 1)
@@ -69,6 +70,7 @@ def update():
     global ageui
 
     ageui.update(common.hero.age)
+    common.skill_system.update()
 
     common.item_spawner.update(common.hero)
     game_world.update()

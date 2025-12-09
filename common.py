@@ -1,6 +1,5 @@
-from job_system import Job_stat,Job_select
+from job_system import Job_stat
 from pause import Pause
-from select_system import Select_System
 
 background = None
 hero = None
@@ -14,4 +13,8 @@ pause_def = Pause()
 select_system = None
 selecting = False
 
-speed = 5.0
+skills = None
+skill_system = None
+
+speed = 2.0
+hobby_num = 0

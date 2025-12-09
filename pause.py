@@ -23,7 +23,6 @@ class Pause_test:
                 break
             else:
                 self.break_map = False
-        print(self.break_map)
 
         if self.break_map:
             self.pause_def.pause_item_and_clear()

@@ -107,7 +107,8 @@ class Hobby:
     def select_collision(self):
         if self.selected:
             common.selecting = True
-            common.hero.earn_hobby.num = self.num
+            common.hobby_num = self.num
+            common.skills[0].skill_earn = True
             common.hero.state_machine.handle_state_event(('select',None))
             common.pause_def.pause_game_switch()
             self.selected = False
