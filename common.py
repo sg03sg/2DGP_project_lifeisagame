@@ -20,7 +20,7 @@ skill_system = None
 
 effect = Effect()
 
-speed = 1.5
+speed = 2.0
 hobby_num = 0
 
 propose_probality = 0  # 프러포즈 확률 %

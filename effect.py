@@ -37,7 +37,7 @@ GRAVITY = 120  # m/s^2
 class Call_effect:
     def __init__(self):
         self.image = load_image("Images/f_call.png")
-        self.duration = 4.0
+        self.duration = 2.0
         self.start_time = get_time()
         self.num = max(0,common.hero.age - 2)
         self.x,self.y = common.hero.x + common.hero.side_size[common.hero.age] - 5, common.hero.y + common.hero.tall[common.hero.age] //2 - 10
