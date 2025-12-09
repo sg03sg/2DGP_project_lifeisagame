@@ -14,10 +14,18 @@ with open('Json/skill_hobby1_data.json', 'r', encoding='utf-8') as f:
 with open('Json/skill_hobby2_data.json', 'r', encoding='utf-8') as f:
     skill_hobby_data.append(json.load(f))
 
+with open('Json/f_call_data.json', 'r', encoding='utf-8') as f:
+    f_call = json.load(f)
+
+f_call_data = f_call['sprites']
+
 class Effect:
     def skill_effect_play(self,skillnum):
         if skillnum == 0:
             effect = Hobby_effect(common.hobby_num)
+            game_world.add_object(effect,1)
+        if skillnum == 1:
+            effect = Call_effect()
             game_world.add_object(effect,1)
         else:
             pass
@@ -25,6 +33,29 @@ class Effect:
 
 PIXEL_PER_METER = (10.0 / 0.9)  # 10 pixel 10 cm
 GRAVITY = 120  # m/s^2
+
+class Call_effect:
+    def __init__(self):
+        self.image = load_image("Images/f_call.png")
+        self.duration = 4.0
+        self.start_time = get_time()
+        self.num = max(0,common.hero.age - 2)
+        self.x,self.y = common.hero.x + common.hero.side_size[common.hero.age] - 5, common.hero.y + common.hero.tall[common.hero.age] //2 - 10
+        self.size_w = 120
+        self.size_h = 100
+
+    def update(self):
+        if get_time() - self.start_time >= self.duration:
+            game_world.remove_object(self)
+            del self
+            return
+        self.y = common.hero.y + common.hero.tall[common.hero.age] // 2 - 20
+
+    def draw(self):
+        i = f_call_data[self.num]
+        self.image.clip_draw(int(i["x"]), int(i['y']),
+                                        int(i['width']), int(i['height']),
+                                        self.x, self.y, self.size_w, self.size_h)
 
 class Hobby_effect:
     def __init__(self,num):
