@@ -100,8 +100,8 @@
             "pivotY": 30.0
         },
         {
-            "name": "button_41",
-            "x": 160.0,
+            "name": "button_42",
+            "x": 482.0,
             "y": 0.0,
             "width": 60.0,
             "height": 60.0,
@@ -109,8 +109,8 @@
             "pivotY": 30.0
         },
         {
-            "name": "button_42",
-            "x": 482.0,
+            "name": "button_41",
+            "x": 160.0,
             "y": 0.0,
             "width": 60.0,
             "height": 60.0,

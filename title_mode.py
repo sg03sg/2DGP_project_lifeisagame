@@ -8,7 +8,7 @@ SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 BOTTOM_OFFSET = 0
 
-with open('Json/logo1_data.json', 'r', encoding='utf-8') as f:
+with open('Json/title_logo_data.json', 'r', encoding='utf-8') as f:
     l = json.load(f)
 logo_title_data = l['sprites']
 
@@ -20,7 +20,8 @@ class Title:
     def __init__(self):
         self.image = load_image('Images/baby_map.png')
         self.baby_img = load_image('Images/baby_sprite_sheet.png')
-        self.title_logo_img = load_image('Images/logo.png')
+        self.title_logo_img = load_image('Images/title_logo.png')
+        self.title_message_img = load_image('Images/title_button.png')
         self.frame_w = 320
         self.frame_h = self.image.h
         self.frame = 0
@@ -40,14 +41,11 @@ class Title:
         if not start_game:
             i = int(self.frame)
             frame_data = logo_title_data[i]
-            # button_data = logo_title_data[7]
             ##로고
             self.title_logo_img.clip_draw(int(frame_data["x"]),int(frame_data["y"]),int(frame_data["width"]),int(frame_data["height"]),
                                           SCREEN_WIDTH//2, SCREEN_HEIGHT//2 + 100,500,200)
             ##버튼
-            # self.title_logo_img.clip_draw( int(button_data["x"]), int(button_data['y']),
-            #                                int(button_data['width']), int(button_data['height']),
-            #                                SCREEN_WIDTH//2, 150,400,50)
+            self.title_message_img.draw( SCREEN_WIDTH//2, 150,400,50)
 
 
 def init():
