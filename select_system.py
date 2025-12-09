@@ -380,11 +380,11 @@ class Propose:
         self.selected = False
         self.can_select = True
 
+        self.success = 0 #-1실패 0초기 1성공
+
         self.choice_img = load_image('Images/choice_ui.png')
 
     def handle_collision(self, other):
-        if self.num == 0:
-            return False
         left_a, bottom_a, right_a, top_a = self.get_bb()
         left_b, bottom_b, right_b, top_b = other.get_bb()
 
@@ -398,8 +398,22 @@ class Propose:
     def select_collision(self):
         if self.selected:
             common.selecting = True
-            pass
+            x = random.randrange(0, 100)
+            if x <= common.propose_probality:
+                self.success = 1
+                common.skills[2].skill_earn = True
+                common.hero.happy = min(100, common.hero.happy + 30)
+                self.num = 2
+            else:
+                self.success = -1
+                common.hero.happy = max(10,common.hero.happy - 20)
+                self.num = 3
+            common.skills[2].skill_earn = True
+            common.selecting = False
             self.selected = False
+            self.h += 7
+            self.w += 15
+            self.x -= 7
         else:
             return
 
@@ -408,6 +422,7 @@ class Propose:
         return self.x - half_w - select_offset, BOTTOM_OFFSET , self.x + half_w+select_offset, SCREEN_HEIGHT
 
     def update(self):
+        self.select_collision()
         self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - 55:
             self.exsit = False
