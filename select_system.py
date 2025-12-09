@@ -5,6 +5,7 @@ import game_world
 import common
 import json
 import itertools
+import savelist
 
 with open('Json/hobby_select_data.json', 'r', encoding='utf-8') as f:
     h = json.load(f)
@@ -14,10 +15,15 @@ with open('Json/hosue_shop_select_data.json', 'r', encoding='utf-8') as f:
     house = json.load(f)
 with open('Json/propose_woman_data.json', 'r', encoding='utf-8') as f:
     propose = json.load(f)
+
+with open('Json/sell_house_data.json', 'r', encoding='utf-8') as f:
+    sell_h = json.load(f)
+
 hobby_select_data = h['sprites']
 flower_shop_select_data = flower['sprites']
 house_shop_select_data = house['sprites']
 propose_woman_data = propose['sprites']
+sell_house_data = sell_h['sprites']
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -159,11 +165,21 @@ class Hobby:
         if bottom_a > top_b: return False
 
         return True
+
+    def hobby_happy(self):
+        if self.num == 0:
+            savelist.item_stats['paint']['happy'] = + 5
+        elif self.num == 1:
+            savelist.item_stats['music']['happy'] = + 5
+        elif self.num == 2:
+            savelist.item_stats['soccer']['happy'] = + 5
+
     def select_collision(self):
         if self.selected:
             common.selecting = True
             common.hobby_num = self.num
             common.skills[0].skill_earn = True
+            self.hobby_happy()
             common.hero.earn_hobby.num = self.num
             common.hero.state_machine.handle_state_event(('select',None))
             common.pause_def.pause_game_switch()
@@ -206,6 +222,8 @@ class Flower_shop:
         self.pos = common.background.map_total_w[10] ## 아무값이나 넣어놓기
         self.exist = False
         self.selected = False
+        self.can_select = True
+
 
     def handle_collision(self, other):
         if self.num in (1,3):
@@ -224,6 +242,7 @@ class Flower_shop:
         if self.selected:
             common.selecting = True
             common.propose_probality = 50 + 10 * (self.num+1)
+            common.selecting = False
             self.selected = False
         else:
             return
@@ -257,6 +276,7 @@ class Flower_shop:
 class House_shop:
     def __init__(self,num = 0):
         self.image = load_image('Images/house_shop_select.png')
+        self.buy_house_image = load_image('Images/sell_house.png')
         if num == 0:
             self.w = house_shop_select_data[num]['width'] * 3
             self.h = house_shop_select_data[num]['height'] * 3
@@ -270,7 +290,9 @@ class House_shop:
         self.pos = common.background.map_total_w[10] ## 아무값이나 넣어놓기
         self.exist = False
         self.selected = False
-        self.screen_pause = False
+        self.can_select = True
+        self.buy = False
+        self.money = [2000,1000, 0]
 
     def handle_collision(self, other):
         if self.num == 0:
@@ -288,7 +310,13 @@ class House_shop:
     def select_collision(self):
         if self.selected:
             common.selecting = True
-            apply_old_resources(self.num)
+            print(1)
+            if self.money[self.num] <= common.hero.money:
+                print(2)
+                common.hero.money -= self.money[self.num]
+                apply_old_resources(self.num)
+                self.buy = True
+            common.selecting = False
             self.selected = False
         else:
             return
@@ -302,6 +330,7 @@ class House_shop:
 
     def update(self):
         self.x -= common.background.display_speed * game_framework.frame_time
+        self.select_collision()
         if self.x < - 55:
             self.exist = False
             game_world.remove_object(self)
@@ -310,11 +339,14 @@ class House_shop:
         i = self.num
         w = self.w
         h = self.h
-        self.image.clip_draw(int(house_shop_select_data[i]["x"]),
-                             int(house_shop_select_data[i]['y']),
-                             int(house_shop_select_data[i]['width']),
-                             int(house_shop_select_data[i]['height']),
-                             self.x, self.y + self.h //2, w, h)
+        if not self.buy:
+            self.image.clip_draw(int(house_shop_select_data[i]["x"]),
+                                 int(house_shop_select_data[i]['y']),
+                                 int(house_shop_select_data[i]['width']),
+                                 int(house_shop_select_data[i]['height']),
+                                 self.x, self.y + self.h //2, w, h)
+        else:
+            self.buy_house_image.clip_draw(int(sell_house_data[i]["x"]),int(sell_house_data[i]["y"]),int(sell_house_data[i]["width"]),int(sell_house_data[i]["height"]),self.x, self.y + self.h //2, w, h)
         if not self.num == 0:
             draw_rectangle(*self.get_bb())
 
@@ -332,7 +364,9 @@ class Propose:
         self.selected = False
         self.screen_pause = True
 
-    def select_collision(self, other):
+    def handle_collision(self, other):
+        if self.num == 0:
+            return False
         left_a, bottom_a, right_a, top_a = self.get_bb()
         left_b, bottom_b, right_b, top_b = other.get_bb()
 
@@ -342,6 +376,14 @@ class Propose:
         if bottom_a > top_b: return False
 
         return True
+
+    def select_collision(self):
+        if self.selected:
+            common.selecting = True
+            pass
+            self.selected = False
+        else:
+            return
 
     def get_bb(self):
         half_w = propose_woman_data[0]['width']
