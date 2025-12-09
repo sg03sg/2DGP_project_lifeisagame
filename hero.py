@@ -145,7 +145,9 @@ class Jump:
             age = self.hero.age - 1
             frame_data = hero_jump_rounding_box_data[age]['sprites'][i]
             base_width = scale_hero[self.hero.age]
-            scale = 100 / base_width
+            scale = self.hero.side_size[self.hero.age] / base_width
+            if self.hero.age in (3,4):
+                scale *= 0.85
             draw_w = int(int(frame_data['width']) * scale)
             self.hero.jump_images[age].clip_draw(
                 int(frame_data["x"]),int(frame_data['y']), int(frame_data['width']),int(frame_data['height']),
