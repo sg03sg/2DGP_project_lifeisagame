@@ -32,7 +32,7 @@ class Background:
             filenames = ['Images/baby_map.png','Images/child_map.png','Images/hobby_map.png', 'Images/student_map.png','Images/adult_bridge_map.png',
                          'Images/no_job_map.png','Images/office_map.png','Images/art_map.png','Images/musician_map.png','Images/soccer_map.png',
                          'Images/merry_bridge_map.png','Images/merry_shop_map.png','Images/merry_map.png','Images/middle_bridge_map.png',
-                         'Images/house_shop_map.png','Images/old_bridge_map.png']
+                         'Images/house_shop_map.png','Images/old_bridge_map.png','Images/old_poor_map.png','Images/old_normal_map.png ','Images/old_rich_map.png','Images/ending_map.png']
         self.images = [load_image(f) for f in filenames]
         # 각 이미지 별 프레임 수(픽셀 240으로 분할한 값)와 그에 따른 폭/높이/총폭을 각각 계산
         self.frame_count = [img.w // 320 if img.w >= 320 else 1 for img in self.images]
@@ -42,7 +42,7 @@ class Background:
         self.map_total_w = list(itertools.accumulate(self.total_w))
 
         self.stage = 0
-        self.logic_stage_age = [0, 1, 2, 2, 3, 3, 3, 3, 3, 4, 4,4,4,4,5]
+        self.logic_stage_age = [0, 1, 2, 2, 3, 3, 3, 3, 3, 4, 4,4,4,5,5,5]
         self.stage_order = [0, 1, 2, 3, 4]
 
         self.offset = 0.0
@@ -82,7 +82,7 @@ class Background:
             self.map_idx = (self.map_idx+1) % len(self.stage_order)
             next_stage = (self.stage + 1) % len(self.stage_order)
             if self.logic_stage_age[self.stage] != self.logic_stage_age[next_stage]:
-                common.hero.age = (common.hero.age+1) % 5
+                common.hero.age = (common.hero.age+1) % 6
                 if common.hero.age == 2 and common.hero.smarter >= savelist.age2ui_max_count[0]:
                     savelist.item_stats['coin']['money'] = int(1.5 * savelist.item_stats['coin']['money'])
 

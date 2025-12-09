@@ -42,6 +42,12 @@ def apply_job_resources(job_num):
             "jump_json": ['Json/soccer_jump_data.json', 'Json/middle_soccer_jump_data.json'],
         },
     }
+    old_hero_poor = {
+        "walk_img": "Images/poor_old.png",
+        "jump_img": "Images/poor_old.png",
+        "walk_json": "Json/poor_old_data.json",
+        "jump_json": "Json/poor_old_data.json",
+    }
 
     info = job_data[job_num]
 
@@ -51,6 +57,8 @@ def apply_job_resources(job_num):
     for fn in range(2):
         hero.walk_images.append(load_image(info["walk_img"][fn]))
         hero.jump_images.append(load_image(info["jump_img"][fn]))
+    hero.walk_images.append(load_image(old_hero_poor["walk_img"]))
+    hero.jump_images.append(load_image(old_hero_poor["jump_img"]))
 
     # JSON 데이터 등록
     import json
@@ -61,6 +69,10 @@ def apply_job_resources(job_num):
 
         with open(info["jump_json"][fn], 'r', encoding='utf-8') as f:
             h.hero_jump_rounding_box_data.append(json.load(f))
+    with open(old_hero_poor["walk_json"], 'r', encoding='utf-8') as f:
+        h.hero_rounding_box_data.append(json.load(f))
+    with open(old_hero_poor["jump_json"], 'r', encoding='utf-8') as f:
+        h.hero_jump_rounding_box_data.append(json.load(f))
 
     h.scale_hero_def(h.scale_hero)
 
@@ -113,15 +125,15 @@ def finish():
     selects = common.select_system.selects
 
     if job == 0: # 무직
-        common.background.stage_order += [5,4,11,12,13,5,13,14,15]
+        common.background.stage_order += [5,4,11,12,13,5,13,14,15,16,19]
     elif job == 1:  # 직장인
-        common.background.stage_order += [6,4,11,12,13,6,13,14,15]
+        common.background.stage_order += [6,4,11,12,13,6,13,14,15,16,19]
     elif job == 2:  # 화가
-        common.background.stage_order += [7,4,11,12,13,7,13,14,15]
+        common.background.stage_order += [7,4,11,12,13,7,13,14,15,16,19]
     elif job == 3:  # 음악가
-        common.background.stage_order += [8,4,11,12,13,8,13,14,15]
+        common.background.stage_order += [8,4,11,12,13,8,13,14,15,16,19]
     elif job == 4:  # 축구선수
-        common.background.stage_order += [9,4,11,12,13,9,13,14,15]
+        common.background.stage_order += [9,4,11,12,13,9,13,14,15,16,19]
 
     apply_job_resources(job)
     select_item_pos(selects)

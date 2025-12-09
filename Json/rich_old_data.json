@@ -1,0 +1,40 @@
+{
+    "sprites": [
+        {
+            "name": "rich_old_11",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 56.0,
+            "height": 150.0,
+            "pivotX": 28.0,
+            "pivotY": 75.0
+        },
+        {
+            "name": "rich_old_12",
+            "x": 122.0,
+            "y": 2.0,
+            "width": 82.0,
+            "height": 148.0,
+            "pivotX": 41.0,
+            "pivotY": 74.0
+        },
+        {
+            "name": "rich_old_13",
+            "x": 62.0,
+            "y": 2.0,
+            "width": 56.0,
+            "height": 150.0,
+            "pivotX": 28.0,
+            "pivotY": 75.0
+        },
+        {
+            "name": "rich_old_14",
+            "x": 208.0,
+            "y": 2.0,
+            "width": 82.0,
+            "height": 148.0,
+            "pivotX": 41.0,
+            "pivotY": 74.0
+        }
+    ]
+}

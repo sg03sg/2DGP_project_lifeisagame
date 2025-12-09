@@ -4,6 +4,7 @@ import game_framework
 import game_world
 import common
 import json
+import itertools
 
 with open('Json/hobby_select_data.json', 'r', encoding='utf-8') as f:
     h = json.load(f)
@@ -23,6 +24,61 @@ SCREEN_HEIGHT = 720
 BOTTOM_OFFSET = 100
 
 select_offset = 2
+
+def apply_old_resources(poor_power):
+    if poor_power == 0:
+        return  # 빈곤은 기본값이므로 패스
+    job_data = {
+        3: {
+            "walk_img": 'Images/poor_old.png',
+            "walk_json": 'Json/poor_old_data.json'
+        },
+        2: {
+            "walk_img": 'Images/normal_old.png',
+            "walk_json": 'Json/normal_old_data.json'
+        },
+        1: {
+            "walk_img": 'Images/rich_old.png',
+            "walk_json": 'Json/rich_old_data.json'
+        }
+    }
+
+    info = job_data[poor_power]
+
+    hero = common.hero
+
+    hero.walk_images.pop(len(hero.walk_images)-1)
+    hero.jump_images.pop(len(hero.jump_images)-1)
+
+    # Hero 이미지 등록
+    hero.walk_images.append(load_image(info["walk_img"]))
+    hero.jump_images.append(load_image(info["walk_img"]))
+
+    # JSON 데이터 등록
+    import json
+    import hero as h
+    h.hero_rounding_box_data.pop(len(h.hero_rounding_box_data)-1)
+    h.hero_jump_rounding_box_data.pop(len(h.hero_jump_rounding_box_data)-1)
+    with open(info["walk_json"], 'r', encoding='utf-8') as f:
+        h.hero_rounding_box_data.append(json.load(f))
+
+    with open(info["walk_json"], 'r', encoding='utf-8') as f:
+        h.hero_jump_rounding_box_data.append(json.load(f))
+
+    h.scale_hero_def(h.scale_hero)
+
+    bg = common.background
+    for _ in range(2):
+        bg.stage_order.pop(len(bg.stage_order)-1)
+    if poor_power == 3:
+        bg.stage_order += [16,17]
+    elif poor_power == 2:
+        bg.stage_order += [17, 19]
+    elif poor_power == 1:
+        bg.stage_order += [18, 19]
+
+    bg.map_total_w = list(itertools.accumulate(bg.total_w[i] for i in bg.stage_order))
+    bg.gate_pos = [total - bg.frame_w[i] for i, total in zip(bg.stage_order, bg.map_total_w)]
 
 ##선택 시스템 객체 게임월드에 추가를 결정하는 함수1
 ##Tab을 눌렀을때 선택 상태를 활성화 상태로 만든다 함수 2
@@ -91,7 +147,6 @@ class Hobby:
         self.pos = common.background.map_total_w[1] - common.background.frame_w[1] + 80 * (num+1)
         self.exist = False
         self.selected = False
-        self.screen_pause = True
         self.can_select = True
 
     def handle_collision(self,other):
@@ -151,9 +206,10 @@ class Flower_shop:
         self.pos = common.background.map_total_w[10] ## 아무값이나 넣어놓기
         self.exist = False
         self.selected = False
-        self.screen_pause = False
 
-    def handle_collision(self, group, other):
+    def handle_collision(self, other):
+        if self.num in (1,3):
+            return False
         left_a, bottom_a, right_a, top_a = self.get_bb()
         left_b, bottom_b, right_b, top_b = other.get_bb()
 
@@ -163,6 +219,14 @@ class Flower_shop:
         if bottom_a > top_b: return False
 
         return True
+
+    def select_collision(self):
+        if self.selected:
+            common.selecting = True
+            common.propose_probality = 50 + 10 * (self.num+1)
+            self.selected = False
+        else:
+            return
 
     def get_bb(self):
         if self.num in (0,2):
@@ -208,7 +272,9 @@ class House_shop:
         self.selected = False
         self.screen_pause = False
 
-    def select_collision(self, other):
+    def handle_collision(self, other):
+        if self.num == 0:
+            return False
         left_a, bottom_a, right_a, top_a = self.get_bb()
         left_b, bottom_b, right_b, top_b = other.get_bb()
 
@@ -218,6 +284,14 @@ class House_shop:
         if bottom_a > top_b: return False
 
         return True
+
+    def select_collision(self):
+        if self.selected:
+            common.selecting = True
+            apply_old_resources(self.num)
+            self.selected = False
+        else:
+            return
 
     def get_bb(self):
         if not self.num ==0:
