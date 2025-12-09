@@ -22,7 +22,11 @@ job = {0: 'no_job', 1:'study', 2 : 'paint', 3 : 'music', 4 : 'soccer'}
 item_stats = {
     'babymilk':   {'happy': +5},
     'smart':      {'happy': +3, 'smarter': +1},
-    'coin':       {'happy': -5, 'money': +30},
+    'study': {'happy': -4},
+    'paint': {'happy': -2},
+    'music': {'happy': -2},
+    'soccer': {'happy': -2},
+    'coin':       {'happy': -5, 'money': +200},
     'cigarette':  {'happy': +5, 'hp': -5,'smoking': +1},
     'dumbel':     {'happy': +2, 'hp': +1},
     'hambuger':   {'happy': +2, 'hp': -1},

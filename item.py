@@ -60,10 +60,9 @@ class Item:
         if group == 'hero:item':
             game_world.remove_object(self)
             common.item_spawner.exist_items.remove(self)
+            self. item_updown_stats()
             if self.age == 2:
                 common.job_stat.handle_collision(self)
-                return
-            self. item_updown_stats()
 
 
     def update(self):
