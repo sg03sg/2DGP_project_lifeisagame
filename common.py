@@ -13,10 +13,11 @@ job_stat = None
 pause_def = Pause()
 
 select_system = None
-selecting = False
+selecting = None
 
 skills = None
 skill_system = None
+using_skill = None
 
 effect = Effect()
 
