@@ -24,5 +24,6 @@ speed = 3.0
 hobby_num = 0
 
 propose_probality = 0  # 프러포즈 확률 %
+friend_probality = 0   # 친구 신청 확률 %
 
 ending_system = None

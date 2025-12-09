@@ -65,6 +65,7 @@ def init():
     common.ending_system = Ending_system()
     common.job_stat = Job_stat()
     common.propose_probality = 50
+    common.friend_probality = 80
 
     hp = Ui("hp", 50)
     game_world.add_object(hp, 1)
