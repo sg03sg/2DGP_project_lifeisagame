@@ -30,6 +30,8 @@ def handle_events():
             if not common.selecting:
                 common.select_system.select_state = True
         elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
+            if common.using_skill:
+                continue  # 스킬 사용 중일 때는 무시
             mx, my = event.x, get_canvas_height() - event.y  # 마우스 좌표
 
             # 스킬 버튼들 검사
@@ -66,6 +68,8 @@ def init():
     common.job_stat = Job_stat()
     common.propose_probality = 50
     common.friend_probality = 80
+    common.selecting = False
+    common.using_skill = False
 
     hp = Ui("hp", 50)
     game_world.add_object(hp, 1)

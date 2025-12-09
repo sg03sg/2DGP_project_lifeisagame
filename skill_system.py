@@ -5,9 +5,11 @@ from pico2d import *
 class Skill_system():
     def __init__(self):
         self.skills = common.skills
-        self.cooltime = 6.0
+        self.cooltime = 8.0
         self.last_use_time = [0 for _ in range(len(self.skills))]
         self.can_skill_use = [True for _ in range(len(self.skills))]
+
+        self.using_time = float('inf')
 
     ##스킬 쿨타임 계산 쿨타임 일때는 스킬 쿨타임 상태 ui로 바꾸고 아닐때는 스킬 ui 활성화 상태
     def skill_on_off_switch(self, skill_num):
@@ -24,6 +26,8 @@ class Skill_system():
         if self.skills[skill_num].skill_earn == False:
             return
         if self.skills[skill_num].skill_on:
+            common.using_skill = True
+            self.using_time = get_time()
             common.effect.skill_effect_play(skill_num)
             self.last_use_time[skill_num] = time.time()
             self.skills[skill_num].on = False
@@ -31,3 +35,7 @@ class Skill_system():
     def update(self):
         for i in range(len(self.skills)):
             self.skill_on_off_switch(i)
+
+        if common.using_skill:
+            if get_time() - self.using_time >= 2.0:
+                common.using_skill = False
