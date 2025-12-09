@@ -36,10 +36,12 @@ class Ending_system:
             elif self.smokken:
                 game_over = Game_over(1)
                 self.ending_start()
+                game_world.add_object(game_over, 2)
 
             elif self.sucide:
                 game_over = Game_over(0)
                 self.ending_start()
+                game_world.add_object(game_over, 2)
 
     def ending_start(self):
         common.pause_def.pause_game_switch()
@@ -67,7 +69,7 @@ class Game_over():
     def __init__(self,num):
         filename = ["Images/suicide.png","Images/smokeen_ending.png"]
         self.images = [load_image(f) for f in filename]
-        self.scale_x, self.scale_y = SCREEN_WIDTH / self.images[num].w, (SCREEN_HEIGHT -BOTTOM_OFFSET) / self.images[num].h
+        self.scale_x, self.scale_y = SCREEN_WIDTH / self.images[num].w, SCREEN_HEIGHT/ self.images[num].h
         self.x, self.y = self.images[num].w * self.scale_x //2 , self.images[num].h * self.scale_y //2
         self.w, self.h = self.images[num].w * self.scale_x, self.images[num].h * self.scale_y
         self.num = num
