@@ -28,6 +28,21 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_TAB:
             if not common.selecting:
                 common.select_system.select_state = True
+        elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
+            mx, my = event.x, get_canvas_height() - event.y  # 마우스 좌표
+
+            # 스킬 버튼들 검사
+            for idx, skill in enumerate(common.skills):
+                half = skill.size / 2
+                left = skill.x - half
+                right = skill.x + half
+                bottom = skill.y - half
+                top = skill.y + half
+
+                if left <= mx <= right and bottom <= my <= top:
+                    common.skill_system.skill_use(idx)
+                    print('click')
+                    break
         else:
             common.hero.handle_event(event)
 
