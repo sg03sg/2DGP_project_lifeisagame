@@ -5,6 +5,7 @@ import background
 import play_mode
 import common
 import savelist
+from effect import Item_effect
 
 stu_it_num = [5,6,7,8]
 with open('Json/ui_data.json', 'r', encoding='utf-8') as f:
@@ -79,6 +80,9 @@ class Item:
         effects = savelist.item_stats.get(item_name, {})
 
         for stat, amount in effects.items():
+            if stat == 'happy':
+                it_effect = Item_effect(amount)
+                game_world.add_object(it_effect,2)
             new_value = getattr(common.hero, stat) + amount
 
             # 0~100 범위 제한 스탯들 제한
