@@ -1,9 +1,10 @@
 from pico2d import *
 
 from background import Background
+from ending_system import Ending_system
 from hero import Hero
 from item_spawner import ItemSpawner
-from job_system import Job_select
+from job_system import Job_select,Job_stat
 from pause import Pause_test
 from select_system import Select_System
 from skill_system import Skill_system
@@ -61,6 +62,9 @@ def init():
     game_world.add_objects(common.skills, 1)
 
     common.skill_system = Skill_system()
+    common.ending_system = Ending_system()
+    common.job_stat = Job_stat()
+    common.propose_probality = 50
 
     hp = Ui("hp", 50)
     game_world.add_object(hp, 1)
@@ -86,6 +90,7 @@ def update():
 
     ageui.update(common.hero.age)
     common.skill_system.update()
+    common.ending_system.update()
 
     common.item_spawner.update(common.hero)
     game_world.update()
