@@ -23,11 +23,10 @@ class Skill_system():
     def skill_use(self,skill_num):
         if self.skills[skill_num].skill_earn == False:
             return
-        if self.skills[skill_num].on:
-            #common.effect.skill_effect_play(skill_num)
+        if self.skills[skill_num].skill_on:
+            common.effect.skill_effect_play(skill_num)
             self.last_use_time = time.time()
             self.skills[skill_num].on = False
-            self.skills[skill_num].activate()
             common.hero.happy = min(100, common.hero.happy + 10)
     def update(self):
         for i in range(len(self.skills)):
