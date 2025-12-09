@@ -231,7 +231,7 @@ class Flower_shop:
         self.choice_img = load_image('Images/choice_ui.png')
 
     def handle_collision(self, other):
-        if self.num in (1,3):
+        if self.num in (0,2):
             return False
         left_a, bottom_a, right_a, top_a = self.get_bb()
         left_b, bottom_b, right_b, top_b = other.get_bb()
@@ -249,11 +249,12 @@ class Flower_shop:
             common.propose_probality = 50 + 10 * (self.num+1)
             common.selecting = False
             self.selected = False
+            game_world.remove_object(self)
         else:
             return
 
     def get_bb(self):
-        if self.num in (0,2):
+        if self.num in (1,3):
             half_w = flower_shop_select_data[0]['width']
             flower_w = flower_shop_select_data[1]['width'] * 2
             return self.x - half_w - select_offset, BOTTOM_OFFSET, self.x + half_w + select_offset + flower_w, SCREEN_HEIGHT
@@ -261,6 +262,7 @@ class Flower_shop:
             return 0, 0, 0, 0
 
     def update(self):
+        self.select_collision()
         self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - 55:
             self.exist = False
@@ -275,7 +277,7 @@ class Flower_shop:
                              int(flower_shop_select_data[i]['width']),
                              int(flower_shop_select_data[i]['height']),
                              self.x, self.y + self.h //2, w, h)
-        if self.num in (0,2):
+        if self.num in (1,3):
             self.choice_img.draw(self.x, self.y + self.h // 2 + 40 + h // 2, 150, 50)
             draw_rectangle(*self.get_bb())
 
