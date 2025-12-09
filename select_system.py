@@ -423,11 +423,11 @@ class Propose:
 class Friend:
     def __init__(self):
         self.image = load_image('Images/friend_idle.png')
-        self.w = self.image.w * 2.2
-        self.h = self.image.h * 1.5
-        self.y = common.hero.y
+        self.w = common.hero.side_size[2]
+        self.h = common.hero.tall[2]
+        self.y = 100 + common.hero.tall[2]//2
         self.x = 1310
-        self.pos = common.background.map_total_w[3] - common.background.frame_w[3] * 2
+        self.pos = common.background.map_total_w[3] - common.background.frame_w[3] * 3
         self.exist = False
         self.selected = False
         self.can_select = True
@@ -461,8 +461,8 @@ class Friend:
             self.selected = False
 
     def get_bb(self):
-        half_w = propose_woman_data[0]['width']
-        return self.x - half_w - select_offset, BOTTOM_OFFSET , self.x + half_w+select_offset, BOTTOM_OFFSET + self.h
+        half_w = self.h //2
+        return self.x - half_w - select_offset, self.y - self.h//2 , self.x + half_w+select_offset, self.y + self.h//2
 
     def update(self):
         self.x -= common.background.display_speed * game_framework.frame_time
@@ -477,7 +477,11 @@ class Friend:
         self.choice_img.draw(self.x, self.y + self.h //2 + 40+ h//2, 150, 50)
         if self.success == 1:
             self.image = load_image('Images/friend_success.png')
+            self.h += 25
+            self.w += 20
         elif self.success == -1:
             self.image = load_image('Images/friend_fail.png')
-        self.image.draw(self.x, self.y + self.h //2, w, h)
+            self.h += 5
+            self.w += 20
+        self.image.draw(self.x, self.y, w, h)
         draw_rectangle(*self.get_bb())

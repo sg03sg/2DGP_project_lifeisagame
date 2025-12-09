@@ -81,7 +81,7 @@ class Skillui:
                                      self.x,self.y,self.size,self.size)
             elif not self.skill_on and not self.name == 'hobby':
                 # print(4)
-                i = self.json_num + 9
+                i = self.json_num + 10
                 self.image.clip_draw(int(button_data['sprites'][i]["x"]),int(button_data['sprites'][i]["y"]),int(button_data['sprites'][i]["width"]),int(button_data['sprites'][i]["height"]),
                                      self.x,self.y,self.size,self.size)
 
