@@ -4,7 +4,7 @@ import game_framework
 import game_world
 import savelist
 from hero import Old_die
-import ending_mode
+import title_mode
 
 with open('Json/curtain_data.json', 'r', encoding='utf-8') as f:
     cutain = json.load(f)
@@ -65,10 +65,10 @@ BOTTOM_OFFSET = 100
 
 class Game_over():
     def __init__(self,num):
-        filename = ["Images/game_over.png","Images/smokeen_ending.png"]
+        filename = ["Images/suicide.png","Images/smokeen_ending.png"]
         self.images = [load_image(f) for f in filename]
         self.scale_x, self.scale_y = SCREEN_WIDTH / self.images[num].w, (SCREEN_HEIGHT -BOTTOM_OFFSET) / self.images[num].h
-        self.x, self.y = self.images[num] * self.scale_x //2 , self.images[num].h * self.scale_y //2
+        self.x, self.y = self.images[num].w * self.scale_x //2 , self.images[num].h * self.scale_y //2
         self.w, self.h = self.images[num].w * self.scale_x, self.images[num].h * self.scale_y
         self.num = num
 
@@ -93,6 +93,7 @@ class Curtain():
     def update(self):
         if get_time() - self.time >= 3.0:
             print('end')
+            game_framework.change_mode(title_mode)
         if not self.frame_move:
             return
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 11
