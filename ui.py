@@ -15,8 +15,11 @@ with open('Json/ui_data.json', 'r', encoding='utf-8') as f:
     ui_data = json.load(f)
 with open('Json/number_data.json', 'r', encoding='utf-8') as f:
     number_data = json.load(f)
+with open('Json/skill_on_data.json', 'r', encoding='utf-8') as f:
+    skill_on = json.load(f)
 
 slash = number_data['sprites'][10]
+skill_on_data = skill_on['sprites']
 
 class Skillui:
     def __init__(self,name = None):
@@ -26,17 +29,24 @@ class Skillui:
             self.x = 100
             self.kind = 0
             self.json_num = 2
+            self.skill_on_json_num = 0
         elif name == 'friend':
             self.run = False
             self.percent = 0
             self.x= 220
             self.json_num = 3
+            self.skill_on_json_num = 3
         elif name == 'family':
             self.run = False
             self.percent = 0
             self.x= 340
             self.json_num = 4
+            self.skill_on_json_num = 4
+
+        self.skill_earn = False
+        self.skill_on = False
         self.image = load_image("Images/button.png")
+        self.image_skill_on = load_image("Images/skill_on.png")
         self.name = name
         self.y = 60
         self.size = 100
@@ -45,9 +55,30 @@ class Skillui:
         pass
 
     def draw(self):
-        self.image.clip_draw(int(button_data['sprites'][self.json_num]["x"]),int(button_data['sprites'][self.json_num]["y"]),
-                                 int(button_data['sprites'][self.json_num]["width"]),int(button_data['sprites'][self.json_num]["height"]),
-                                 self.x,self.y,self.size,self.size)
+        if not self.skill_earn:
+            self.image.clip_draw(int(button_data['sprites'][self.json_num]["x"]),int(button_data['sprites'][self.json_num]["y"]),
+                                     int(button_data['sprites'][self.json_num]["width"]),int(button_data['sprites'][self.json_num]["height"]),
+                                     self.x,self.y,self.size,self.size)
+        else:
+            if self.skill_on and self.name == 'hobby':
+                i = self.skill_on_json_num + common.hobby_num
+                self.image_skill_on.clip_draw(int(skill_on_data[i]["x"]),int(skill_on_data[i]["y"]),
+                                         int(skill_on_data[i]["width"]),int(skill_on_data[i]["height"]),
+                                         self.x,self.y,self.size,self.size)
+            elif self.skill_on and not self.name == 'hobby':
+                i = self.skill_on_json_num
+                self.image_skill_on.clip_draw(int(skill_on_data[i]["x"]),int(skill_on_data[i]["y"]),
+                                         int(skill_on_data[i]["width"]),int(skill_on_data[i]["height"]),
+                                         self.x,self.y,self.size,self.size)
+            elif not skill_on and self.name == 'hobby':
+                i = 10 + common.hobby_num
+                self.image.clip_draw(int(button_data['sprites'][i]["x"]),int(button_data['sprites'][i]["y"]),int(button_data['sprites'][i]["width"]),int(button_data['sprites'][i]["height"]),
+                                     self.x,self.y,self.size,self.size)
+            elif not skill_on and not self.name == 'hobby':
+                i = self.json_num + 9
+                self.image.clip_draw(int(button_data['sprites'][i]["x"]),int(button_data['sprites'][i]["y"]),int(button_data['sprites'][i]["width"]),int(button_data['sprites'][i]["height"]),
+                                     self.x,self.y,self.size,self.size)
+
 
 class Ageui:
     def __init__(self,age=0):
