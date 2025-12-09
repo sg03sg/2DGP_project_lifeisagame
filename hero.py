@@ -61,9 +61,9 @@ def hero_jump(hero, dt):
         hero.state_machine.handle_state_event(("jump_end", None))
 
 
-TIME_PER_ACTION = 0.6 #사람이 뛸때 두걸음 내딛는 평균 시간은 약 0.7초
-ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION = 6
+TIME_PER_ACTION = [0.6,0.6,0.6,0.6,0.6,0.9] #사람이 뛸때 두걸음 내딛는 평균 시간은 약 0.7초
+ACTION_PER_TIME = [1.0 /TPA for TPA in TIME_PER_ACTION]
+FRAMES_PER_ACTION = [6,6,6,6,6,4]
 
 class Run:
     def __init__(self,hero):
@@ -76,7 +76,7 @@ class Run:
         pass
 
     def do(self):
-        self.hero.frame = (self.hero.frame+FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time)%self.hero.walk_frame_counts[self.hero.age]
+        self.hero.frame = (self.hero.frame+FRAMES_PER_ACTION[self.hero.age] * ACTION_PER_TIME[self.hero.age] * game_framework.frame_time)%self.hero.walk_frame_counts[self.hero.age]
         # if self.hero.frame %10 ==0:
         #     self.hero.y_frame = (self.hero.y_frame +1)%3
     def draw(self):
@@ -126,7 +126,7 @@ class Jump:
 
     def do(self):
         if  not self.hero.age ==0 and not int(self.hero.frame) == self.hero.jump_frame_counts[self.hero.age-1]-1:
-            self.hero.frame = (self.hero.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % self.hero.jump_frame_counts[self.hero.age-1]
+            self.hero.frame = (self.hero.frame + FRAMES_PER_ACTION[self.hero.age] * ACTION_PER_TIME[self.hero.age] * game_framework.frame_time) % self.hero.jump_frame_counts[self.hero.age-1]
         dt = game_framework.frame_time
         hero_jump(self.hero, dt)
 
@@ -162,12 +162,12 @@ class Hero:
         self.walk_images = [load_image(f) for f in walk_filename]
         self.jump_images = [load_image(f) for f in jump_filename]
 
-        self.tall = [100,140,230,260,260]  # 각 나이대별 키
-        self.side_size = [100,120,150,160,160]  # 각 나이대별 옆 크기
+        self.tall = [100,140,230,260,260,240]  # 각 나이대별 키
+        self.side_size = [100,120,150,160,160,150]  # 각 나이대별 옆 크기
         self.age = 0
 
-        self.walk_frame_counts = [6,6,6,6,6]
-        self.jump_frame_counts = [3,5,5,5]
+        self.walk_frame_counts = [6,6,6,6,6,4]
+        self.jump_frame_counts = [3,5,5,5,4]
         self.x,self.y = 640,150
         self.frame = -1
         self.y_frame =-1
@@ -185,7 +185,7 @@ class Hero:
         self.job = 0
 
         # 점프 관련 기본값 : v0^2 / (2 * |g|) <-이거 계산하면 최고 높이
-        self.jump_initial_v = [1000.0,1300.0,1300.0,1300.0,1200.0]    # 초기 상승 속도(px/s)
+        self.jump_initial_v = [1000.0,1300.0,1300.0,1300.0,1200.0,1200.0]    # 초기 상승 속도(px/s)
         self.gravity = -2500.0         # 중력(px/s^2)
         self.jump_vy = 0.0
 
@@ -227,3 +227,58 @@ class Hero:
             #     self.hp += 5
             if self.happy < 100:
                 self.happy += 5
+
+die_data = []
+with open("Json/old_die_data.json", 'r', encoding='utf-8') as f:
+    die_data.append(json.load(f))
+with open("Json/old_die_background_data.json", 'r', encoding='utf-8') as f:
+    die_data.append(json.load(f))
+
+class Old_die:
+    def __init__(self,filename=None):
+        self.die_image = load_image("Images/old_die.png")
+        self.die_bg_images = load_image("Images/old_die_background.png")
+
+        # self.die_num = 0
+        # self.bg_num = 1
+
+        self.freame_die = 0
+        self.frame_bg = 0
+
+        self.w = [180,300]
+        self.h = [300,200]
+
+        self.frame_counts = [12,3]
+        self.x,self.y = [640,750],[100+self.h[0]//2,150+self.h[1]//2]
+
+        self.TIME_PER_ACTION = 3.0 #엔딩 애니메이션 시간은 3초
+        self.ACTION_PER_TIME = 1.0 / self.TIME_PER_ACTION
+        self.FRAMES_PER_ACTION = self.frame_counts
+
+        self.time = get_time()
+
+        self.stop = False
+
+    def update(self):
+        if not self.stop:
+            self.frame_die = (self.freame_die + self.FRAMES_PER_ACTION[0] * self.ACTION_PER_TIME * game_framework.frame_time) % self.frame_counts[0]
+            self.frame_bg = (self.frame_bg + self.FRAMES_PER_ACTION[1] * self.ACTION_PER_TIME * game_framework.frame_time) % self.frame_counts[1]
+
+        if int(self.frame_die) >= self.frame_counts[1]-1:
+            self.stop = True
+
+    def draw(self):
+        i_0 = int(self.frame_die)
+        j_0 = int(self.frame_bg)
+        frame_data_0 = die_data[0]['sprites'][i_0]
+        frame_data_1 = die_data[1]['sprites'][j_0]
+        self.die_image.clip_draw(int(frame_data_0["x"]),
+                                 int(frame_data_0['y']),
+                                 int(frame_data_0['width']),
+                                 int(frame_data_0['height']),
+                                 self.x[0], self.y[0], self.w[0], self.h[0])
+        self.die_bg_images.clip_draw(int(frame_data_1["x"]),
+                                     int(frame_data_1['y']),
+                                     int(frame_data_1['width']),
+                                     int(frame_data_1['height']),
+                                     self.x[1], self.y[1], self.w[1], self.h[1])

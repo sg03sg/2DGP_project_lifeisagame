@@ -1,0 +1,112 @@
+{
+    "sprites": [
+        {
+            "name": "old_die_0",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 154.0,
+            "height": 174.0,
+            "pivotX": 77.0,
+            "pivotY": 87.0
+        },
+        {
+            "name": "old_die_1",
+            "x": 159.0,
+            "y": 2.0,
+            "width": 130.0,
+            "height": 174.0,
+            "pivotX": 65.0,
+            "pivotY": 87.0
+        },
+        {
+            "name": "old_die_2",
+            "x": 292.0,
+            "y": 2.0,
+            "width": 108.0,
+            "height": 174.0,
+            "pivotX": 54.0,
+            "pivotY": 87.0
+        },
+        {
+            "name": "old_die_3",
+            "x": 403.0,
+            "y": 2.0,
+            "width": 106.0,
+            "height": 174.0,
+            "pivotX": 53.0,
+            "pivotY": 87.0
+        },
+        {
+            "name": "old_die_4",
+            "x": 512.0,
+            "y": 2.0,
+            "width": 106.0,
+            "height": 174.0,
+            "pivotX": 53.0,
+            "pivotY": 87.0
+        },
+        {
+            "name": "old_die_5",
+            "x": 621.0,
+            "y": 2.0,
+            "width": 106.0,
+            "height": 174.0,
+            "pivotX": 53.0,
+            "pivotY": 87.0
+        },
+        {
+            "name": "old_die_6",
+            "x": 730.0,
+            "y": 2.0,
+            "width": 106.0,
+            "height": 174.0,
+            "pivotX": 53.0,
+            "pivotY": 87.0
+        },
+        {
+            "name": "old_die_7",
+            "x": 839.0,
+            "y": 2.0,
+            "width": 111.0,
+            "height": 174.0,
+            "pivotX": 55.5,
+            "pivotY": 87.0
+        },
+        {
+            "name": "old_die_9",
+            "x": 960.0,
+            "y": 2.0,
+            "width": 106.0,
+            "height": 148.0,
+            "pivotX": 53.0,
+            "pivotY": 74.0
+        },
+        {
+            "name": "old_die_10",
+            "x": 1095.0,
+            "y": 2.0,
+            "width": 102.0,
+            "height": 108.0,
+            "pivotX": 51.0,
+            "pivotY": 54.0
+        },
+        {
+            "name": "old_die_12",
+            "x": 1206.0,
+            "y": 2.0,
+            "width": 96.0,
+            "height": 60.0,
+            "pivotX": 48.0,
+            "pivotY": 30.0
+        },
+        {
+            "name": "old_die_13",
+            "x": 1305.0,
+            "y": 2.0,
+            "width": 96.0,
+            "height": 60.0,
+            "pivotX": 48.0,
+            "pivotY": 30.0
+        }
+    ]
+}
