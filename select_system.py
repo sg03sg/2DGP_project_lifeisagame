@@ -227,7 +227,7 @@ class Flower_shop:
         self.exist = False
         self.selected = False
         self.can_select = True
-
+        self.money = [300,10]
         self.choice_img = load_image('Images/choice_ui.png')
 
     def handle_collision(self, other):
@@ -247,6 +247,10 @@ class Flower_shop:
         if self.selected:
             common.selecting = True
             common.propose_probality = 50 + 10 * (self.num+1)
+            num = 0 if self.num ==1 else 1
+            if self.money[num] <= common.hero.money:
+                print(2)
+                common.hero.money -= self.money[num]
             common.selecting = False
             self.selected = False
             game_world.remove_object(self)
@@ -374,7 +378,7 @@ class Propose:
         self.pos = common.background.map_total_w[10] ## 아무값이나 넣어놓기
         self.exist = False
         self.selected = False
-        self.screen_pause = True
+        self.can_select = True
 
         self.choice_img = load_image('Images/choice_ui.png')
 
