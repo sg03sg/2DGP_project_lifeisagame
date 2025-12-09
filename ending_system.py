@@ -3,13 +3,14 @@ import common
 import game_framework
 import game_world
 import savelist
+from background import BOTTOM_OFFSET
 from hero import Old_die
 
 class Ending_system:
     def __init__(self):
         self.ending_image = None
         self.perfect = False
-        self.smokken = False
+        self.smokeen = False
         self.sucide = False
 
         self.ending = False
@@ -18,7 +19,7 @@ class Ending_system:
     def ending_judge(self):
         if self.ending:
             if get_time() - self.time >= 4.0:
-                game_framework.change_mode(endind_mode)
+                game_framework.change_mode(ending_mode)
 
         else:
             if self.perfect:
@@ -28,9 +29,11 @@ class Ending_system:
                 game_world.add_object(animation, 1)
 
             elif self.smokken:
+                game_over = Game_over(1)
                 self.ending_start()
 
             elif self.sucide:
+                game_over = Game_over(0)
                 self.ending_start()
 
     def ending_start(self):
@@ -51,4 +54,20 @@ class Ending_system:
     def draw(self):
         pass
 
-class game_over
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+
+class Game_over():
+    def __init__(self,num):
+        filename = ["Images/game_over.png","Images/smokeen_ending.png"]
+        self.images = [load_image(f) for f in filename]
+        self.scale_x, self.scale_y = SCREEN_WIDTH / self.images[num].w, (SCREEN_HEIGHT -BOTTOM_OFFSET) / self.images[num].h
+        self.x, self.y = self.images[num] * self.scale_x //2 , self.images[num].h * self.scale_y //2
+        self.w, self.h = self.images[num].w * self.scale_x, self.images[num].h * self.scale_y
+        self.num = num
+
+    def update(self):
+        pass
+
+    def draw(self):
+        self.images[self.num].draw(self.x,self.y,self.w,self.h)
