@@ -1,3 +1,4 @@
+from effect import Effect
 from job_system import Job_stat
 from pause import Pause
 
@@ -15,6 +16,8 @@ selecting = False
 
 skills = None
 skill_system = None
+
+effect = Effect()
 
 speed = 2.0
 hobby_num = 0
