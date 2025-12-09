@@ -127,7 +127,7 @@ class Jump:
     def do(self):
         if  not self.hero.age ==0 and not int(self.hero.frame) == self.hero.jump_frame_counts[self.hero.age-1]-1:
             self.hero.frame = (self.hero.frame + FRAMES_PER_ACTION[self.hero.age] * ACTION_PER_TIME[self.hero.age] * game_framework.frame_time) % self.hero.jump_frame_counts[self.hero.age-1]
-        dt = game_framework.frame_time
+        dt = game_framework.frame_time * common.speed
         hero_jump(self.hero, dt)
 
     def draw(self):
@@ -185,8 +185,10 @@ class Hero:
         self.job = 0
 
         # 점프 관련 기본값 : v0^2 / (2 * |g|) <-이거 계산하면 최고 높이
-        self.jump_initial_v = [1000.0,1300.0,1300.0,1300.0,1200.0,1200.0]    # 초기 상승 속도(px/s)
-        self.gravity = -2500.0         # 중력(px/s^2)
+        self.jump_initial_v = [1000.0,1300.0,1300.0,1300.0,1200.0,1200.0]   # 초기 상승 속도(px/s)
+        # for i in range(len(self.jump_initial_v)):
+        #     self.jump_initial_v[i] *= common.speed
+        self.gravity = -2500.0        # 중력(px/s^2)
         self.jump_vy = 0.0
 
         self.run = Run(self)
@@ -222,11 +224,7 @@ class Hero:
         self.state_machine.handle_state_event(("INPUT", event))
 
     def handle_collision(self,group, other):
-        if group == 'hero:item':
-            # if self.hp < 100:
-            #     self.hp += 5
-            if self.happy < 100:
-                self.happy += 5
+        pass
 
 die_data = []
 with open("Json/old_die_data.json", 'r', encoding='utf-8') as f:
