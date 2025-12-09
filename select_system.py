@@ -310,7 +310,7 @@ class House_shop:
 
 
     def handle_collision(self, other):
-        if self.num == 0:
+        if self.num in (0,3):
             return False
         left_a, bottom_a, right_a, top_a = self.get_bb()
         left_b, bottom_b, right_b, top_b = other.get_bb()
@@ -337,7 +337,7 @@ class House_shop:
             return
 
     def get_bb(self):
-        if not self.num ==0:
+        if not self.num in (0,3):
             half_w = house_shop_select_data[1]['width']
             return self.x - half_w - select_offset, BOTTOM_OFFSET , self.x + half_w+select_offset, SCREEN_HEIGHT
         else:
@@ -361,8 +361,9 @@ class House_shop:
                                  int(house_shop_select_data[i]['height']),
                                  self.x, self.y + self.h //2, w, h)
         else:
+            i -=1
             self.buy_house_image.clip_draw(int(sell_house_data[i]["x"]),int(sell_house_data[i]["y"]),int(sell_house_data[i]["width"]),int(sell_house_data[i]["height"]),self.x, self.y + self.h //2, w, h)
-        if not self.num == 0:
+        if not self.num in (0,3):
             self.choice_img.draw(self.x, self.y + self.h // 2 + 40 + h // 2, 150, 50)
             draw_rectangle(*self.get_bb())
 
