@@ -242,30 +242,34 @@ class Old_die:
         # self.die_num = 0
         # self.bg_num = 1
 
-        self.freame_die = 0
+        self.frame_die = 0
         self.frame_bg = 0
 
         self.w = [180,300]
         self.h = [300,200]
 
         self.frame_counts = [12,3]
-        self.x,self.y = [640,750],[100+self.h[0]//2,150+self.h[1]//2]
+        self.x,self.y = [640,940],[100+self.h[0]//2,100+self.h[1]//2]
 
         self.TIME_PER_ACTION = 3.0 #엔딩 애니메이션 시간은 3초
         self.ACTION_PER_TIME = 1.0 / self.TIME_PER_ACTION
-        self.FRAMES_PER_ACTION = self.frame_counts
+        self.FRAMES_PER_ACTION = [12,3]
 
         self.time = get_time()
 
-        self.stop = False
+        self.stop_die = False
+        self.stop_bg = False
 
     def update(self):
-        if not self.stop:
-            self.frame_die = (self.freame_die + self.FRAMES_PER_ACTION[0] * self.ACTION_PER_TIME * game_framework.frame_time) % self.frame_counts[0]
+        if not self.stop_die:
+            self.frame_die = (self.frame_die + self.FRAMES_PER_ACTION[0] * self.ACTION_PER_TIME * game_framework.frame_time) % self.frame_counts[0]
+        if not self.stop_bg:
             self.frame_bg = (self.frame_bg + self.FRAMES_PER_ACTION[1] * self.ACTION_PER_TIME * game_framework.frame_time) % self.frame_counts[1]
 
-        if int(self.frame_die) >= self.frame_counts[1]-1:
-            self.stop = True
+        if int(self.frame_die) >= self.frame_counts[0]-1:
+            self.stop_die = True
+        if int(self.frame_bg) >= self.frame_counts[1]-1:
+            self.stop_bg = True
 
     def draw(self):
         i_0 = int(self.frame_die)
