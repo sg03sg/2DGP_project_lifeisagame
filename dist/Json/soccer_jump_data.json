@@ -1,0 +1,49 @@
+{
+    "sprites": [
+        {
+            "name": "soccer_jump_0",
+            "x": 413.0,
+            "y": 0.0,
+            "width": 96.0,
+            "height": 149.0,
+            "pivotX": 48.0,
+            "pivotY": 74.5
+        },
+        {
+            "name": "soccer_jump_1",
+            "x": 139.0,
+            "y": 2.0,
+            "width": 134.0,
+            "height": 100.0,
+            "pivotX": 67.0,
+            "pivotY": 50.0
+        },
+        {
+            "name": "soccer_jump_2",
+            "x": 276.0,
+            "y": 2.0,
+            "width": 134.0,
+            "height": 100.0,
+            "pivotX": 67.0,
+            "pivotY": 50.0
+        },
+        {
+            "name": "soccer_jump_4",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 134.0,
+            "height": 100.0,
+            "pivotX": 67.0,
+            "pivotY": 50.0
+        },
+        {
+            "name": "soccer_jump_6",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 68.0,
+            "height": 146.0,
+            "pivotX": 34.0,
+            "pivotY": 73.0
+        }
+    ]
+}

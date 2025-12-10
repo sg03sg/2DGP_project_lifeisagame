@@ -1,0 +1,40 @@
+{
+    "sprites": [
+        {
+            "name": "flower_shop_select_0",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 48.0,
+            "height": 14.0,
+            "pivotX": 24.0,
+            "pivotY": 7.0
+        },
+        {
+            "name": "flower_shop_select_1",
+            "x": 192.0,
+            "y": 0.0,
+            "width": 19.0,
+            "height": 23.0,
+            "pivotX": 9.5,
+            "pivotY": 11.5
+        },
+        {
+            "name": "flower_shop_select_2",
+            "x": 124.0,
+            "y": 0.0,
+            "width": 48.0,
+            "height": 14.0,
+            "pivotX": 24.0,
+            "pivotY": 7.0
+        },
+        {
+            "name": "flower_shop_select_3",
+            "x": 175.0,
+            "y": 1.0,
+            "width": 12.0,
+            "height": 19.0,
+            "pivotX": 6.0,
+            "pivotY": 9.5
+        }
+    ]
+}

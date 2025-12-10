@@ -1,0 +1,40 @@
+{
+    "sprites": [
+        {
+            "name": "poor_old_11",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 58.0,
+            "height": 144.0,
+            "pivotX": 29.0,
+            "pivotY": 72.0
+        },
+        {
+            "name": "poor_old_12",
+            "x": 126.0,
+            "y": 2.0,
+            "width": 84.0,
+            "height": 142.0,
+            "pivotX": 42.0,
+            "pivotY": 71.0
+        },
+        {
+            "name": "poor_old_13",
+            "x": 64.0,
+            "y": 2.0,
+            "width": 58.0,
+            "height": 144.0,
+            "pivotX": 29.0,
+            "pivotY": 72.0
+        },
+        {
+            "name": "poor_old_14",
+            "x": 214.0,
+            "y": 2.0,
+            "width": 84.0,
+            "height": 142.0,
+            "pivotX": 42.0,
+            "pivotY": 71.0
+        }
+    ]
+}

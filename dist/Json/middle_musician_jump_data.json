@@ -1,0 +1,49 @@
+{
+    "sprites": [
+        {
+            "name": "middle_music_jump_0",
+            "x": 419.0,
+            "y": 0.0,
+            "width": 96.0,
+            "height": 145.0,
+            "pivotX": 48.0,
+            "pivotY": 72.5
+        },
+        {
+            "name": "middle_music_jump_1",
+            "x": 141.0,
+            "y": 2.0,
+            "width": 136.0,
+            "height": 98.0,
+            "pivotX": 68.0,
+            "pivotY": 49.0
+        },
+        {
+            "name": "middle_music_jump_2",
+            "x": 280.0,
+            "y": 2.0,
+            "width": 136.0,
+            "height": 98.0,
+            "pivotX": 68.0,
+            "pivotY": 49.0
+        },
+        {
+            "name": "middle_music_jump_4",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 136.0,
+            "height": 98.0,
+            "pivotX": 68.0,
+            "pivotY": 49.0
+        },
+        {
+            "name": "middle_music_jump_5",
+            "x": 518.0,
+            "y": 0.0,
+            "width": 68.0,
+            "height": 144.0,
+            "pivotX": 34.0,
+            "pivotY": 72.0
+        }
+    ]
+}

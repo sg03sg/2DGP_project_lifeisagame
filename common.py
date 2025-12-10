@@ -23,7 +23,7 @@ effect = None
 
 draw_rec = None
 
-speed = 1.5
+speed = 1.25
 hobby_num = 0
 
 propose_probality = 0  # 프러포즈 확률 %

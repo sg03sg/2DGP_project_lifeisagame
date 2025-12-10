@@ -1,0 +1,49 @@
+{
+    "sprites": [
+        {
+            "name": "middle_officer_jump_0",
+            "x": 141.0,
+            "y": 0.0,
+            "width": 96.0,
+            "height": 148.0,
+            "pivotX": 48.0,
+            "pivotY": 74.0
+        },
+        {
+            "name": "middle_officer_jump_2",
+            "x": 240.0,
+            "y": 2.0,
+            "width": 136.0,
+            "height": 100.0,
+            "pivotX": 68.0,
+            "pivotY": 50.0
+        },
+        {
+            "name": "middle_officer_jump_3",
+            "x": 379.0,
+            "y": 2.0,
+            "width": 136.0,
+            "height": 100.0,
+            "pivotX": 68.0,
+            "pivotY": 50.0
+        },
+        {
+            "name": "middle_officer_jump_4",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 136.0,
+            "height": 100.0,
+            "pivotX": 68.0,
+            "pivotY": 50.0
+        },
+        {
+            "name": "middle_officer_jump_5",
+            "x": 518.0,
+            "y": 0.0,
+            "width": 68.0,
+            "height": 146.0,
+            "pivotX": 34.0,
+            "pivotY": 73.0
+        }
+    ]
+}

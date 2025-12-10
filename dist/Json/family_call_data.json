@@ -1,0 +1,31 @@
+{
+    "sprites": [
+        {
+            "name": "family_call_0",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 80.0,
+            "height": 82.0,
+            "pivotX": 40.0,
+            "pivotY": 41.0
+        },
+        {
+            "name": "family_call_1",
+            "x": 93.0,
+            "y": 0.0,
+            "width": 80.0,
+            "height": 82.0,
+            "pivotX": 40.0,
+            "pivotY": 41.0
+        },
+        {
+            "name": "family_call_2",
+            "x": 183.0,
+            "y": 0.0,
+            "width": 80.0,
+            "height": 82.0,
+            "pivotX": 40.0,
+            "pivotY": 41.0
+        }
+    ]
+}

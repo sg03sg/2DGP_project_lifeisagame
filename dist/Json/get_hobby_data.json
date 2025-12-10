@@ -1,0 +1,31 @@
+{
+    "sprites": [
+      {
+            "name": "get_hobby_0",
+            "x": 158.0,
+            "y": 0.0,
+            "width": 76.0,
+            "height": 170.0,
+            "pivotX": 38.0,
+            "pivotY": 85.0
+        },
+      {
+            "name": "get_hobby_1",
+            "x": 79.0,
+            "y": 0.0,
+            "width": 76.0,
+            "height": 170.0,
+            "pivotX": 38.0,
+            "pivotY": 85.0
+        },
+        {
+            "name": "get_hobby_2",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 76.0,
+            "height": 170.0,
+            "pivotX": 38.0,
+            "pivotY": 85.0
+        }
+    ]
+}

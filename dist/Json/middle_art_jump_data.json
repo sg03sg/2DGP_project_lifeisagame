@@ -1,0 +1,49 @@
+{
+    "sprites": [
+        {
+            "name": "middle_art_jump_0",
+            "x": 413.0,
+            "y": 0.0,
+            "width": 96.0,
+            "height": 162.0,
+            "pivotX": 48.0,
+            "pivotY": 81.0
+        },
+        {
+            "name": "middle_art_jump_1",
+            "x": 139.0,
+            "y": 2.0,
+            "width": 134.0,
+            "height": 120.0,
+            "pivotX": 67.0,
+            "pivotY": 60.0
+        },
+        {
+            "name": "middle_art_jump_2",
+            "x": 276.0,
+            "y": 2.0,
+            "width": 134.0,
+            "height": 120.0,
+            "pivotX": 67.0,
+            "pivotY": 60.0
+        },
+        {
+            "name": "middle_art_jump_4",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 134.0,
+            "height": 120.0,
+            "pivotX": 67.0,
+            "pivotY": 60.0
+        },
+        {
+            "name": "middle_art_jump_5",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 68.0,
+            "height": 160.0,
+            "pivotX": 34.0,
+            "pivotY": 80.0
+        }
+    ]
+}

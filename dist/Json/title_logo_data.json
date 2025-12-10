@@ -1,0 +1,67 @@
+{
+    "sprites": [
+        {
+            "name": "logo1_0",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 275.0,
+            "height": 166.0,
+            "pivotX": 137.5,
+            "pivotY": 83.0
+        },
+        {
+            "name": "logo1_1",
+            "x": 285.0,
+            "y": 0.0,
+            "width": 275.0,
+            "height": 166.0,
+            "pivotX": 137.5,
+            "pivotY": 83.0
+        },
+        {
+            "name": "logo1_2",
+            "x": 570.0,
+            "y": 0.0,
+            "width": 277.0,
+            "height": 166.0,
+            "pivotX": 138.5,
+            "pivotY": 83.0
+        },
+        {
+            "name": "logo1_3",
+            "x": 857.0,
+            "y": 0.0,
+            "width": 275.0,
+            "height": 166.0,
+            "pivotX": 137.5,
+            "pivotY": 83.0
+        },
+        {
+            "name": "logo1_4",
+            "x": 1142.0,
+            "y": 0.0,
+            "width": 276.0,
+            "height": 166.0,
+            "pivotX": 138.0,
+            "pivotY": 83.0
+        },
+        {
+            "name": "logo1_5",
+            "x": 1429.0,
+            "y": 0.0,
+            "width": 275.0,
+            "height": 166.0,
+            "pivotX": 137.5,
+            "pivotY": 83.0
+        },
+        {
+            "name": "logo1_6",
+            "x": 1714.0,
+            "y": 0.0,
+            "width": 272.0,
+            "height": 166.0,
+            "pivotX": 136.0,
+            "pivotY": 83.0
+        }
+    ]
+}

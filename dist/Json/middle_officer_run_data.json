@@ -1,0 +1,58 @@
+{
+    "sprites": [
+        {
+            "name": "middle_officer_run_11",
+            "x": 467.0,
+            "y": 2.0,
+            "width": 60.0,
+            "height": 152.0,
+            "pivotX": 30.0,
+            "pivotY": 76.0
+        },
+        {
+            "name": "middle_officer_run_12",
+            "x": 202.0,
+            "y": 2.0,
+            "width": 112.0,
+            "height": 148.0,
+            "pivotX": 56.0,
+            "pivotY": 74.0
+        },
+        {
+            "name": "middle_officer_run_13",
+            "x": 121.0,
+            "y": 2.0,
+            "width": 78.0,
+            "height": 150.0,
+            "pivotX": 39.0,
+            "pivotY": 75.0
+        },
+        {
+            "name": "middle_officer_run_14",
+            "x": 317.0,
+            "y": 2.0,
+            "width": 72.0,
+            "height": 152.0,
+            "pivotX": 36.0,
+            "pivotY": 76.0
+        },
+        {
+            "name": "middle_officer_run_15",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 116.0,
+            "height": 148.0,
+            "pivotX": 58.0,
+            "pivotY": 74.0
+        },
+        {
+            "name": "middle_officer_run_16",
+            "x": 392.0,
+            "y": 2.0,
+            "width": 72.0,
+            "height": 150.0,
+            "pivotX": 36.0,
+            "pivotY": 75.0
+        }
+    ]
+}

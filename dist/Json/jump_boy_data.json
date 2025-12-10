@@ -1,0 +1,31 @@
+{
+    "sprites": [
+        {
+            "name": "jump_boy_0",
+            "x": 2.0,
+            "y": 2.0,
+            "width": 22.0,
+            "height": 39.0,
+            "pivotX": 11.0,
+            "pivotY": 19.5
+        },
+        {
+            "name": "jump_boy_1",
+            "x": 27.0,
+            "y": 2.0,
+            "width": 22.0,
+            "height": 39.0,
+            "pivotX": 11.0,
+            "pivotY": 19.5
+        },
+        {
+            "name": "jump_boy_2",
+            "x": 52.0,
+            "y": 2.0,
+            "width": 23.0,
+            "height": 43.0,
+            "pivotX": 11.5,
+            "pivotY": 21.5
+        }
+    ]
+}

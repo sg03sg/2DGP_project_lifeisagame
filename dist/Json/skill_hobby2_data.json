@@ -1,0 +1,58 @@
+{
+    "sprites": [
+        {
+            "name": "skill_hobby2_0",
+            "x": 52.0,
+            "y": 78.0,
+            "width": 104.0,
+            "height": 34.0,
+            "pivotX": 52.0,
+            "pivotY": 17.0
+        },
+        {
+            "name": "skill_hobby2_1",
+            "x": 213.0,
+            "y": 68.0,
+            "width": 102.0,
+            "height": 46.0,
+            "pivotX": 51.0,
+            "pivotY": 23.0
+        },
+        {
+            "name": "skill_hobby2_2",
+            "x": 372.0,
+            "y": 75.0,
+            "width": 104.0,
+            "height": 35.0,
+            "pivotX": 52.0,
+            "pivotY": 17.5
+        },
+        {
+            "name": "skill_hobby2_3",
+            "x": 535.0,
+            "y": 70.0,
+            "width": 99.0,
+            "height": 58.0,
+            "pivotX": 49.5,
+            "pivotY": 29.0
+        },
+        {
+            "name": "skill_hobby2_4",
+            "x": 692.0,
+            "y": 79.0,
+            "width": 105.0,
+            "height": 38.0,
+            "pivotX": 52.5,
+            "pivotY": 19.0
+        },
+        {
+            "name": "skill_hobby2_5",
+            "x": 855.0,
+            "y": 70.0,
+            "width": 99.0,
+            "height": 58.0,
+            "pivotX": 49.5,
+            "pivotY": 29.0
+        }
+    ]
+}
