@@ -62,9 +62,12 @@ class Background:
 
         self.stop = False
 
-        self.bgm = load_music('Sound/03_bgm_Baby.wav')
-        self.bgm.set_volume(40)
-        self.bgm.repeat_play()
+        self.bgm_idx = 0
+        bgm_filename = ['Sound/03_bgm_Baby.wav', 'Sound/04_bgm_Child.wav', 'Sound/06_bgm_Student.wav']
+        self.bgm = [load_music(f) for f in bgm_filename]
+        for bgm in self.bgm:
+            bgm.set_volume(40)
+        self.bgm[self.bgm_idx].repeat_play()
 
     def update(self):
         if self.stop:
@@ -87,6 +90,10 @@ class Background:
             next_stage = (self.stage + 1) % len(self.stage_order)
             if self.logic_stage_age[self.stage] != self.logic_stage_age[next_stage]:
                 common.hero.age = (common.hero.age+1) % 6
+                # 배경음악 변경
+                self.bgm[self.bgm_idx].stop()
+                self.bgm_idx = (self.bgm_idx + 1) % len(self.bgm)
+                self.bgm[self.bgm_idx].repeat_play()
                 if common.hero.age == 2 and common.hero.smarter >= savelist.age2ui_max_count[0]:
                     savelist.item_stats['coin']['money'] = int(1.5 * savelist.item_stats['coin']['money'])
 
