@@ -111,7 +111,7 @@ class Ageui:
             self.age = age
 
             if age == 1:
-                self.uis = [Age1ui(i) for i in savelist.age1uiname]
+                self.uis = [Age1ui('smart')]
             elif age == 2:
                 self.uis = [Age2ui(i) for i in savelist.age2uiname]
             elif age == 3 or age == 4:

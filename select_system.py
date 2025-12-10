@@ -249,7 +249,10 @@ class Flower_shop:
     def select_collision(self):
         if self.selected:
             common.selecting = True
-            common.propose_probality = 50 + 10 * (self.num+1)
+            if self.num == 1:
+                common.propose_probality += 35
+            else:
+                common.propose_probality += 10
             num = 0 if self.num ==1 else 1
             if self.money[num] <= common.hero.money:
                 self.sound.play()
