@@ -95,6 +95,7 @@ class Curtain():
     def update(self):
         if get_time() - self.time >= 3.0:
             print('end')
+            del common.hero
             game_framework.change_mode(title_mode)
         if not self.frame_move:
             return

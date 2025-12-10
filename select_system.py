@@ -201,6 +201,7 @@ class Hobby:
         if self.x < - 55:
             self.exist = False
             game_world.remove_object(self)
+            del self
 
     def draw(self):
         i = self.num

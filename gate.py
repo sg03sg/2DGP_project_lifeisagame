@@ -64,6 +64,7 @@ class Gate:
         self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - float((60 + self.size)/2):
             game_world.remove_object(self)
+            del self
 
     def draw(self):
         self.image.clip_draw(0,0,91,260,self.x, self.y, 60 + self.size, SCREEN_HEIGHT - BOTTOM_OFFSET)

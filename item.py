@@ -82,6 +82,7 @@ class Item:
         if self.x <= 0:
             game_world.remove_object(self)
             common.item_spawner.exist_items.remove(self)
+            del self
 
     def item_updown_stats(self):
         item_name = self.name
