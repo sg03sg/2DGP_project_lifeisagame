@@ -1,4 +1,5 @@
-from pico2d import load_image, draw_rectangle, get_time
+from pico2d import load_image, draw_rectangle, get_time, load_wav
+from pygame.examples.aliens import load_sound
 from sdl2 import SDL_KEYDOWN, SDLK_SPACE
 
 import common
@@ -95,7 +96,11 @@ class Earn_hobby:
         self.image = load_image('Images/get_hobby.png')
         self.num = 0
 
+        self.earn_hobby_sound = load_wav("Sound/09_sfx_GoodEvent.wav")
+        self.earn_hobby_sound.set_volume(40)
+
     def enter(self,e):
+        self.earn_hobby_sound.play()
         self.hero.x = 640
         self.hero.y = 100 + (self.hero.tall[2]+50)//2
         self.time = get_time()
@@ -118,6 +123,15 @@ class Jump:
 
     def enter(self,e):
         # 점프 시작 시 초기 속도 설정
+        age = self.hero.age
+        if age <= 1:
+            self.sound = load_wav('Sound/18_sfx_JumpBabyChild.wav')
+        elif age == 2:
+            self.sound = load_wav('Sound/28_sfx_JumpStudent.wav')
+        else:
+            self.sound = load_wav('Sound/34_sfx_JumpJob.wav')
+        self.sound.set_volume(40)
+        self.sound.play()
         self.hero.jump_vy = self.hero.jump_initial_v[self.hero.age]
         self.hero.frame = 0
 

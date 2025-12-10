@@ -25,12 +25,19 @@ class Door:
         self.y = SCREEN_HEIGHT // 2 + BOTTOM_OFFSET // 2
         self.frame_move = False
 
+        self.door_sound = load_wav('Sound/16_sfx_Door.wav')
+        self.door_sound.set_volume(40)
+        self.sound_play = False
+
     def update(self):
         self.x -= common.background.display_speed * game_framework.frame_time
         if self.x < - 55:
             game_world.remove_object(self)
 
         if self.frame_move:
+            if not self.sound_play:
+                self.door_sound.play()
+                self.sound_play = True
             self.frame = self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time
             if self.frame > 3:
                 self.frame = 3

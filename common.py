@@ -19,7 +19,7 @@ skills = None
 skill_system = None
 using_skill = None
 
-effect = Effect()
+effect = None
 
 speed = 2.0
 hobby_num = 0

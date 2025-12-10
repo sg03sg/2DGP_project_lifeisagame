@@ -62,6 +62,10 @@ class Background:
 
         self.stop = False
 
+        self.bgm = load_music('Sound/03_bgm_Baby.wav')
+        self.bgm.set_volume(40)
+        self.bgm.repeat_play()
+
     def update(self):
         if self.stop:
             return

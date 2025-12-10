@@ -18,6 +18,7 @@ stu_item_data = [data['sprites'][i] for i in stu_it_num]
 
 class Item:
     image = None
+    hero_eat_sound = None
 
     def __init__(self, filename = None,y = 150,age=0, num=0):
         if filename == None:
@@ -35,6 +36,10 @@ class Item:
         self.size = [40,40,60,50,50]
 
         self.stop = False
+
+        if not Item.hero_eat_sound:
+            Item.hero_eat_sound = load_wav('Sound/08_sfx_CoinNew.wav')
+            Item.hero_eat_sound.set_volume(40)
 
     def get_bb(self):
         s = self.size[self.age] // 2
@@ -59,6 +64,8 @@ class Item:
 
     def handle_collision(self,group, other):
         if group == 'hero:item':
+            Item.hero_eat_sound.play()
+
             game_world.remove_object(self)
             common.item_spawner.exist_items.remove(self)
             self. item_updown_stats()

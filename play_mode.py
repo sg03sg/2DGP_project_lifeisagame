@@ -9,6 +9,7 @@ from pause import Pause_test
 from select_system import Select_System
 from skill_system import Skill_system
 from ui import Ui, Skillui, Ageui, Money_ui
+from effect import Effect
 
 import game_world
 import game_framework
@@ -70,6 +71,7 @@ def init():
     common.friend_probality = 80
     common.selecting = False
     common.using_skill = False
+    common.effect = Effect()
 
     hp = Ui("hp", 50)
     game_world.add_object(hp, 1)

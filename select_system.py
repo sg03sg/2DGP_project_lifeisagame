@@ -229,6 +229,8 @@ class Flower_shop:
         self.can_select = True
         self.money = [300,10]
         self.choice_img = load_image('Images/choice_ui.png')
+        self.sound = load_wav('Sound/14_sfx_Cash.wav')
+        self.sound.set_volume(40)
 
     def handle_collision(self, other):
         if self.num in (0,2):
@@ -249,7 +251,7 @@ class Flower_shop:
             common.propose_probality = 50 + 10 * (self.num+1)
             num = 0 if self.num ==1 else 1
             if self.money[num] <= common.hero.money:
-                print(2)
+                self.sound.play()
                 common.hero.money -= self.money[num]
             common.selecting = False
             self.selected = False
@@ -306,6 +308,9 @@ class House_shop:
         self.buy = False
         self.money = [2000,1000, 0]
 
+        self.sound = load_wav('Sound/14_sfx_Cash.wav')
+        self.sound.set_volume(40)
+
         self.choice_img = load_image('Images/choice_ui.png')
 
 
@@ -325,9 +330,8 @@ class House_shop:
     def select_collision(self):
         if self.selected:
             common.selecting = True
-            print(1)
             if self.money[self.num] <= common.hero.money:
-                print(2)
+                self.sound.play()
                 common.hero.money -= self.money[self.num]
                 apply_old_resources(self.num)
                 self.buy = True
@@ -383,6 +387,11 @@ class Propose:
 
         self.success = 0 #-1실패 0초기 1성공
 
+        sound_filename = ['Sound/09_sfx_GoodEvent.wav','Sound/11_sfx_BadEvent.wav']
+        self.sound = [load_wav(f) for f in sound_filename]
+        for sound in self.sound:
+            sound.set_volume(40)
+
         self.choice_img = load_image('Images/choice_ui.png')
 
     def handle_collision(self, other):
@@ -401,11 +410,13 @@ class Propose:
             common.selecting = True
             x = random.randrange(0, 100)
             if x <= common.propose_probality:
+                self.sound[0].play()
                 self.success = 1
                 common.skills[2].skill_earn = True
                 common.hero.happy = min(100, common.hero.happy + 30)
                 self.num = 2
             else:
+                self.sound[1].play()
                 self.success = -1
                 common.hero.happy = max(10,common.hero.happy - 20)
                 self.num = 3
@@ -457,6 +468,11 @@ class Friend:
 
         self.choice_img = load_image('Images/choice_ui.png')
 
+        sound_filename = ['Sound/09_sfx_GoodEvent.wav', 'Sound/11_sfx_BadEvent.wav']
+        self.sound = [load_wav(f) for f in sound_filename]
+        for sound in self.sound:
+            sound.set_volume(40)
+
     def handle_collision(self, other):
         left_a, bottom_a, right_a, top_a = self.get_bb()
         left_b, bottom_b, right_b, top_b = other.get_bb()
@@ -473,10 +489,12 @@ class Friend:
             common.selecting = True
             x = random.randrange(0, 100)
             if x<= 80:
+                self.sound[0].play()
                 self.success = 1
                 common.skills[1].skill_earn = True
                 common.hero.happy = min(100,common.hero.happy + 10)
             else:
+                self.sound[1].play()
                 self.success = -1
                 common.hero.happy -= 5
             self.h += 28

@@ -25,6 +25,9 @@ class Title:
         self.frame_w = 320
         self.frame_h = self.image.h
         self.frame = 0
+        self.bgm = load_music('Sound/02_bgm_Start.wav')
+        self.bgm.set_volume(32)
+        self.bgm.repeat_play()
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 7

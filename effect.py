@@ -23,11 +23,21 @@ f_call_data = f_call['sprites']
 family_call_data = family_call['sprites']
 
 class Effect:
+    def __init__(self):
+        h_filename = ['Sound/06_sfx_ArtDrawing.wav','Sound/05_sfx_Guitar.wav','Sound/07_sfx_SoccerBall.wav']
+        self.hobby_sound = [load_wav(f) for f in h_filename]
+        for sound in self.hobby_sound:
+            sound.set_volume(40)
+        self.call_sound = load_wav('Sound/03_sfx_Calling.wav')
+        self.call_sound.set_volume(40)
+
     def skill_effect_play(self,skillnum):
         if skillnum == 0:
+            self.hobby_sound[common.hobby_num].play()
             effect = Hobby_effect(common.hobby_num)
             game_world.add_object(effect,1)
         elif skillnum in (1,2):
+            self.call_sound.play()
             effect = Call_effect(skillnum)
             game_world.add_object(effect,1)
         else:
