@@ -236,6 +236,10 @@ class Flower_shop:
     def handle_collision(self, other):
         if self.num in (0,2):
             return False
+        num = 0 if self.num == 1 else 1
+        if self.money[num] > common.hero.money:
+            return False
+
         left_a, bottom_a, right_a, top_a = self.get_bb()
         left_b, bottom_b, right_b, top_b = other.get_bb()
 
@@ -321,6 +325,8 @@ class House_shop:
 
     def handle_collision(self, other):
         if self.num in (0,3):
+            return False
+        if self.money[self.num - 1] > common.hero.money:
             return False
         left_a, bottom_a, right_a, top_a = self.get_bb()
         left_b, bottom_b, right_b, top_b = other.get_bb()

@@ -428,7 +428,7 @@ class Money_ui:
         y = self.y
 
         ##4자리 수일때
-        if self.count >= 1000:
+        if self.count >= 1000 and self.count < 10000:
             thousands = self.count // 1000
             hundreds = (self.count // 100) % 10
             tens = ((self.count // 10) % 100) % 10
@@ -455,7 +455,7 @@ class Money_ui:
                                       x + (2*self.spacing), y, self.num_size, self.num_size)
 
         # 3자리 수일때
-        elif self.count >= 100:
+        elif self.count >= 100 and self.count < 1000:
             hundreds = self.count // 100
             tens = (self.count // 10) % 10
             units = self.count % 10
@@ -475,7 +475,7 @@ class Money_ui:
                                       int(number_data['sprites'][units]["height"]),
                                       x + self.spacing, y, self.num_size, self.num_size)
         # 2자리 수일때
-        elif self.count >= 10:
+        elif self.count >= 10 and self.count < 100:
             tens = self.count // 10
             units = self.count % 10
             self.number_img.clip_draw(int(number_data['sprites'][tens]["x"]),
@@ -489,7 +489,7 @@ class Money_ui:
                                       int(number_data['sprites'][units]["height"]),
                                       x, y, self.num_size, self.num_size)
         # 1자리 수일때
-        else:
+        elif self.count >= 0 and self.count < 10:
             i = self.count
             self.number_img.clip_draw(int(number_data['sprites'][i]["x"]),
                                       int(number_data['sprites'][i]["y"]),

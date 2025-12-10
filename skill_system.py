@@ -5,7 +5,7 @@ from pico2d import *
 class Skill_system():
     def __init__(self):
         self.skills = common.skills
-        self.cooltime = 9.0
+        self.cooltime = 10.0
         self.last_use_time = [0 for _ in range(len(self.skills))]
         self.can_skill_use = [True for _ in range(len(self.skills))]
 
