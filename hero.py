@@ -234,7 +234,8 @@ class Hero:
 
     def draw(self):
         self.state_machine.draw()
-        draw_rectangle(*self.get_bb())
+        if common.draw_rec:
+            draw_rectangle(*self.get_bb())
 
     def handle_event(self, event):
         self.state_machine.handle_state_event(("INPUT", event))

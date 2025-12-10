@@ -212,7 +212,8 @@ class Hobby:
                              int(hobby_select_data[i]['width']),
                              int(hobby_select_data[i]['height']),
                              self.x, self.y + self.h //2, w, h)
-        draw_rectangle(*self.get_bb())
+        if common.draw_rec:
+            draw_rectangle(*self.get_bb())
 
 
 class Flower_shop:
@@ -285,7 +286,8 @@ class Flower_shop:
                              self.x, self.y + self.h //2, w, h)
         if self.num in (1,3):
             self.choice_img.draw(self.x, self.y + self.h // 2 + 40 + h // 2, 150, 50)
-            draw_rectangle(*self.get_bb())
+            if common.draw_rec:
+                draw_rectangle(*self.get_bb())
 
 class House_shop:
     def __init__(self,num = 0):
@@ -369,7 +371,8 @@ class House_shop:
             self.buy_house_image.clip_draw(int(sell_house_data[i]["x"]),int(sell_house_data[i]["y"]),int(sell_house_data[i]["width"]),int(sell_house_data[i]["height"]),self.x, self.y + self.h //2, w, h)
         if not self.num in (0,3):
             self.choice_img.draw(self.x, self.y + self.h // 2 + 40 + h // 2, 150, 50)
-            draw_rectangle(*self.get_bb())
+            if common.draw_rec:
+                draw_rectangle(*self.get_bb())
 
 class Propose:
     def __init__(self,num = 0):
@@ -420,7 +423,6 @@ class Propose:
                 self.success = -1
                 common.hero.happy = max(10,common.hero.happy - 20)
                 self.num = 3
-            common.skills[2].skill_earn = True
             common.selecting = False
             self.selected = False
             self.h += 7
@@ -451,7 +453,8 @@ class Propose:
                              int(propose_woman_data[i]['width']),
                              int(propose_woman_data[i]['height']),
                              self.x, self.y + self.h //2, w, h)
-        draw_rectangle(*self.get_bb())
+        if common.draw_rec:
+            draw_rectangle(*self.get_bb())
 
 class Friend:
     def __init__(self):
@@ -525,4 +528,5 @@ class Friend:
             self.image = load_image('Images/friend_fail.png')
 
         self.image.draw(self.x, self.y, w, h)
-        draw_rectangle(*self.get_bb())
+        if common.draw_rec:
+            draw_rectangle(*self.get_bb())

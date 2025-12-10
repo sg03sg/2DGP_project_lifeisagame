@@ -34,7 +34,7 @@ class Background:
                          'Images/merry_bridge_map.png','Images/merry_shop_map.png','Images/merry_map.png','Images/middle_bridge_map.png',
                          'Images/house_shop_map.png','Images/old_bridge_map.png','Images/old_poor_map.png','Images/old_normal_map.png ','Images/old_rich_map.png','Images/ending_map.png']
         self.images = [load_image(f) for f in filenames]
-        # 각 이미지 별 프레임 수(픽셀 240으로 분할한 값)와 그에 따른 폭/높이/총폭을 각각 계산
+        # 각 이미지 별 프레임 수(픽셀 320으로 분할한 값)와 그에 따른 폭/높이/총폭을 각각 계산
         self.frame_count = [img.w // 320 if img.w >= 320 else 1 for img in self.images]
         self.frame_w = [img.w // cnt if cnt > 0 else img.w for img, cnt in zip(self.images, self.frame_count)]
         self.frame_h = [img.h for img in self.images]

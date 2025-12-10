@@ -21,7 +21,9 @@ using_skill = None
 
 effect = None
 
-speed = 2.0
+draw_rec = None
+
+speed = 1.5
 hobby_num = 0
 
 propose_probality = 0  # 프러포즈 확률 %

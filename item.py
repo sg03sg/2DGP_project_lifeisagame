@@ -60,7 +60,8 @@ class Item:
                                              self.x, self.y,self.size[3],self.size[3])
         else:
             self.images[self.age].draw(self.x, self.y,40,40)
-        draw_rectangle(*self.get_bb())
+        if common.draw_rec:
+            draw_rectangle(*self.get_bb())
 
     def handle_collision(self,group, other):
         if group == 'hero:item':

@@ -68,8 +68,10 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
-            start_game = True
+        # elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
+        #     start_game = True
+        elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
+                start_game = True
 
 
 def draw():

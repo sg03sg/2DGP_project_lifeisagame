@@ -30,6 +30,11 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_TAB:
             if not common.selecting:
                 common.select_system.select_state = True
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_o:
+            if common. draw_rec:
+                common.draw_rec = False
+            else:
+                common.draw_rec = True
         elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:
             if common.using_skill:
                 continue  # 스킬 사용 중일 때는 무시
@@ -72,6 +77,7 @@ def init():
     common.selecting = False
     common.using_skill = False
     common.effect = Effect()
+    draw_rec = False
 
     hp = Ui("hp", 50)
     game_world.add_object(hp, 1)
