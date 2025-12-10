@@ -328,11 +328,11 @@ class House_shop:
         return True
 
     def select_collision(self):
-        if self.selected:
+        if self.selected and self.num in (1,2):
             common.selecting = True
-            if self.money[self.num] <= common.hero.money:
+            if self.money[self.num-1] <= common.hero.money:
                 self.sound.play()
-                common.hero.money -= self.money[self.num]
+                common.hero.money -= self.money[self.num-1]
                 apply_old_resources(self.num)
                 self.buy = True
             common.selecting = False

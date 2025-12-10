@@ -62,12 +62,16 @@ class Background:
 
         self.stop = False
 
-        self.bgm_idx = 0
-        bgm_filename = ['Sound/03_bgm_Baby.wav', 'Sound/04_bgm_Child.wav', 'Sound/06_bgm_Student.wav']
+        bgm_filename = ['Sound/03_bgm_Baby.wav', 'Sound/04_bgm_Child.wav', 'Sound/06_bgm_Student.wav','Sound/11_bgm_Job1.wav', 'Sound/10_bgm_Soccer_Musician_1.wav', 'Sound/24_bgm_Soccer_Musician_2.wav', 'Sound/18_bgm_Store.wav'
+                        , 'Sound/19_bgm_Propose.wav', 'Sound/26_bgm_Job2.wav', 'Sound/34_bgm_Old.wav']
         self.bgm = [load_music(f) for f in bgm_filename]
         for bgm in self.bgm:
             bgm.set_volume(40)
-        self.bgm[self.bgm_idx].repeat_play()
+
+        self.bgm_order = [0, 1, 2]
+        self.bgm_order_idx = 0
+        i = self.bgm_order[self.bgm_order_idx]
+        self.bgm[i].repeat_play()
 
     def update(self):
         if self.stop:
@@ -87,13 +91,21 @@ class Background:
             self.gate[0].frame_move = True
             self.hero_pos = 0
             self.map_idx = (self.map_idx+1) % len(self.stage_order)
+
+            if self.map_idx in (6,8,11):
+                self.bgm[self.bgm_order[self.bgm_order_idx]].stop()
+                self.bgm_order_idx = (self.bgm_order_idx + 1) % len(self.bgm_order)
+                self.bgm[self.bgm_order[self.bgm_order_idx]].repeat_play()
+
             next_stage = (self.stage + 1) % len(self.stage_order)
             if self.logic_stage_age[self.stage] != self.logic_stage_age[next_stage]:
                 common.hero.age = (common.hero.age+1) % 6
                 # 배경음악 변경
-                self.bgm[self.bgm_idx].stop()
-                self.bgm_idx = (self.bgm_idx + 1) % len(self.bgm)
-                self.bgm[self.bgm_idx].repeat_play()
+                if not common.hero.age == 3:
+                    self.bgm[self.bgm_order[self.bgm_order_idx]].stop()
+                    self.bgm_order_idx = (self.bgm_order_idx + 1) % len(self.bgm_order)
+                    self.bgm[self.bgm_order[self.bgm_order_idx]].repeat_play()
+
                 if common.hero.age == 2 and common.hero.smarter >= savelist.age2ui_max_count[0]:
                     savelist.item_stats['coin']['money'] = int(1.5 * savelist.item_stats['coin']['money'])
 
